@@ -1,0 +1,2 @@
+terrain - 16x16
+text - 8x10
