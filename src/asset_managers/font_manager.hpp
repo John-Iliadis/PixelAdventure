@@ -1,0 +1,8 @@
+//
+// Created by Gianni on 9/01/2024.
+//
+
+#ifndef PLATFORMER_FONT_MANAGER_HPP
+#define PLATFORMER_FONT_MANAGER_HPP
+
+#endif //PLATFORMER_FONT_MANAGER_HPP
