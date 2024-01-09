@@ -6,11 +6,11 @@
 #define PLATFORMER_TEXTURE_MANAGER_HPP
 
 #include <SFML/Graphics/Texture.hpp>
-#include "resourse_manager.hpp"
+#include "asset_manager.hpp"
 
-class TextureManager : public ResourceManager<TextureManager, sf::Texture>
+class TextureManager : public AssetManager<TextureManager, sf::Texture>
 {
-    friend ResourceManager;
+    friend AssetManager;
 private:
     static std::unique_ptr<sf::Texture> load(const std::string& file_name)
     {

@@ -1,5 +1,5 @@
 template<typename Derived, typename asset_type>
-asset_type &ResourceManager<Derived, asset_type>::get(const std::string &key)
+asset_type &AssetManager<Derived, asset_type>::get(const std::string &key)
 {
     if (auto it = map.find(key);
             it != map.end())
@@ -12,23 +12,8 @@ asset_type &ResourceManager<Derived, asset_type>::get(const std::string &key)
     }
 }
 
-//template<typename Derived, typename asset_type> // todo: check this
-//const asset_type &ResourceManager<Derived, asset_type>::get(const std::string &key) const
-//{
-//    if (auto it = map.find(key);
-//            it != map.end())
-//    {
-//        return *(it->second);
-//    }
-//    else
-//    {
-//        throw std::runtime_error("AssetManager::get - Asset " + key +  " missing from map\n");
-//    }
-//    return get(key);
-//}
-
 template<typename Derived, typename asset_type>
-void ResourceManager<Derived, asset_type>::load(const std::string &key, const std::string &file_name)
+void AssetManager<Derived, asset_type>::load(const std::string &key, const std::string &file_name)
 {
     std::unique_ptr<asset_type> asset = static_cast<Derived*>(this)->load(file_name);
 
@@ -36,12 +21,12 @@ void ResourceManager<Derived, asset_type>::load(const std::string &key, const st
 
     if (!result.second)
     {
-        throw std::runtime_error("ResourceManager<Derived, asset_type>::load - Failed to insert " + file_name + " to map\n");
+        throw std::runtime_error("AssetManager<Derived, asset_type>::load - Failed to insert " + file_name + " to map\n");
     }
 }
 
 template<typename Derived, typename asset_type>
-void ResourceManager<Derived, asset_type>::load_directory(const std::string &dir)
+void AssetManager<Derived, asset_type>::load_directory(const std::string &dir)
 {
     namespace fs = std::filesystem;
 
@@ -64,11 +49,11 @@ void ResourceManager<Derived, asset_type>::load_directory(const std::string &dir
 }
 
 template<typename Derived, typename asset_type>
-void ResourceManager<Derived, asset_type>::remove(const std::string &key)
+void AssetManager<Derived, asset_type>::remove(const std::string &key)
 {
     if (auto result = map.erase(key);
         result != 1)
     {
-        throw std::runtime_error("ResourceManager<Derived, asset_type>::remove - Failed to remove " + key + " from map\n");
+        throw std::runtime_error("AssetManager<Derived, asset_type>::remove - Failed to remove " + key + " from map\n");
     }
 }

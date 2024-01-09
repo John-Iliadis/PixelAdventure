@@ -3,9 +3,18 @@ project(Platformer)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(Platformer main.cpp
-        game.cpp
-        game.hpp)
+add_executable(Platformer
+        src/main.cpp
+        src/game.cpp
+        src/game.hpp
+        src/utils.hpp
+        src/utils.cpp
+        src/asset_managers/asset_manager.hpp
+        src/asset_managers/asset_manager.inl
+        src/asset_managers/texture_manager.hpp
+        src/asset_managers/font_manager.hpp
+        src/asset_managers/sound_buffer_manager.hpp
+        src/asset_managers/music_manager.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
