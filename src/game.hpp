@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include "utils.hpp"
+#include "states/state_stack.hpp"
 
 
 class Game
@@ -22,7 +23,8 @@ private:
     void draw();
 
 private:
-    sf::RenderWindow window;
+    sf::RenderWindow m_window;
+    StateStack state_stack;
 };
 
 

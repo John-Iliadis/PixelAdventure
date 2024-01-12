@@ -14,7 +14,17 @@ add_executable(Platformer
         src/asset_managers/texture_manager.hpp
         src/asset_managers/font_manager.hpp
         src/asset_managers/sound_buffer_manager.hpp
-        src/asset_managers/music_manager.hpp)
+        src/asset_managers/music_manager.hpp
+        src/states/state_identifiers.hpp
+        src/states/state.cpp
+        src/states/state.hpp
+        src/states/game_context.hpp
+        src/states/state_stack.cpp
+        src/states/state_stack.hpp
+        src/states/state_factory.cpp
+        src/states/state_factory.hpp
+        src/states/test_state.cpp
+        src/states/test_state.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
