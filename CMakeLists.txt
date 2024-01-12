@@ -24,7 +24,9 @@ add_executable(Platformer
         src/states/state_factory.cpp
         src/states/state_factory.hpp
         src/states/menu_state.cpp
-        src/states/menu_state.hpp)
+        src/states/menu_state.hpp
+        src/states/game_state.cpp
+        src/states/game_state.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

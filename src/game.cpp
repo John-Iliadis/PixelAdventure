@@ -44,6 +44,9 @@ void Game::handle_events()
             if (event.key.code == sf::Keyboard::Escape)
                 m_window.close();
 
+        if (state_stack.empty())
+            m_window.close();
+
         state_stack.handle_events(event);
     }
 }
