@@ -15,7 +15,7 @@ Game::Game()
     context->window = &m_window;
 
     state_stack = StateStack(context);
-    state_stack.push(StateID::TEST, 5);
+    state_stack.push(StateID::MAIN_MENU);
 }
 
 void Game::run()

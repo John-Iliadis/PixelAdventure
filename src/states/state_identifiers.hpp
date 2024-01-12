@@ -15,7 +15,6 @@ enum class StateID
     PAUSE,
     GAME,
     GAME_OVER,
-    TEST // todo: remove
 };
 
 

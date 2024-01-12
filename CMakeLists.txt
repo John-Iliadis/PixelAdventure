@@ -23,8 +23,8 @@ add_executable(Platformer
         src/states/state_stack.hpp
         src/states/state_factory.cpp
         src/states/state_factory.hpp
-        src/states/test_state.cpp
-        src/states/test_state.hpp)
+        src/states/menu_state.cpp
+        src/states/menu_state.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
@@ -36,6 +36,6 @@ if (NOT SFML_FOUND)
     message(FATAL_ERROR "SFML libraries not found")
 endif ()
 
-target_include_directories(Platformer PRIVATE ${CMAKE_CURRENT_LIST_DIR}SFML_INCLUDES/include/)
+target_include_directories(Platformer PRIVATE ${SFML_INCLUDE_DIR})
 
 target_link_libraries(Platformer PRIVATE sfml-audio sfml-window sfml-graphics sfml-system)
