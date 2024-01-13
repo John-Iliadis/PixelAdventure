@@ -11,10 +11,18 @@ namespace sf
 }
 
 class Settings;
+class TextureManager;
+class FontManager;
+class SoundBufferManager;
+class MusicManager;
 
 struct GameContext
 {
     sf::RenderWindow* window = nullptr;
+    TextureManager* texture_manager = nullptr;
+    FontManager* font_manager = nullptr;
+    SoundBufferManager* sound_buffer_manager = nullptr;
+    MusicManager* music_manager = nullptr;
     Settings* settings = nullptr;
 };
 

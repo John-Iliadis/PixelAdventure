@@ -9,6 +9,10 @@
 #include <SFML/Window/Event.hpp>
 #include "utils.hpp"
 #include "states/state_stack.hpp"
+#include "asset_managers/texture_manager.hpp"
+#include "asset_managers/font_manager.hpp"
+#include "asset_managers/sound_buffer_manager.hpp"
+#include "asset_managers/music_manager.hpp"
 
 
 class Game
@@ -25,6 +29,11 @@ private:
 private:
     sf::RenderWindow m_window;
     StateStack state_stack;
+    GameContext context;
+    TextureManager texture_manager;
+    FontManager font_manager;
+    SoundBufferManager sound_buffer_manager;
+    MusicManager music_manager;
 };
 
 

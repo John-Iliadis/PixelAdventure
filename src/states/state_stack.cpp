@@ -6,8 +6,8 @@
 #include "state.hpp"
 
 
-StateStack::StateStack(std::shared_ptr<GameContext> context)
-    : m_state_factory(this, context)
+StateStack::StateStack(GameContext& context)
+    : m_state_factory(*this, context)
 {
 }
 

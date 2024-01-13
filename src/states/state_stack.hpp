@@ -20,7 +20,7 @@ class StateStack
 {
 public:
     StateStack() = default;
-    explicit StateStack(std::shared_ptr<GameContext> context);
+    explicit StateStack(GameContext& context);
 
     void handle_events(const sf::Event& event);
     void update(double dt);

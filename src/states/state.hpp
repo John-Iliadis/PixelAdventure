@@ -11,12 +11,13 @@
 #include "game_context.hpp"
 #include "state_identifiers.hpp"
 
+
 class StateStack;
 
 class State
 {
 public:
-    State(StateStack& state_stack, std::shared_ptr<GameContext> context, UINT_PTR user_ptr = 0);
+    State(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
     virtual ~State() = default;
 
     virtual void on_exit();
@@ -32,7 +33,7 @@ protected:
     void request_stack_clear();
 
 protected:
-    std::shared_ptr<GameContext> context;
+    GameContext& context;
 
     enum class Status
     {

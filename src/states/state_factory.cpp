@@ -4,15 +4,26 @@
 
 #include "state_factory.hpp"
 #include "menu_state.hpp"
+#include "game_state.hpp"
 
-StateFactory::StateFactory(StateStack *state_stack, std::shared_ptr<GameContext> context)
-    : m_state_stack(state_stack)
-    , m_context(context)
+
+#define FACTORY_FUNCTION(T) [&] (UINT_PTR user_ptr = 0) \
+    { return std::make_unique<T>(state_stack, context); }
+
+StateFactory::StateFactory(StateStack& state_stack, GameContext& context)
 {
-    m_factory[StateID::MAIN_MENU] = [this] (UINT_PTR user_ptr = 0) { return std::make_unique<MenuState>(*m_state_stack, m_context); };
+    m_factory[StateID::MAIN_MENU] = FACTORY_FUNCTION(MenuState);
+    m_factory[StateID::GAME] = FACTORY_FUNCTION(GameState);
 }
 
 std::unique_ptr<State> StateFactory::create_state(StateID id, UINT_PTR user_ptr)
 {
-    return m_factory[id](user_ptr);
+    if (auto result = m_factory.find(id);
+        result != m_factory.end())
+    {
+        return result->second(user_ptr);
+    }
+
+    // todo: implement macro that will print the id
+    throw std::runtime_error("StateFactory::create_state - State not registered\n");
 }

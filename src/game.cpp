@@ -7,15 +7,24 @@
 
 Game::Game()
 {
-    sf::VideoMode window_size {1920, 1080};
+    sf::VideoMode window_size {1280, 720};
     m_window.create(window_size, "Platformer");
     m_window.setFramerateLimit(get_max_refresh_rate());
 
-    auto context = std::make_shared<GameContext>();
-    context->window = &m_window;
+    texture_manager.load_directory("../assets/textures");
+    font_manager.load_directory("../assets/fonts");
+    sound_buffer_manager.load_directory("../assets/sounds");
+    music_manager.load_directory("../assets/music");
+
+    context.window = &m_window;
+    context.texture_manager = &texture_manager;
+    context.font_manager = &font_manager;
+    context.sound_buffer_manager = &sound_buffer_manager;
+    context.music_manager = &music_manager;
 
     state_stack = StateStack(context);
-    state_stack.push(StateID::MAIN_MENU);
+    state_stack.push(StateID::GAME);
+    state_stack.apply_pending_changes();
 }
 
 void Game::run()

@@ -10,7 +10,7 @@
 class MenuState : public State
 {
 public:
-    MenuState(StateStack& state_stack, std::shared_ptr<GameContext> context, UINT_PTR user_ptr = 0);
+    MenuState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
 
     bool handle_events(const sf::Event &event) override;
 

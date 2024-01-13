@@ -5,7 +5,7 @@
 #include "menu_state.hpp"
 
 
-MenuState::MenuState(StateStack &state_stack, std::shared_ptr<GameContext> context, UINT_PTR user_ptr)
+MenuState::MenuState(StateStack &state_stack, GameContext& context, UINT_PTR user_ptr)
     : State(state_stack, context, user_ptr)
 {
 }
