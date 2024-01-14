@@ -1,5 +1,19 @@
 template<typename Derived, typename asset_type>
-asset_type &AssetManager<Derived, asset_type>::get(const std::string &key)
+asset_type& AssetManager<Derived, asset_type>::get(const std::string &key)
+{
+    if (auto it = map.find(key);
+            it != map.end())
+    {
+        return *(it->second);
+    }
+    else
+    {
+        throw std::runtime_error("AssetManager::get - Asset " + key +  " missing from map\n");
+    }
+}
+
+template<typename Derived, typename asset_type>
+const asset_type& AssetManager<Derived, asset_type>::get(const std::string& key) const
 {
     if (auto it = map.find(key);
             it != map.end())

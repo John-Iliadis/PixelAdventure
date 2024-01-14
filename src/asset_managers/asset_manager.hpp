@@ -20,8 +20,11 @@ public:
     virtual ~AssetManager() = default;
 
     asset_type& get(const std::string& key);
+    const asset_type& get(const std::string& key) const;
+
     void load(const std::string& key, const std::string& file_name);
     void load_directory(const std::string& dir);
+
     void remove(const std::string& key);
 
 private:
