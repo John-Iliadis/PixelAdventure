@@ -6,19 +6,20 @@
 #define PLATFORMER_GAME_STATE_HPP
 
 #include "state.hpp"
+#include "../world/world.hpp"
 
 
 class GameState : public State
 {
 public:
-    GameState(StateStack& state_stack, std::shared_ptr<GameContext> context, UINT_PTR user_ptr = 0);
+    GameState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
 
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;
     void draw() override;
 
 private:
-
+    World world;
 };
 
 

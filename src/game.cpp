@@ -48,13 +48,23 @@ Game::Game()
 
 void Game::run()
 {
+    const double time_per_frame = 1.0 / get_max_refresh_rate();
+    double lag{};
     sf::Clock clock;
 
     while (m_window.isOpen())
     {
-        //double dt = clock.restart().asSeconds();
+        double dt = clock.restart().asSeconds();
+        lag += dt;
+
         handle_events();
-        update(1 / 144.0);
+
+        while (lag >= time_per_frame)
+        {
+            update(time_per_frame);
+            lag -= time_per_frame;
+        }
+
         draw();
     }
 }

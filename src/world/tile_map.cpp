@@ -5,20 +5,11 @@
 #include "tile_map.hpp"
 
 
-using json = nlohmann::json;
-
-constexpr int tile_scale = 2;
+constexpr int tile_scale = 2; // todo: put in json file
 
 TileMap::TileMap(GameContext& context, const std::string &file_name)
 {
-    std::ifstream file(file_name);
-
-    if (!file.is_open())
-    {
-        throw std::runtime_error("TileMap::TileMap - Failed to open file: " + file_name);
-    }
-
-    json map_data = json::parse(file);
+    auto& map_data = *context.map_data;
 
     window_size = context.window->getSize();
 
@@ -50,8 +41,6 @@ TileMap::TileMap(GameContext& context, const std::string &file_name)
             }
         }
     }
-
-    file.close();
 }
 
 const std::vector<sf::FloatRect>& TileMap::get_colliders() const

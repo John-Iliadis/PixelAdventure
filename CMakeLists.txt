@@ -26,7 +26,18 @@ add_executable(Platformer
         src/states/menu_state.cpp
         src/states/menu_state.hpp
         src/states/game_state.cpp
-        src/states/game_state.hpp)
+        src/states/game_state.hpp
+        src/world/world.cpp
+        src/world/world.hpp
+        src/world/player.cpp
+        src/world/player.hpp
+        src/world/tile_map.cpp
+        src/world/tile_map.hpp
+        src/world/back_ground.cpp
+        src/world/back_ground.hpp
+        src/json.hpp
+        src/world/collision.cpp
+        src/world/collision.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

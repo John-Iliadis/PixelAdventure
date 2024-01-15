@@ -6,9 +6,7 @@
 #define PLATFORMER_TILE_MAP_HPP
 
 #include <vector>
-#include <fstream>
 #include <cstdint>
-#include <memory>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
