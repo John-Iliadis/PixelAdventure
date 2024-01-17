@@ -64,8 +64,8 @@ void World::handle_player_collision()
         m_player.move(velocity.x, 0);
         get_colliding_rectangles_indexes();
 
-        auto smallest_distance_collision_rect_x = std::max_element(colliding_rectangles_indexes.begin(), colliding_rectangles_indexes.end(),
-            [&] (int a, int b) {
+        auto highest_overlapping_rect_x = std::max_element(colliding_rectangles_indexes.begin(), colliding_rectangles_indexes.end(),
+                                                           [&] (int a, int b) {
                 if (velocity.x > 0)
                    return (map_tiles.at(a).getPosition().x - m_player.getPosition().x < map_tiles.at(b).getPosition().x - m_player.getPosition().x);
                 else
@@ -73,9 +73,9 @@ void World::handle_player_collision()
                            map_tiles.at(b).getPosition().x + map_tiles.at(b).width - m_player.getPosition().x);
         });
 
-        if (smallest_distance_collision_rect_x != colliding_rectangles_indexes.end())
+        if (highest_overlapping_rect_x != colliding_rectangles_indexes.end())
         {
-            int i = *smallest_distance_collision_rect_x;
+            int i = *highest_overlapping_rect_x;
 
             if (velocity.x > 0)
             {
@@ -93,8 +93,8 @@ void World::handle_player_collision()
         m_player.move(0, velocity.y);
         get_colliding_rectangles_indexes();
 
-        auto smallest_distance_collision_rect_x = std::max_element(colliding_rectangles_indexes.begin(), colliding_rectangles_indexes.end(),
-            [&] (int a, int b) {
+        auto highest_overlapping_rect_y = std::max_element(colliding_rectangles_indexes.begin(), colliding_rectangles_indexes.end(),
+                                                           [&] (int a, int b) {
                 if (velocity.y > 0)
                    return (map_tiles.at(a).getPosition().y - m_player.getPosition().y < map_tiles.at(b).getPosition().y - m_player.getPosition().y);
                 else
@@ -102,9 +102,9 @@ void World::handle_player_collision()
                            map_tiles.at(b).getPosition().y + map_tiles.at(b).height - m_player.getPosition().y);
         });
 
-        if (smallest_distance_collision_rect_x != colliding_rectangles_indexes.end())
+        if (highest_overlapping_rect_y != colliding_rectangles_indexes.end())
         {
-            int i = *smallest_distance_collision_rect_x;
+            int i = *highest_overlapping_rect_y;
 
             if (velocity.y > 0)
             {
