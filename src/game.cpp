@@ -4,7 +4,6 @@
 
 #include "game.hpp"
 
-#include <iostream>
 
 #define INITIAL_WINDOW_WIDTH 1280
 #define INITIAL_WINDOW_HEIGHT 720
@@ -49,13 +48,12 @@ Game::Game()
 void Game::run()
 {
     const double time_per_frame = 1.0 / get_max_refresh_rate();
-    double lag{};
+    double lag = 0;
     sf::Clock clock;
 
     while (m_window.isOpen())
     {
-        double dt = clock.restart().asSeconds();
-        lag += dt;
+        lag += clock.restart().asSeconds();
 
         handle_events();
 

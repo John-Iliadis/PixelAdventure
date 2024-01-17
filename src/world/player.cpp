@@ -4,6 +4,7 @@
 
 #include "player.hpp"
 
+
 static const sf::Vector2f player_speed {400, 400};
 
 Player::Player(const TextureManager &texture_manager)
@@ -11,9 +12,8 @@ Player::Player(const TextureManager &texture_manager)
     m_sprite.setTexture(texture_manager.get("idle"));
     m_sprite.setTextureRect({0, 0, 32, 32});
     m_sprite.setScale(2, 2);
-    m_sprite.setPosition(200, 200);
 
-    m_hit_box = m_sprite.getGlobalBounds();
+    setPosition(200, 200);
 }
 
 void Player::update(double dt)
@@ -29,9 +29,6 @@ void Player::update(double dt)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         m_velocity.y = player_speed.y * dt;
-
-    m_sprite.move(m_velocity);
-    m_hit_box = m_sprite.getGlobalBounds(); // todo: remove
 }
 
 void Player::handle_event(const sf::Event &event)
@@ -42,24 +39,24 @@ void Player::handle_event(const sf::Event &event)
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_sprite);
+    states.transform = getTransform();
+    target.draw(m_sprite, states);
 }
 
-const sf::FloatRect& Player::get_hit_box() const
+sf::FloatRect Player::get_rectangle() const
 {
-    return m_hit_box;
-}
-
-void Player::move(float x, float y)
-{
-    m_sprite.move(x, y);
-    m_hit_box = m_sprite.getGlobalBounds();
+    return getTransform().transformRect(m_sprite.getGlobalBounds());
 }
 
 sf::Vector2f Player::get_center() const
 {
-    auto sprite_bounds = m_sprite.getGlobalBounds();
+    auto sprite_bounds = get_rectangle();
 
     return {sprite_bounds.left + sprite_bounds.width / 2.f,
             sprite_bounds.top + sprite_bounds.height / 2.f};
+}
+
+const sf::Vector2f &Player::get_velocity() const
+{
+    return m_velocity;
 }

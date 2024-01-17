@@ -12,6 +12,8 @@
 #include "player.hpp"
 #include "collision.hpp"
 
+#include <SFML/Graphics/RectangleShape.hpp> // todo: remove
+
 
 class World
 {
@@ -21,6 +23,9 @@ public:
     void handle_events(const sf::Event& event);
     void update(double dt);
     void draw();
+
+private:
+    void handle_player_collision();
 
 private:
     GameContext& m_context;

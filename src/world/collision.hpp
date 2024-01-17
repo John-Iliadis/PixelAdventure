@@ -7,13 +7,23 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <SFML/Graphics/Rect.hpp>
 #include "player.hpp"
+
 
 namespace Collision
 {
     bool point_vs_rect(const sf::Vector2f& point, const sf::FloatRect& rect);
     bool rect_vs_rect(const sf::FloatRect& rect1, const sf::FloatRect& rect2);
+
+    bool ray_vs_rect(const sf::Vector2f& ray_origin, const sf::Vector2f& ray_dir, const sf::FloatRect& rect,
+                     sf::Vector2f* contact_point = nullptr, sf::Vector2f* contact_normal = nullptr,
+                     float* t_intersection_near = nullptr);
+
+    bool dynamic_rect_vs_rect(const sf::FloatRect& movable, const sf::Vector2f& velocity, const sf::FloatRect& target,
+                              sf::Vector2f* contact_point = nullptr, sf::Vector2f* contact_normal = nullptr,
+                              float* t = nullptr);
 };
 
 
