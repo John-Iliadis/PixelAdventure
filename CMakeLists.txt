@@ -7,8 +7,8 @@ add_executable(Platformer
         src/main.cpp
         src/game.cpp
         src/game.hpp
-        src/utils.hpp
-        src/utils.cpp
+        src/utilities/utils.hpp
+        src/utilities/utils.cpp
         src/asset_managers/asset_manager.hpp
         src/asset_managers/asset_manager.inl
         src/asset_managers/texture_manager.hpp
@@ -35,9 +35,15 @@ add_executable(Platformer
         src/world/tile_map.hpp
         src/world/back_ground.cpp
         src/world/back_ground.hpp
-        src/json.hpp
+        src/vendor/json.hpp
         src/world/collision.cpp
-        src/world/collision.hpp)
+        src/world/collision.hpp
+        src/animation/animation.cpp
+        src/animation/animation.hpp
+        src/animation/looping_animation.cpp
+        src/animation/looping_animation.hpp
+        src/animation/non_looping_animation.cpp
+        src/animation/non_looping_animation.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
