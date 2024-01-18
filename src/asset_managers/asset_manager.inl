@@ -62,6 +62,20 @@ void AssetManager<Derived, asset_type>::load_directory(const std::string &dir)
     }
 }
 
+template <typename Derived, typename asset_type>
+void AssetManager<Derived, asset_type>::load_directory_list(const std::string& file_name)
+{
+    std::ifstream file(file_name);
+
+    if (!file.is_open())
+        throw std::runtime_error("AssetManager::load_from_list - Failed to open file " + file_name);
+
+    nlohmann::json directory_list = nlohmann::json::parse(file);
+
+    for (const std::string& dir : directory_list)
+        load_directory(dir);
+}
+
 template<typename Derived, typename asset_type>
 void AssetManager<Derived, asset_type>::remove(const std::string &key)
 {

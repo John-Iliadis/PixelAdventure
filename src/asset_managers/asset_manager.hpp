@@ -10,6 +10,8 @@
 #include <memory>
 #include <filesystem>
 #include <stdexcept>
+#include <fstream>
+#include "../vendor/json.hpp"
 
 
 template <typename Derived, typename asset_type>
@@ -24,6 +26,7 @@ public:
 
     void load(const std::string& key, const std::string& file_name);
     void load_directory(const std::string& dir);
+    void load_directory_list(const std::string& file_name);
 
     void remove(const std::string& key);
 
