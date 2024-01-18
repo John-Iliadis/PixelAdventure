@@ -4,13 +4,13 @@
 
 #include "world.hpp"
 
+
 World::World(GameContext& context)
     : m_context(context)
     , m_tile_map(m_context, "../data/tmx/test_map.tmj")
     , m_background(*m_context.texture_manager, m_context.window->getSize())
     , m_player(*context.texture_manager)
 {
-
 }
 
 void World::handle_events(const sf::Event &event)
@@ -45,45 +45,48 @@ void World::draw()
 
 void World::handle_player_collision()
 {
-    std::vector<uint32_t> colliding_rectangles_indexes;
+    std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
     const auto& map_tiles = m_tile_map.get_colliders();
     sf::Vector2f velocity = m_player.get_velocity();
 
     auto get_colliding_rectangles_indexes = [&] () {
-        colliding_rectangles_indexes.clear();
+        std::vector<std::pair<uint32_t, sf::FloatRect>> rects;
 
         for (int i = 0; i < map_tiles.size(); ++i)
         {
-            if (m_player.get_rectangle().intersects(map_tiles.at(i)))
-                colliding_rectangles_indexes.push_back(i);
+            sf::FloatRect l_rect;
+
+            if (m_player.get_rectangle().intersects(map_tiles.at(i), l_rect))
+                rects.emplace_back(i, std::move(l_rect));
         }
+
+        return rects;
     };
 
     if (velocity.x != 0)
     {
         m_player.move(velocity.x, 0);
-        get_colliding_rectangles_indexes();
 
-        auto highest_overlapping_rect_x = std::max_element(colliding_rectangles_indexes.begin(), colliding_rectangles_indexes.end(),
-                                                           [&] (int a, int b) {
-                if (velocity.x > 0)
-                   return (map_tiles.at(a).getPosition().x - m_player.getPosition().x < map_tiles.at(b).getPosition().x - m_player.getPosition().x);
-                else
-                   return (map_tiles.at(a).getPosition().x + map_tiles.at(a).width - m_player.getPosition().x <
-                           map_tiles.at(b).getPosition().x + map_tiles.at(b).width - m_player.getPosition().x);
-        });
+        colliding_rectangles = get_colliding_rectangles_indexes();
 
-        if (highest_overlapping_rect_x != colliding_rectangles_indexes.end())
+        if (!colliding_rectangles.empty())
         {
-            int i = *highest_overlapping_rect_x;
+            std::sort(colliding_rectangles.begin(), colliding_rectangles.end(),
+                      [] (const std::pair<uint32_t, sf::FloatRect>& a, const std::pair<uint32_t, sf::FloatRect>& b) {
+                          return a.second.width > b.second.width;
+            });
+
+            uint32_t highest_overlapping_rect_index = colliding_rectangles.front().first;
 
             if (velocity.x > 0)
             {
-                m_player.setPosition(map_tiles.at(i).getPosition().x - m_player.get_rectangle().width, m_player.getPosition().y);
+                float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - m_player.get_rectangle().width;
+                m_player.setPosition(new_pos, m_player.getPosition().y);
             }
-            else if (velocity.x < 0)
+            else
             {
-                m_player.setPosition(map_tiles.at(i).getPosition().x + map_tiles.at(i).width, m_player.getPosition().y);
+                float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width;
+                m_player.setPosition(new_pos, m_player.getPosition().y);
             }
         }
     }
@@ -91,56 +94,27 @@ void World::handle_player_collision()
     if (velocity.y != 0)
     {
         m_player.move(0, velocity.y);
-        get_colliding_rectangles_indexes();
+        colliding_rectangles = get_colliding_rectangles_indexes();
 
-        auto highest_overlapping_rect_y = std::max_element(colliding_rectangles_indexes.begin(), colliding_rectangles_indexes.end(),
-                                                           [&] (int a, int b) {
-                if (velocity.y > 0)
-                   return (map_tiles.at(a).getPosition().y - m_player.getPosition().y < map_tiles.at(b).getPosition().y - m_player.getPosition().y);
-                else
-                   return (map_tiles.at(a).getPosition().y + map_tiles.at(a).height - m_player.getPosition().y <
-                           map_tiles.at(b).getPosition().y + map_tiles.at(b).height - m_player.getPosition().y);
-        });
-
-        if (highest_overlapping_rect_y != colliding_rectangles_indexes.end())
+        if (!colliding_rectangles.empty())
         {
-            int i = *highest_overlapping_rect_y;
+            std::sort(colliding_rectangles.begin(), colliding_rectangles.end(),
+                      [] (const std::pair<uint32_t, sf::FloatRect>& a, const std::pair<uint32_t, sf::FloatRect>& b) {
+                          return a.second.height > b.second.height;
+                      });
+
+            uint32_t highest_overlapping_rect_index = colliding_rectangles.front().first;
 
             if (velocity.y > 0)
             {
-                m_player.setPosition(m_player.getPosition().x, map_tiles.at(i).getPosition().y - m_player.get_rectangle().height);
+                float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y - m_player.get_rectangle().height;
+                m_player.setPosition(m_player.getPosition().x, new_pos);
             }
-            else if (velocity.y < 0)
+            else
             {
-                m_player.setPosition(m_player.getPosition().x, map_tiles.at(i).getPosition().y + map_tiles.at(i).height);
+                float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y + map_tiles.at(highest_overlapping_rect_index).height;
+                m_player.setPosition(m_player.getPosition().x, new_pos);
             }
         }
     }
-
-//    for (uint32_t i : colliding_rectangles_indexes)
-//    {
-//        if (velocity.x > 0)
-//        {
-//            m_player.setPosition(map_tiles.at(i).getPosition().x - m_player.get_rectangle().width, m_player.getPosition().y);
-//        }
-//        else if (velocity.x < 0)
-//        {
-//            m_player.setPosition(map_tiles.at(i).getPosition().x + map_tiles.at(i).width, m_player.getPosition().y);
-//        }
-//    }
-
-//    m_player.move(0, velocity.y);
-//    get_colliding_rectangles_indexes();
-
-//    for (uint32_t i : colliding_rectangles_indexes)
-//    {
-//        if (velocity.y > 0)
-//        {
-//            m_player.setPosition(m_player.getPosition().x, map_tiles.at(i).getPosition().y - m_player.get_rectangle().height);
-//        }
-//        else if (velocity.y < 0)
-//        {
-//            m_player.setPosition(m_player.getPosition().x, map_tiles.at(i).getPosition().y + map_tiles.at(i).height);
-//        }
-//    }
 }
