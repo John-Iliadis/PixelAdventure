@@ -5,7 +5,7 @@
 #ifndef PLATFORMER_GAME_CONTEXT_HPP
 #define PLATFORMER_GAME_CONTEXT_HPP
 
-#include "../json.hpp"
+#include "../vendor/json.hpp"
 
 
 namespace sf

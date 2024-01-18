@@ -11,7 +11,7 @@
 #include <basetsd.h>
 #include "state_identifiers.hpp"
 #include "game_context.hpp"
-#include "../utils.hpp"
+#include "../utilities/utils.hpp"
 
 
 class State;

@@ -8,8 +8,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <fstream>
-#include "utils.hpp"
-#include "json.hpp"
+#include "utilities/utils.hpp"
+#include "vendor/json.hpp"
 #include "states/state_stack.hpp"
 #include "asset_managers/texture_manager.hpp"
 #include "asset_managers/font_manager.hpp"

@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../json.hpp"
+#include "../vendor/json.hpp"
 #include "../states/game_context.hpp"
 #include "../asset_managers/texture_manager.hpp"
 
