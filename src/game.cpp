@@ -48,21 +48,22 @@ Game::Game()
 void Game::run()
 {
     const double time_per_frame = 1.0 / get_max_refresh_rate();
-    double lag = 0;
+    double ellapsed = 0;
     sf::Clock clock;
 
     while (m_window.isOpen())
     {
-        lag += clock.restart().asSeconds();
+        sf::Time elapsed_time = clock.restart();
+        ellapsed += elapsed_time.asSeconds();
 
-        handle_events();
-
-        while (lag >= time_per_frame)
+        while (ellapsed >= time_per_frame)
         {
+            handle_events();
             update(time_per_frame);
-            lag -= time_per_frame;
+            ellapsed -= time_per_frame;
         }
 
+        update_fps_stats(elapsed_time);
         draw();
     }
 }
@@ -113,4 +114,20 @@ void Game::draw()
     m_window.clear({33, 31, 48, 255});
     m_state_stack.draw();
     m_window.display();
+}
+
+#include <iostream>
+
+void Game::update_fps_stats(sf::Time elapsed)
+{
+    fps_update_time += elapsed;
+    fps_num_frames += 1;
+
+    if (fps_update_time >= sf::seconds(1.f))
+    {
+       // std::cout << fps_num_frames << '\n';
+
+        fps_update_time -= sf::seconds(1);
+        fps_num_frames = 0;
+    }
 }

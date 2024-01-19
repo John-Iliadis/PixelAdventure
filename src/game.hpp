@@ -6,6 +6,7 @@
 #define PLATFORMER_GAME_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 #include <fstream>
 #include "utilities/utils.hpp"
@@ -28,6 +29,8 @@ private:
     void update(double dt);
     void draw();
 
+    void update_fps_stats(sf::Time elapsed);
+
 private:
     sf::RenderWindow m_window;
     sf::View m_view;
@@ -38,6 +41,9 @@ private:
     SoundBufferManager m_sound_buffer_manager;
     MusicManager m_music_manager;
     nlohmann::json m_map_data;
+
+    sf::Time fps_update_time{};
+    uint32_t fps_num_frames{};
 };
 
 
