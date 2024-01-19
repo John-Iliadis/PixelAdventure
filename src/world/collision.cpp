@@ -102,4 +102,90 @@ namespace Collision
 
         return false;
     }
+
+    void handle_player_collisions(Player& player, TileMap& tile_map, double dt)
+    {
+        std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
+        const auto& map_tiles = tile_map.get_colliders();
+        PlatformerData& data = player.get_platformer_data();
+        sf::Vector2f& velocity = data.velocity;
+        data.collide_directions.fill(false);
+
+        auto get_colliding_rectangles_indexes = [&] () {
+            std::vector<std::pair<uint32_t, sf::FloatRect>> rects;
+
+            for (int i = 0; i < map_tiles.size(); ++i)
+            {
+                sf::FloatRect l_rect;
+
+                if (player.get_rectangle().intersects(map_tiles.at(i), l_rect))
+                    rects.emplace_back(i, std::move(l_rect));
+            }
+
+            return rects;
+        };
+
+        if (velocity.x != 0)
+        {
+            player.move(velocity.x * dt, 0);
+
+            colliding_rectangles = get_colliding_rectangles_indexes();
+
+            if (!colliding_rectangles.empty())
+            {
+                std::sort(colliding_rectangles.begin(), colliding_rectangles.end(),
+                          [] (const std::pair<uint32_t, sf::FloatRect>& a, const std::pair<uint32_t, sf::FloatRect>& b) {
+                              return a.second.width > b.second.width;
+                          });
+
+                uint32_t highest_overlapping_rect_index = colliding_rectangles.front().first;
+
+                if (velocity.x > 0)
+                {
+                    float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - player.get_rectangle().width;
+                    player.setPosition(new_pos, player.getPosition().y);
+                    data.collide_directions[PlatformerData::RIGHT] = true;
+                }
+                else
+                {
+                    float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width;
+                    player.setPosition(new_pos, player.getPosition().y);
+                    data.collide_directions[PlatformerData::LEFT] = true;
+                }
+            }
+
+            velocity.x = 0;
+        }
+
+        if (velocity.y != 0)
+        {
+            player.move(0, velocity.y * dt);
+            colliding_rectangles = get_colliding_rectangles_indexes();
+
+            if (!colliding_rectangles.empty())
+            {
+                std::sort(colliding_rectangles.begin(), colliding_rectangles.end(),
+                          [] (const std::pair<uint32_t, sf::FloatRect>& a, const std::pair<uint32_t, sf::FloatRect>& b) {
+                              return a.second.height > b.second.height;
+                          });
+
+                uint32_t highest_overlapping_rect_index = colliding_rectangles.front().first;
+
+                if (velocity.y > 0)
+                {
+                    float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y - player.get_rectangle().height;
+                    player.setPosition(player.getPosition().x, new_pos);
+                    data.collide_directions[PlatformerData::DOWN] = true;
+                }
+                else
+                {
+                    float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y + map_tiles.at(highest_overlapping_rect_index).height;
+                    player.setPosition(player.getPosition().x, new_pos);
+                    data.collide_directions[PlatformerData::UP] = true;
+                }
+
+                velocity.y = 0;
+            }
+        }
+    }
 };

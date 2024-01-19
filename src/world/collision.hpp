@@ -9,7 +9,8 @@
 #include <vector>
 #include <cmath>
 #include <SFML/Graphics/Rect.hpp>
-#include "player.hpp"
+#include "tile_map.hpp"
+#include "player/player.hpp"
 
 
 namespace Collision
@@ -24,6 +25,8 @@ namespace Collision
     bool dynamic_rect_vs_rect(const sf::FloatRect& movable, const sf::Vector2f& velocity, const sf::FloatRect& target,
                               sf::Vector2f* contact_point = nullptr, sf::Vector2f* contact_normal = nullptr,
                               float* t = nullptr);
+
+    void handle_player_collisions(Player& player, TileMap& tile_map, double dt);
 };
 
 

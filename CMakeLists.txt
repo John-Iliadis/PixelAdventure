@@ -29,8 +29,8 @@ add_executable(Platformer
         src/states/game_state.hpp
         src/world/world.cpp
         src/world/world.hpp
-        src/world/player.cpp
-        src/world/player.hpp
+        src/world/player/player.cpp
+        src/world/player/player.hpp
         src/world/tile_map.cpp
         src/world/tile_map.hpp
         src/world/back_ground.cpp
@@ -43,7 +43,23 @@ add_executable(Platformer
         src/animation/looping_animation.cpp
         src/animation/looping_animation.hpp
         src/animation/non_looping_animation.cpp
-        src/animation/non_looping_animation.hpp)
+        src/animation/non_looping_animation.hpp
+        src/world/player/player_state.hpp
+        src/world/player/idle_state.cpp
+        src/world/player/idle_state.hpp
+        src/world/player/running_state.cpp
+        src/world/player/running_state.hpp
+        src/world/player/jumping_state.cpp
+        src/world/player/jumping_state.hpp
+        src/world/player/falling_state.cpp
+        src/world/player/falling_state.hpp
+        src/world/player/wall_sliding_state.cpp
+        src/world/player/wall_sliding_state.hpp
+        src/world/player/double_jumping_state.cpp
+        src/world/player/double_jumping_state.hpp
+        src/world/player/death_state.cpp
+        src/world/player/death_state.hpp
+        src/world/player/player_platformer_data.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

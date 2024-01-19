@@ -1,0 +1,6 @@
+{
+    "move_speed": 400,
+    "gravity": 15,
+    "jump_speed": -800,
+    "facing_right": true
+}

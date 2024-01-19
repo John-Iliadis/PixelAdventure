@@ -9,27 +9,41 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Window/Event.hpp>
-#include "../asset_managers/texture_manager.hpp"
+#include "../../states/game_context.hpp"
+#include "../../asset_managers/texture_manager.hpp"
+#include "../../asset_managers/sound_buffer_manager.hpp"
+#include "idle_state.hpp"
+#include "player_platformer_data.hpp"
 
 
 class Player : public sf::Drawable, public sf::Transformable
 {
 public:
-    Player(const TextureManager& texture_manager);
+    Player();
+    ~Player();
 
     void update(double dt);
     void handle_event(const sf::Event& event);
 
+    void set_texture(const std::string& texture_id);
+    void set_texture_rect(const sf::IntRect& rect);
+
+
     sf::FloatRect get_rectangle() const;
     sf::Vector2f get_center() const;
-    const sf::Vector2f& get_velocity() const;
+    sf::Sprite& get_sprite();
+    PlatformerData& get_platformer_data();
+    bool facing_right();
 
 protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 private:
+    TextureManager m_textures;
+    SoundBufferManager m_sound_buffers;
     sf::Sprite m_sprite;
-    sf::Vector2f m_velocity;
+    PlatformerData m_platformer_data;
+    PlayerState* current_state;
 };
 
 

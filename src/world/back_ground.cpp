@@ -3,11 +3,11 @@
 //
 
 #include "back_ground.hpp"
-#include "iostream"
+
 
 BackGround::BackGround(TextureManager &texture_manager, const sf::Vector2u& window_size)
     : m_window_size(window_size)
-    , scroll_speed(50)
+    , scroll_speed(50) // todo: not hardcode
 {
     auto& texture = texture_manager.get("Purple");
     texture.setRepeated(true);
