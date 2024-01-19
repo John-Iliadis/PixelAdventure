@@ -15,8 +15,8 @@ class RunningState : public PlayerState
 public:
     RunningState(Player& player);
 
-    PlayerState *handle_event(Player &player, const sf::Event &event) override;
-    PlayerState *update(Player &player, double dt) override;
+    PlayerState* handle_event(Player &player, const sf::Event &event) override;
+    PlayerState* update(Player &player, double dt) override;
 
 private:
     LoopingAnimation running_animation;

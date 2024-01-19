@@ -26,7 +26,8 @@ namespace Collision
                               sf::Vector2f* contact_point = nullptr, sf::Vector2f* contact_normal = nullptr,
                               float* t = nullptr);
 
-    void handle_player_collisions(Player& player, TileMap& tile_map, double dt);
+    void handle_x_axis_collisions(Player& player, TileMap& tile_map, double dt);
+    void handle_y_axis_collisions(Player& player, TileMap& tile_map, double dt);
 };
 
 

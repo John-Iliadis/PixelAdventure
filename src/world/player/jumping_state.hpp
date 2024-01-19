@@ -14,8 +14,8 @@ class JumpingState : public PlayerState
 public:
     JumpingState(Player& player);
 
-    PlayerState *handle_event(Player &player, const sf::Event &event) override;
-    PlayerState *update(Player &player, double dt) override;
+    PlayerState* handle_event(Player &player, const sf::Event &event) override;
+    PlayerState* update(Player &player, double dt) override;
 
 private:
     bool last_direction;
