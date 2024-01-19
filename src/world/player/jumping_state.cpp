@@ -11,6 +11,7 @@
 JumpingState::JumpingState(Player &player)
 {
     auto& data = player.get_platformer_data();
+
     data.previously_jumped = true;
     data.velocity.y = data.jump_speed;
 
@@ -20,19 +21,12 @@ JumpingState::JumpingState(Player &player)
 
     if (!data.facing_right)
         flip_sprite_x(player.get_sprite(), data.facing_right);
-
-    puts("Jumping state");
 }
 
 PlayerState* JumpingState::handle_event(Player &player, const sf::Event &event)
 {
-    auto& data = player.get_platformer_data();
-
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
-    {
-        if (data.velocity.y != 0)
-            return new DoubleJumpingState(player);
-    }
+        return new DoubleJumpingState(player);
 
     return nullptr;
 }

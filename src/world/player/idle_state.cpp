@@ -8,18 +8,18 @@
 #include "jumping_state.hpp"
 #include "falling_state.hpp"
 
-#include <iostream>
-
 
 IdleState::IdleState(Player &player)
 {
+    auto& data = player.get_platformer_data();
+
     idle_animation = LoopingAnimation(32, 32, 11, sf::milliseconds(50), true);
+
     player.set_texture("idle");
     player.set_texture_rect(static_cast<sf::IntRect>(idle_animation.get_current_frame(player.facing_right())));
-    player.get_platformer_data().previously_jumped = false;
-    player.get_platformer_data().previously_double_jumped = false;
 
-    puts("Idle state");
+    data.previously_jumped = false;
+    data.previously_double_jumped = false;
 }
 
 PlayerState* IdleState::handle_event(Player &player, const sf::Event &event)

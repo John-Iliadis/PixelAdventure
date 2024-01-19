@@ -18,8 +18,6 @@ DoubleJumpingState::DoubleJumpingState(Player &player)
 
     data.previously_double_jumped = true;
     data.velocity.y = data.jump_speed;
-
-    puts("Double jumping state");
 }
 
 PlayerState *DoubleJumpingState::handle_event(Player &player, const sf::Event &event)

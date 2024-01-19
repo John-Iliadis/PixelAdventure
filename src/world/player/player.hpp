@@ -28,7 +28,6 @@ public:
     void set_texture(const std::string& texture_id);
     void set_texture_rect(const sf::IntRect& rect);
 
-
     sf::FloatRect get_rectangle() const;
     sf::Vector2f get_center() const;
     sf::Sprite& get_sprite();
@@ -38,6 +37,8 @@ public:
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     void handle_real_time_input();
+    void apply_gravity();
+    void change_state(PlayerState* new_state);
 
 private:
     TextureManager m_textures;

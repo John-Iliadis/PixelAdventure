@@ -142,6 +142,7 @@ namespace Collision
                 {
                     float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - player.get_rectangle().width;
                     player.setPosition(new_pos, player.getPosition().y);
+                    // todo: collided left
                 }
                 else
                 {

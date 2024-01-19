@@ -19,8 +19,6 @@ FallingState::FallingState(Player &player)
 
     if (!data.facing_right)
         flip_sprite_x(player.get_sprite(), data.facing_right);
-
-    puts("Falling state");
 }
 
 PlayerState* FallingState::handle_event(Player &player, const sf::Event &event)
@@ -32,8 +30,8 @@ PlayerState* FallingState::handle_event(Player &player, const sf::Event &event)
         if (!data.previously_jumped)
             return new JumpingState(player);
 
-//        if (!data.previously_double_jumped)
-//            return new DoubleJumpingState();
+        if (!data.previously_double_jumped)
+            return new DoubleJumpingState(player);
     }
 
     return nullptr;
@@ -45,7 +43,7 @@ PlayerState* FallingState::update(Player &player, double dt)
 
     if (data.velocity.y == 0)
     {
-        if (data.velocity != sf::Vector2f(0, 0))
+        if (data.velocity.x != 0)
             return new RunningState(player);
 
         return new IdleState(player);

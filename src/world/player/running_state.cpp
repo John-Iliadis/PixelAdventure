@@ -2,7 +2,6 @@
 // Created by Gianni on 18/01/2024.
 //
 
-#include <iostream>
 #include "running_state.hpp"
 #include "player.hpp"
 #include "jumping_state.hpp"
@@ -12,7 +11,7 @@
 
 RunningState::RunningState(Player &player)
 {
-    auto data = player.get_platformer_data();
+    auto& data = player.get_platformer_data();
 
     running_animation = LoopingAnimation(32, 32, 12, sf::milliseconds(50));
     player.set_texture("running");
@@ -20,11 +19,9 @@ RunningState::RunningState(Player &player)
 
     data.previously_jumped = false;
     data.previously_double_jumped = false;
-
-    puts("Running state");
 }
 
-PlayerState *RunningState::handle_event(Player &player, const sf::Event &event)
+PlayerState* RunningState::handle_event(Player &player, const sf::Event &event)
 {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
         return new JumpingState(player);
@@ -32,7 +29,7 @@ PlayerState *RunningState::handle_event(Player &player, const sf::Event &event)
     return nullptr;
 }
 
-PlayerState *RunningState::update(Player &player, double dt)
+PlayerState* RunningState::update(Player &player, double dt)
 {
     auto& data = player.get_platformer_data();
 
@@ -47,4 +44,3 @@ PlayerState *RunningState::update(Player &player, double dt)
 
     return nullptr;
 }
-

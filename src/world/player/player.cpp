@@ -23,35 +23,20 @@ Player::~Player()
 
 void Player::handle_event(const sf::Event &event)
 {
-    // todo: remove this
-    if (event.type == sf::Event::KeyReleased)
-        if (event.key.code == sf::Keyboard::Space)
-            puts("\n---------------------------------------------------------------\n");
-
     PlayerState* new_state = current_state->handle_event(*this, event);
 
-    if (new_state)
-    {
-        delete current_state;
-        current_state = new_state;
-    }
+    change_state(new_state);
 }
 
 void Player::update(double dt)
 {
-   // m_platformer_data.velocity.x = 0;
-
     handle_real_time_input();
 
     PlayerState* new_state = current_state->update(*this, dt);
 
-    if (new_state)
-    {
-        delete current_state;
-        current_state = new_state;
-    }
+    change_state(new_state);
 
-    m_platformer_data.velocity.y += m_platformer_data.gravity;
+    apply_gravity();
 }
 
 void Player::set_texture(const std::string &texture_id)
@@ -66,7 +51,7 @@ void Player::set_texture_rect(const sf::IntRect &rect)
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    states.transform = getTransform();
+    states.transform *= getTransform();
     target.draw(m_sprite, states);
 }
 
@@ -105,7 +90,7 @@ void Player::handle_real_time_input()
     {
         m_platformer_data.velocity.x = 0;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) // todo : if not collided left
     {
         m_platformer_data.velocity.x = -m_platformer_data.move_speed;
         m_platformer_data.facing_right = false;
@@ -114,5 +99,19 @@ void Player::handle_real_time_input()
     {
         m_platformer_data.velocity.x = m_platformer_data.move_speed;
         m_platformer_data.facing_right = true;
+    }
+}
+
+void Player::apply_gravity()
+{
+    m_platformer_data.velocity.y += m_platformer_data.gravity;
+}
+
+void Player::change_state(PlayerState *new_state)
+{
+    if (new_state)
+    {
+        delete current_state;
+        current_state = new_state;
     }
 }
