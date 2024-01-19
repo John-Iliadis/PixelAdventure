@@ -13,12 +13,9 @@ class LoopingAnimation : public Animation
 {
 public:
     LoopingAnimation() = default;
-    LoopingAnimation(uint32_t texture_width, uint32_t texture_height, uint32_t frame_count, sf::Time time_per_frame, bool playing = false);
+    LoopingAnimation(uint32_t texture_width, uint32_t texture_height, uint32_t frame_count, sf::Time time_per_frame, bool playing = true);
 
-    void update(sf::Sprite &sprite) override;
-
-private:
-    void set_next_frame();
+    void update() override;
 };
 
 

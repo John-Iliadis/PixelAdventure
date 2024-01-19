@@ -10,22 +10,17 @@ LoopingAnimation::LoopingAnimation(uint32_t texture_width, uint32_t texture_heig
 {
 }
 
-void LoopingAnimation::update(sf::Sprite &sprite)
+void LoopingAnimation::update()
 {
     if (!m_playing) return;
 
     if (m_clock.getElapsedTime() >= m_time_pre_frame)
     {
-        set_next_frame();
-        sprite.setTextureRect(static_cast<sf::IntRect>(m_frames.at(m_frame_index)));
+        m_frame_index++;
+
+        if (m_frame_index == m_frame_count)
+            m_frame_index = 0;
+
         m_clock.restart();
     }
-}
-
-void LoopingAnimation::set_next_frame()
-{
-    m_frame_index++;
-
-    if (m_frame_index == m_frame_count)
-        m_frame_index = 0;
 }

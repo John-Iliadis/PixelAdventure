@@ -21,6 +21,7 @@ Animation::Animation(uint32_t texture_width, uint32_t texture_height, uint32_t f
     for (int i = 0; i < frame_count; ++i)
     {
         m_frames.emplace_back(i * texture_width, 0, texture_width, texture_height);
+        m_frames_reversed.emplace_back(i * texture_width + texture_width, 0, -texture_width, texture_height);
     }
 }
 
@@ -40,7 +41,10 @@ void Animation::reset()
     m_frame_index = 0;
 }
 
-const sf::Rect<uint32_t>& Animation::get_current_frame() const
+const sf::Rect<uint32_t>& Animation::get_current_frame(bool facing_right) const
 {
-    return m_frames.at(m_frame_index);
+    if (facing_right)
+        return m_frames.at(m_frame_index);
+    else
+        return m_frames_reversed.at(m_frame_index);
 }

@@ -19,7 +19,7 @@ void NonLoopingAnimation::reset()
     m_first_play = true;
 }
 
-void NonLoopingAnimation::update(sf::Sprite &sprite)
+void NonLoopingAnimation::update()
 {
     if (!m_playing || m_ended) return;
 
@@ -31,8 +31,11 @@ void NonLoopingAnimation::update(sf::Sprite &sprite)
             return;
         }
 
-        set_next_frame();
-        sprite.setTextureRect(static_cast<sf::IntRect>(m_frames.at(m_frame_index)));
+        m_frame_index++;
+
+        if (m_frame_index == m_frame_count - 1)
+            m_ended = true;
+
         m_clock.restart();
     }
 }
@@ -40,12 +43,4 @@ void NonLoopingAnimation::update(sf::Sprite &sprite)
 bool NonLoopingAnimation::ended() const
 {
     return m_ended;
-}
-
-void NonLoopingAnimation::set_next_frame()
-{
-    m_frame_index++;
-
-    if (m_frame_index == m_frame_count - 1)
-        m_ended = true;
 }
