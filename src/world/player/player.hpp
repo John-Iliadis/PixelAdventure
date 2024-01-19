@@ -35,8 +35,9 @@ public:
     PlatformerData& get_platformer_data();
     bool facing_right();
 
-protected:
+private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    void handle_real_time_input();
 
 private:
     TextureManager m_textures;

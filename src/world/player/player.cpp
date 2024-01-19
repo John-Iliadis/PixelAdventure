@@ -3,15 +3,15 @@
 //
 
 #include "player.hpp"
-#include <iostream>
 
 
 Player::Player()
 {
     m_textures.load_directory_list("../data/player/player_textures.json");
     m_platformer_data.load_platformer_data("../data/player/platformer_data.json");
-    current_state = new IdleState();
-    current_state->on_enter(*this);
+
+    current_state = new IdleState(*this);
+
     scale(2, 2);
     setPosition(100, 100);
 }
@@ -23,25 +23,32 @@ Player::~Player()
 
 void Player::handle_event(const sf::Event &event)
 {
+    // todo: remove this
+    if (event.type == sf::Event::KeyReleased)
+        if (event.key.code == sf::Keyboard::Space)
+            puts("\n---------------------------------------------------------------\n");
+
     PlayerState* new_state = current_state->handle_event(*this, event);
 
     if (new_state)
     {
         delete current_state;
         current_state = new_state;
-        new_state->on_enter(*this);
     }
 }
 
 void Player::update(double dt)
 {
+   // m_platformer_data.velocity.x = 0;
+
+    handle_real_time_input();
+
     PlayerState* new_state = current_state->update(*this, dt);
 
     if (new_state)
     {
         delete current_state;
         current_state = new_state;
-        new_state->on_enter(*this);
     }
 
     m_platformer_data.velocity.y += m_platformer_data.gravity;
@@ -89,4 +96,23 @@ sf::Sprite &Player::get_sprite()
 bool Player::facing_right()
 {
     return m_platformer_data.facing_right;
+}
+
+void Player::handle_real_time_input()
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+        || (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
+    {
+        m_platformer_data.velocity.x = 0;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        m_platformer_data.velocity.x = -m_platformer_data.move_speed;
+        m_platformer_data.facing_right = false;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        m_platformer_data.velocity.x = m_platformer_data.move_speed;
+        m_platformer_data.facing_right = true;
+    }
 }

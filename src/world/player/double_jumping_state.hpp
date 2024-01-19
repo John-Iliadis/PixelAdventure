@@ -12,8 +12,7 @@
 class DoubleJumpingState : public PlayerState
 {
 public:
-    void on_enter(Player &player) override;
-    void on_exit(Player &player) override;
+    DoubleJumpingState(Player& player);
 
     PlayerState* handle_event(Player &player, const sf::Event &event) override;
     PlayerState* update(Player &player, double dt) override;

@@ -9,18 +9,18 @@
 #include "double_jumping_state.hpp"
 
 
-void FallingState::on_enter(Player &player)
+FallingState::FallingState(Player &player)
 {
     auto& data = player.get_platformer_data();
 
     player.set_texture("falling");
 
+    last_direction = data.facing_right;
+
     if (!data.facing_right)
         flip_sprite_x(player.get_sprite(), data.facing_right);
-}
 
-void FallingState::on_exit(Player &player)
-{
+    puts("Falling state");
 }
 
 PlayerState* FallingState::handle_event(Player &player, const sf::Event &event)
@@ -30,52 +30,31 @@ PlayerState* FallingState::handle_event(Player &player, const sf::Event &event)
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
     {
         if (!data.previously_jumped)
-            return new JumpingState();
+            return new JumpingState(player);
 
-        if (!data.previously_double_jumped)
-            return new DoubleJumpingState();
+//        if (!data.previously_double_jumped)
+//            return new DoubleJumpingState();
     }
 
     return nullptr;
 }
 
-PlayerState *FallingState::update(Player &player, double dt)
+PlayerState* FallingState::update(Player &player, double dt)
 {
     auto& data = player.get_platformer_data();
 
-    bool moving = false;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        player.get_platformer_data().velocity.x = -player.get_platformer_data().move_speed;
-
-        if (data.facing_right)
-        {
-            data.facing_right = false;
-            flip_sprite_x(player.get_sprite(), data.facing_right);
-        }
-
-        moving = true;
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        player.get_platformer_data().velocity.x = player.get_platformer_data().move_speed;
-
-        if (!data.facing_right)
-        {
-            data.facing_right = true;
-            flip_sprite_x(player.get_sprite(), data.facing_right);
-        }
-
-        moving = true;
-    }
-
     if (data.velocity.y == 0)
     {
-        if (moving)
-            return new RunningState();
+        if (data.velocity != sf::Vector2f(0, 0))
+            return new RunningState(player);
 
-        return new IdleState();
+        return new IdleState(player);
+    }
+
+    if (data.facing_right != last_direction)
+    {
+        flip_sprite_x(player.get_sprite(), data.facing_right);
+        last_direction = data.facing_right;
     }
 
     return nullptr;

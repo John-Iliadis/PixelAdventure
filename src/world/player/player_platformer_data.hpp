@@ -21,17 +21,6 @@ struct PlatformerData
     bool previously_double_jumped = false;
     bool facing_right = true;
 
-    enum CollideDirections
-    {
-        LEFT = 0,
-        RIGHT,
-        UP,
-        DOWN,
-        COUNT
-    };
-
-    std::array<bool, CollideDirections::COUNT> collide_directions{};
-
     void load_platformer_data(const std::string& file_name)
     {
         std::ifstream file(file_name);
