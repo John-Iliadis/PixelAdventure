@@ -107,9 +107,7 @@ namespace Collision
     {
         std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
         const auto& map_tiles = tile_map.get_colliders();
-        PlatformerData& data = player.get_platformer_data();
-        sf::Vector2f& velocity = data.velocity;
-        data.collide_directions.fill(false);
+        sf::Vector2f& velocity = player.get_platformer_data().velocity;
 
         auto get_colliding_rectangles_indexes = [&] () {
             std::vector<std::pair<uint32_t, sf::FloatRect>> rects;
@@ -144,13 +142,11 @@ namespace Collision
                 {
                     float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - player.get_rectangle().width;
                     player.setPosition(new_pos, player.getPosition().y);
-                    data.collide_directions[PlatformerData::RIGHT] = true;
                 }
                 else
                 {
                     float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width;
                     player.setPosition(new_pos, player.getPosition().y);
-                    data.collide_directions[PlatformerData::LEFT] = true;
                 }
             }
 
@@ -175,13 +171,11 @@ namespace Collision
                 {
                     float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y - player.get_rectangle().height;
                     player.setPosition(player.getPosition().x, new_pos);
-                    data.collide_directions[PlatformerData::DOWN] = true;
                 }
                 else
                 {
                     float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y + map_tiles.at(highest_overlapping_rect_index).height;
                     player.setPosition(player.getPosition().x, new_pos);
-                    data.collide_directions[PlatformerData::UP] = true;
                 }
 
                 velocity.y = 0;
