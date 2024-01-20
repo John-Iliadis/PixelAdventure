@@ -22,9 +22,7 @@ namespace Collision
                      sf::Vector2f* contact_point = nullptr, sf::Vector2f* contact_normal = nullptr,
                      float* t_intersection_near = nullptr);
 
-    bool dynamic_rect_vs_rect(const sf::FloatRect& movable, const sf::Vector2f& velocity, const sf::FloatRect& target,
-                              sf::Vector2f* contact_point = nullptr, sf::Vector2f* contact_normal = nullptr,
-                              float* t = nullptr);
+    bool ray_cast(const sf::FloatRect& movable, const sf::Vector2f& velocity, const sf::FloatRect& target);
 
     void handle_x_axis_collisions(Player& player, TileMap& tile_map, double dt);
     void handle_y_axis_collisions(Player& player, TileMap& tile_map, double dt);

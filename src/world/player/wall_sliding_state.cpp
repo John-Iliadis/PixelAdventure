@@ -48,7 +48,7 @@ PlayerState* WallSlidingState::update(Player &player, double dt)
         return new IdleState(player);
     }
 
-    if (facing_right != data.facing_right)
+    if (facing_right != data.facing_right || !data.touching_wall)
     {
         player.set_gravity(true);
         return new FallingState(player);

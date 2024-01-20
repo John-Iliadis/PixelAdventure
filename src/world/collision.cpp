@@ -73,9 +73,7 @@ namespace Collision
         return true;
     }
 
-    bool dynamic_rect_vs_rect(const sf::FloatRect& movable, const sf::Vector2f& velocity, const sf::FloatRect& target,
-                              sf::Vector2f* contact_point, sf::Vector2f* contact_normal,
-                              float* t)
+    bool ray_cast(const sf::FloatRect& movable, const sf::Vector2f& velocity, const sf::FloatRect& target)
     {
         if (!velocity.x && !velocity.y)
             return false;
@@ -85,16 +83,18 @@ namespace Collision
         sf::Vector2f movable_size = movable.getSize();
 
         sf::FloatRect expanded_rect {
-            target_pos.x - movable_size.x / 2.f,
-            target_pos.y - movable_size.y / 2.f,
-            target_size.x + movable_size.x,
-            target_size.y + movable_size.y
+                target_pos.x - movable_size.x / 2.f,
+                target_pos.y - movable_size.y / 2.f,
+                target_size.x + movable_size.x,
+                target_size.y + movable_size.y
         };
 
         sf::Vector2f ray_origin {movable.left + movable.width / 2.f, movable.top + movable.height / 2.f};
 
-        if (ray_vs_rect(ray_origin, velocity, expanded_rect, contact_point, contact_normal, t))
-            return (*t >= 0.f && *t < 1.f);
+        float t{};
+
+        if (ray_vs_rect(ray_origin, velocity, expanded_rect, nullptr, nullptr, &t))
+            return (t >= 0.f && t < 1.f);
 
         return false;
     }
@@ -119,8 +119,18 @@ namespace Collision
         std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
         const auto& map_tiles = tile_map.get_colliders();
         auto& velocity = player.get_platformer_data().velocity;
-        auto& collide_direction = player.get_platformer_data().collide_direction;
-        collide_direction.fill(false);
+        player.get_platformer_data().touching_wall = false;
+
+        for (const auto& tile : map_tiles)
+        {
+            sf::Vector2f l_velocity = player.get_platformer_data().facing_right? sf::Vector2f(1, 0) : sf::Vector2f(-1, 0);
+
+            if (ray_cast(player.get_rectangle(), l_velocity, tile))
+            {
+                player.get_platformer_data().touching_wall = true;
+                break;
+            }
+        }
 
         if (velocity.x == 0) return;
 
@@ -141,13 +151,11 @@ namespace Collision
         {
             float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - player.get_rectangle().width / 2.f;
             player.set_position(new_pos, player.get_position().y);
-            collide_direction[PlatformerData::CollideDirection::LEFT] = true;
         }
         else
         {
             float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width + player.get_rectangle().width / 2.f;
             player.set_position(new_pos, player.get_position().y);
-            collide_direction[PlatformerData::CollideDirection::RIGHT] = true;
         }
 
         velocity.x = 0;

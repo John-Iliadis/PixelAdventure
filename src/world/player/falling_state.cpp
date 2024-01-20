@@ -50,7 +50,7 @@ PlayerState* FallingState::update(Player &player, double dt)
         return new IdleState(player);
     }
 
-    if (data.collide_direction[0] || data.collide_direction[1])
+    if (data.touching_wall)
         return new WallSlidingState(player);
 
     if (data.facing_right != last_direction)

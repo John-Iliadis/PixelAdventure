@@ -5,7 +5,6 @@
 #ifndef PLATFORMER_PLAYER_PLATFORMER_DATA_HPP
 #define PLATFORMER_PLAYER_PLATFORMER_DATA_HPP
 
-#include <array>
 #include <fstream>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -27,16 +26,8 @@ struct PlatformerData
     bool previously_jumped;
     bool previously_double_jumped;
     bool facing_right;
+    bool touching_wall;
     sf::Clock time_since_last_jump_button_pressed;
-
-    enum CollideDirection
-    {
-        LEFT,
-        RIGHT,
-        COUNT
-    };
-
-    std::array<bool, CollideDirection::COUNT> collide_direction;
 
     PlatformerData()
     {
@@ -63,6 +54,7 @@ struct PlatformerData
 
         previously_jumped = false;
         previously_double_jumped = false;
+        touching_wall = false;
 
         file.close();
     }
