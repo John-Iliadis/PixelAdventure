@@ -23,15 +23,15 @@ RunningState::RunningState(Player &player)
 
 PlayerState* RunningState::handle_event(Player &player, const sf::Event &event)
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
-        return new JumpingState(player);
-
     return nullptr;
 }
 
 PlayerState* RunningState::update(Player &player, double dt)
 {
     auto& data = player.get_platformer_data();
+
+    if (data.time_since_last_jump_button_pressed.getElapsedTime().asSeconds() <= data.jump_pressed_remember_time)
+        return new JumpingState(player);
 
     if (data.velocity.y > 0)
         return new FallingState(player);

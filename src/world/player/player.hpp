@@ -27,11 +27,13 @@ public:
     void update(double dt);
     void handle_event(const sf::Event& event);
 
+    void set_collision_callbacks(std::function<void(double)> x, std::function<void(double)> y);
+
     void set_texture(const std::string& texture_id);
     void set_texture_rect(const sf::IntRect& rect);
     void set_position(float x, float y);
     void move(float x, float y);
-    void set_collision_callbacks(std::function<void(double)> x, std::function<void(double)> y);
+    void set_gravity(bool on);
 
     sf::FloatRect get_rectangle() const;
     sf::Vector2f get_center() const; // update to new center

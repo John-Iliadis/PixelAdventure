@@ -119,6 +119,8 @@ namespace Collision
         std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
         const auto& map_tiles = tile_map.get_colliders();
         auto& velocity = player.get_platformer_data().velocity;
+        auto& collide_direction = player.get_platformer_data().collide_direction;
+        collide_direction.fill(false);
 
         if (velocity.x == 0) return;
 
@@ -139,11 +141,13 @@ namespace Collision
         {
             float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - player.get_rectangle().width / 2.f;
             player.set_position(new_pos, player.get_position().y);
+            collide_direction[PlatformerData::CollideDirection::LEFT] = true;
         }
         else
         {
             float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width + player.get_rectangle().width / 2.f;
             player.set_position(new_pos, player.get_position().y);
+            collide_direction[PlatformerData::CollideDirection::RIGHT] = true;
         }
 
         velocity.x = 0;

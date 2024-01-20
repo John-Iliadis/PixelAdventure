@@ -8,11 +8,11 @@
 Player::Player()
 {
     m_textures.load_directory_list("../data/player/player_textures.json");
-    m_platformer_data.load_platformer_data("../data/player/platformer_data.json");
 
     current_state = new IdleState(*this);
 
     m_platformer_data.collision_rect.setPosition(200, 150);
+
     m_sprite.setScale(2, 2);
     m_sprite.setPosition(200, 150);
     set_origin_mid_bottom(m_sprite);
@@ -25,6 +25,9 @@ Player::~Player()
 
 void Player::handle_event(const sf::Event &event)
 {
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
+         m_platformer_data.time_since_last_jump_button_pressed.restart();
+
     PlayerState* new_state = current_state->handle_event(*this, event);
 
     change_state(new_state);
@@ -141,4 +144,9 @@ void Player::set_collision_callbacks(std::function<void(double)> x, std::functio
 sf::Vector2f Player::get_position() const
 {
     return m_platformer_data.collision_rect.getPosition();
+}
+
+void Player::set_gravity(bool on)
+{
+    m_platformer_data.gravity = on? m_platformer_data.gravity_speed : 0;
 }
