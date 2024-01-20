@@ -47,14 +47,10 @@ namespace Collision
             return false;
 
         if (t_intersection_near)
-        {
             *t_intersection_near = l_t_intersection_near;
-        }
 
         if (contact_point)
-        {
             *contact_point = ray_origin + l_t_intersection_near * ray_dir;
-        }
 
         if (contact_normal)
         {
@@ -141,13 +137,13 @@ namespace Collision
 
         if (velocity.x > 0)
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - player.get_rectangle().width;
-            player.setPosition(new_pos, player.getPosition().y);
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - player.get_rectangle().width / 2.f;
+            player.set_position(new_pos, player.get_position().y);
         }
         else
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width;
-            player.setPosition(new_pos, player.getPosition().y);
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width + player.get_rectangle().width / 2.f;
+            player.set_position(new_pos, player.get_position().y);
         }
 
         velocity.x = 0;
@@ -175,13 +171,13 @@ namespace Collision
 
         if (velocity.y > 0)
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y - player.get_rectangle().height;
-            player.setPosition(player.getPosition().x, new_pos);
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y;
+            player.set_position(player.get_position().x, new_pos);
         }
         else
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y + map_tiles.at(highest_overlapping_rect_index).height;
-            player.setPosition(player.getPosition().x, new_pos);
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y + map_tiles.at(highest_overlapping_rect_index).height + player.get_rectangle().height;
+            player.set_position(player.get_position().x, new_pos);
         }
 
         velocity.y = 0;

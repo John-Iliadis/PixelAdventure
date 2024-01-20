@@ -12,8 +12,10 @@ Player::Player()
 
     current_state = new IdleState(*this);
 
-    scale(2, 2);
-    setPosition(100, 100);
+    m_platformer_data.collision_rect.setPosition(200, 150);
+    m_sprite.setScale(2, 2);
+    m_sprite.setPosition(200, 150);
+    set_origin_mid_bottom(m_sprite);
 }
 
 Player::~Player()
@@ -39,6 +41,8 @@ void Player::update(double dt)
 
     apply_gravity();
     y_axis_collision_callback(dt);
+
+    m_sprite.setPosition(m_platformer_data.collision_rect.getPosition());
 }
 
 void Player::set_texture(const std::string &texture_id)
@@ -51,20 +55,30 @@ void Player::set_texture_rect(const sf::IntRect &rect)
     m_sprite.setTextureRect(rect);
 }
 
+void Player::set_position(float x, float y)
+{
+    m_platformer_data.collision_rect.setPosition(x, y);
+}
+
+void Player::move(float x, float y)
+{
+    m_platformer_data.collision_rect.move(x, y);
+}
+
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    states.transform *= getTransform();
-    target.draw(m_sprite, states);
+    target.draw(m_sprite);
+    target.draw(m_platformer_data.collision_rect);
 }
 
 sf::FloatRect Player::get_rectangle() const
 {
-    return getTransform().transformRect(m_sprite.getGlobalBounds());
+    return m_platformer_data.collision_rect.getGlobalBounds();
 }
 
 sf::Vector2f Player::get_center() const
 {
-    auto rect = get_rectangle();
+    auto rect = m_sprite.getGlobalBounds();
 
     return {rect.left + rect.width / 2.f,
             rect.top + rect.height / 2.f};
@@ -122,4 +136,9 @@ void Player::set_collision_callbacks(std::function<void(double)> x, std::functio
 {
     x_axis_collision_callback = std::move(x);
     y_axis_collision_callback = std::move(y);
+}
+
+sf::Vector2f Player::get_position() const
+{
+    return m_platformer_data.collision_rect.getPosition();
 }

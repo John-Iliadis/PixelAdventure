@@ -7,11 +7,14 @@
 
 #include <fstream>
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include "../../vendor/json.hpp"
+#include "../../utilities/utils.hpp"
 
 
 struct PlatformerData
 {
+    sf::RectangleShape collision_rect;
     sf::Vector2f velocity;
     float move_speed = 0;
     float gravity = 0;
@@ -28,6 +31,12 @@ struct PlatformerData
             throw std::runtime_error("PlatformerData::load_platformer_data - Failed to open file " + file_name);
 
         nlohmann::json json = nlohmann::json::parse(file);
+
+        collision_rect.setFillColor(sf::Color::Transparent);
+        collision_rect.setSize({json["collision_rect"]["width"].get<float>(),
+                                json["collision_rect"]["height"].get<float>()});
+        collision_rect.setScale(2, 2);
+        set_origin_mid_bottom(collision_rect);
 
         move_speed = json["move_speed"].get<float>();
         gravity = json["gravity"].get<float>();

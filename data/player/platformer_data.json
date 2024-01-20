@@ -2,5 +2,9 @@
     "move_speed": 400,
     "gravity": 15,
     "jump_speed": -800,
-    "facing_right": true
+    "facing_right": true,
+    "collision_rect": {
+        "width": 20,
+        "height": 26
+    }
 }

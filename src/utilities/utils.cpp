@@ -29,6 +29,18 @@ void set_origin_top_left(sf::Sprite& sprite)
     sprite.setOrigin(0, 0);
 }
 
+void set_origin_mid_bottom(sf::Sprite& sprite)
+{
+    auto rect = sprite.getLocalBounds();
+    sprite.setOrigin(rect.width / 2.f, rect.height);
+}
+
+void set_origin_mid_bottom(sf::RectangleShape& shape)
+{
+    auto rect = shape.getLocalBounds();
+    shape.setOrigin(rect.width / 2.f, rect.height);
+}
+
 void flip_sprite_x(sf::Sprite& sprite, bool facing_right)
 {
     auto rect = sprite.getTextureRect();
