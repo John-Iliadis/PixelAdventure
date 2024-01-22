@@ -11,7 +11,7 @@ Player::Player()
 
     current_state = new IdleState(*this);
 
-    m_platformer_data.collision_rect.setPosition(200, 150);
+    data.collision_rect.setPosition(200, 150);
 
     m_sprite.setScale(2, 2);
     m_sprite.setPosition(200, 150);
@@ -26,7 +26,7 @@ Player::~Player()
 void Player::handle_event(const sf::Event &event)
 {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
-         m_platformer_data.time_since_last_jump_button_pressed.restart();
+         data.time_since_last_jump_button_pressed.restart();
 
     PlayerState* new_state = current_state->handle_event(*this, event);
 
@@ -45,7 +45,7 @@ void Player::update(double dt)
     apply_gravity();
     y_axis_collision_callback(dt);
 
-    m_sprite.setPosition(m_platformer_data.collision_rect.getPosition());
+    m_sprite.setPosition(data.collision_rect.getPosition());
 }
 
 void Player::set_texture(const std::string &texture_id)
@@ -60,23 +60,23 @@ void Player::set_texture_rect(const sf::IntRect &rect)
 
 void Player::set_position(float x, float y)
 {
-    m_platformer_data.collision_rect.setPosition(x, y);
+    data.collision_rect.setPosition(x, y);
 }
 
 void Player::move(float x, float y)
 {
-    m_platformer_data.collision_rect.move(x, y);
+    data.collision_rect.move(x, y);
 }
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite);
-    target.draw(m_platformer_data.collision_rect);
+    target.draw(data.collision_rect);
 }
 
 sf::FloatRect Player::get_rectangle() const
 {
-    return m_platformer_data.collision_rect.getGlobalBounds();
+    return data.collision_rect.getGlobalBounds();
 }
 
 sf::Vector2f Player::get_center() const
@@ -89,7 +89,7 @@ sf::Vector2f Player::get_center() const
 
 PlatformerData &Player::get_platformer_data()
 {
-    return m_platformer_data;
+    return data;
 }
 
 sf::Sprite &Player::get_sprite()
@@ -99,7 +99,7 @@ sf::Sprite &Player::get_sprite()
 
 bool Player::facing_right()
 {
-    return m_platformer_data.facing_right;
+    return data.facing_right;
 }
 
 void Player::handle_real_time_input()
@@ -107,23 +107,23 @@ void Player::handle_real_time_input()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
         || (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
     {
-        m_platformer_data.velocity.x = 0;
+        data.velocity.x = 0;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        m_platformer_data.velocity.x = -m_platformer_data.move_speed;
-        m_platformer_data.facing_right = false;
+        data.velocity.x = -data.move_speed;
+        data.facing_right = false;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        m_platformer_data.velocity.x = m_platformer_data.move_speed;
-        m_platformer_data.facing_right = true;
+        data.velocity.x = data.move_speed;
+        data.facing_right = true;
     }
 }
 
 void Player::apply_gravity()
 {
-    m_platformer_data.velocity.y += m_platformer_data.gravity;
+    data.velocity.y += data.gravity;
 }
 
 void Player::change_state(PlayerState *new_state)
@@ -143,10 +143,10 @@ void Player::set_collision_callbacks(std::function<void(double)> x, std::functio
 
 sf::Vector2f Player::get_position() const
 {
-    return m_platformer_data.collision_rect.getPosition();
+    return data.collision_rect.getPosition();
 }
 
 void Player::set_gravity(bool on)
 {
-    m_platformer_data.gravity = on? m_platformer_data.gravity_speed : 0;
+    data.gravity = on ? data.gravity_speed : 0;
 }

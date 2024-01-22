@@ -125,7 +125,7 @@ void Game::update_fps_stats(sf::Time elapsed)
 
     if (fps_update_time >= sf::seconds(1.f))
     {
-       // std::cout << fps_num_frames << '\n';
+        std::cout << fps_num_frames << '\n';
 
         fps_update_time -= sf::seconds(1);
         fps_num_frames = 0;

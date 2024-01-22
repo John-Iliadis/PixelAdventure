@@ -34,11 +34,4 @@ void World::draw()
     window.draw(m_background);
     window.draw(m_tile_map);
     window.draw(m_player);
-
-//    sf::RectangleShape rect;
-//    rect.setSize({m_player.get_rectangle().width, m_player.get_rectangle().height});
-//    rect.setOrigin(rect.getSize().x / 2.f, rect.getSize().y / 2.f);
-//    rect.setFillColor(sf::Color::Red);
-//    rect.setPosition(m_player.get_center());
-//    window.draw(rect);
 }

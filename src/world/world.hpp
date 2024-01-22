@@ -12,8 +12,6 @@
 #include "player/player.hpp"
 #include "collision.hpp"
 
-#include <SFML/Graphics/RectangleShape.hpp> // todo: remove
-
 
 class World
 {

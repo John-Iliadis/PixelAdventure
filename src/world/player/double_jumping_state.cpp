@@ -20,12 +20,12 @@ DoubleJumpingState::DoubleJumpingState(Player &player)
     data.velocity.y = data.jump_speed;
 }
 
-PlayerState *DoubleJumpingState::handle_event(Player &player, const sf::Event &event)
+PlayerState* DoubleJumpingState::handle_event(Player &player, const sf::Event &event)
 {
     return nullptr;
 }
 
-PlayerState *DoubleJumpingState::update(Player &player, double dt)
+PlayerState* DoubleJumpingState::update(Player &player, double dt)
 {
     auto& data = player.get_platformer_data();
 

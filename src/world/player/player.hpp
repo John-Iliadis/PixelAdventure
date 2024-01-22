@@ -36,7 +36,7 @@ public:
     void set_gravity(bool on);
 
     sf::FloatRect get_rectangle() const;
-    sf::Vector2f get_center() const; // update to new center
+    sf::Vector2f get_center() const;
     sf::Vector2f get_position() const;
     sf::Sprite& get_sprite();
     PlatformerData& get_platformer_data();
@@ -52,7 +52,7 @@ private:
     TextureManager m_textures;
     SoundBufferManager m_sound_buffers;
     sf::Sprite m_sprite;
-    PlatformerData m_platformer_data;
+    PlatformerData data;
     PlayerState* current_state;
 
     std::function<void(double)> x_axis_collision_callback;
