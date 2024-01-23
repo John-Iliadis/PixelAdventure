@@ -117,7 +117,7 @@ namespace Collision
     void handle_x_axis_collisions(Player& player, TileMap& tile_map, double dt)
     {
         std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
-        const auto& map_tiles = tile_map.get_colliders();
+        const auto& map_tiles = tile_map.get_solid_tiles();
         auto velocity = player.get_velocity();
         player.set_touching_wall(false);
 
@@ -166,7 +166,7 @@ namespace Collision
     void handle_y_axis_collisions(Player& player, TileMap& tile_map, double dt)
     {
         std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
-        const auto& map_tiles = tile_map.get_colliders();
+        const auto& map_tiles = tile_map.get_solid_tiles();
         auto velocity = player.get_velocity();
 
         if (velocity.y == 0) return;

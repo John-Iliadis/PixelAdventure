@@ -7,7 +7,7 @@
 
 World::World(GameContext& context)
     : m_context(context)
-    , m_tile_map(m_context, "../data/tmx/test_map.tmj")
+    , m_tile_map("../data/tmx/test_map2.tmj")
     , m_background(*m_context.texture_manager, m_context.window->getSize())
 {
     m_player.set_collision_callbacks([this] (double dt) {Collision::handle_x_axis_collisions(m_player, m_tile_map, dt);},

@@ -21,28 +21,16 @@ Game::Game()
     m_sound_buffer_manager.load_directory("../assets/sounds");
     m_music_manager.load_directory("../assets/music");
 
-    std::ifstream file("../data/tmx/test_map.tmj");
-
-    if (!file.is_open())
-    {
-        throw std::runtime_error("Game::Game() - Failed to load map data\n");
-    }
-
-    m_map_data = nlohmann::json::parse(file);
-
     m_context.window = &m_window;
     m_context.view = &m_view;
     m_context.texture_manager = &m_texture_manager;
     m_context.font_manager = &m_font_manager;
     m_context.sound_buffer_manager = &m_sound_buffer_manager;
     m_context.music_manager = &m_music_manager;
-    m_context.map_data = &m_map_data;
 
     m_state_stack = StateStack(m_context);
     m_state_stack.push(StateID::GAME);
     m_state_stack.apply_pending_changes();
-
-    file.close();
 }
 
 void Game::run()

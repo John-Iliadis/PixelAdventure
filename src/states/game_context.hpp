@@ -5,8 +5,6 @@
 #ifndef PLATFORMER_GAME_CONTEXT_HPP
 #define PLATFORMER_GAME_CONTEXT_HPP
 
-#include "../vendor/json.hpp"
-
 
 namespace sf
 {
@@ -29,7 +27,6 @@ struct GameContext
     SoundBufferManager* sound_buffer_manager = nullptr;
     MusicManager* music_manager = nullptr;
     Settings* settings = nullptr;
-    nlohmann::json* map_data = nullptr;
 };
 
 #endif //PLATFORMER_GAME_CONTEXT_HPP

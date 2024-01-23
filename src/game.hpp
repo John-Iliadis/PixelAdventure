@@ -40,7 +40,6 @@ private:
     FontManager m_font_manager;
     SoundBufferManager m_sound_buffer_manager;
     MusicManager m_music_manager;
-    nlohmann::json m_map_data;
 
     sf::Time fps_update_time{};
     uint32_t fps_num_frames{};

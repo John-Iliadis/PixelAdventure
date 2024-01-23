@@ -121,7 +121,6 @@ void AnimationManager::update(double dt)
 
         if (m_current_frame_index + 1 < current_animation.get_frame_count())
         {
-
             ++m_current_frame_index;
         }
         else if (!current_animation.is_looped())
