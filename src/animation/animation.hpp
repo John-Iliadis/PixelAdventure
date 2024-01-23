@@ -7,33 +7,56 @@
 
 #include <vector>
 #include <cstdint>
+#include <string>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Clock.hpp>
 
 
-class Animation
+class Animation final
 {
 public:
+    class Frame
+    {
+    public:
+        Frame() = default;
+        Frame(int left, int top, int width, int height, const std::string& tag = "");
+        Frame(const sf::IntRect& spritesheet_rect, const std::string& tag = "");
+
+        void set_spritesheet_rect(const sf::IntRect& rect);
+        void set_frame_tag(const std::string& tag);
+
+        const sf::IntRect& get_spritesheet_rect() const;
+        const std::string& get_frame_tag() const;
+
+    private:
+        sf::IntRect m_spritesheet_sub_rect;
+        std::string m_frame_tag;
+    };
+
     Animation();
-    Animation(uint32_t texture_width, uint32_t texture_height, uint32_t frame_count, sf::Time time_per_frame, bool playing = true);
-    virtual ~Animation() = default;
+    Animation(int sprite_width, int sprite_height, uint32_t frame_count, sf::Time time_per_frame, bool looped = true);
 
-    virtual void start();
-    virtual void stop();
-    virtual void reset();
+    void add_frame(const Frame& frame);
+    void add_frame(const sf::IntRect& spritesheet_rect, const std::string& tag = "");
 
-    virtual void update() = 0;
+    void set_time_pre_frame(sf::Time time_per_frame);
+    void set_looped(bool looped);
+    void set_spritesheet_rect(size_t index, const sf::IntRect& rect);
+    void set_frame_tag(size_t index, const std::string& tag);
 
-    const sf::Rect<uint32_t>& get_current_frame(bool facing_right) const;
+    void clear_frames();
 
-protected:
-    std::vector<sf::Rect<uint32_t>> m_frames;
-    std::vector<sf::Rect<uint32_t>> m_frames_reversed;
-    sf::Clock m_clock;
+    const Frame& get_frame(size_t index) const;
+    const sf::IntRect& get_frame_rect(size_t index) const;
+    const std::string& get_frame_tag(size_t index) const;
+    sf::Time get_time_pre_frame() const;
+    size_t get_frame_count() const;
+    bool is_looped() const;
+
+private:
+    std::vector<Frame> m_frames;
     sf::Time m_time_pre_frame;
-    uint32_t m_frame_count;
-    uint32_t m_frame_index;
-    bool m_playing;
+    bool m_looped;
 };
 
 
