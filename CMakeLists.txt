@@ -55,7 +55,6 @@ add_executable(Platformer
         src/world/player/double_jumping_state.hpp
         src/world/player/death_state.cpp
         src/world/player/death_state.hpp
-        src/world/player/player_platformer_data.hpp
         src/world/sprite_collider.cpp
         src/world/sprite_collider.hpp
         src/world/enums.hpp

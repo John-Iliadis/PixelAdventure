@@ -11,12 +11,9 @@
 
 IdleState::IdleState(Player &player)
 {
-    auto& data = player.get_platformer_data();
-
     player.set_animation("idle");
-
-    data.previously_jumped = false;
-    data.previously_double_jumped = false;
+    player.set_previously_jumped(false);
+    player.set_previously_double_jumped(false);
 }
 
 PlayerState* IdleState::handle_event(Player &player, const sf::Event &event)
@@ -26,15 +23,13 @@ PlayerState* IdleState::handle_event(Player &player, const sf::Event &event)
 
 PlayerState* IdleState::update(Player &player, double dt)
 {
-    auto& data = player.get_platformer_data();
-
-    if (data.time_since_last_jump_button_pressed.getElapsedTime().asSeconds() <= data.jump_pressed_remember_time)
+    if (player.time_since_last_jump_button_pressed().asSeconds() <= player.get_jump_pressed_remember_time())
         return new JumpingState(player);
 
-    if (data.velocity.y > 0)
+    if (player.get_velocity().y > 0)
         return new FallingState(player);
 
-    if (data.velocity.x != 0)
+    if (player.get_velocity().x != 0)
         return new RunningState(player);
 
     return nullptr;

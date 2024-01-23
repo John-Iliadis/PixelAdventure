@@ -10,14 +10,11 @@
 
 WallSlidingState::WallSlidingState(Player &player)
 {
-    auto& data = player.get_platformer_data();
-
     player.set_animation("wall_sliding");
     player.set_gravity(false);
-
-    data.previously_jumped = false;
-    data.previously_double_jumped = false;
-    data.velocity.y = data.wall_sliding_speed;
+    player.set_previously_jumped(false);
+    player.set_previously_double_jumped(false);
+    player.set_velocity(player.get_velocity().x, player.get_wall_sliding_speed());
 }
 
 PlayerState* WallSlidingState::handle_event(Player &player, const sf::Event &event)
@@ -33,16 +30,14 @@ PlayerState* WallSlidingState::handle_event(Player &player, const sf::Event &eve
 
 PlayerState* WallSlidingState::update(Player &player, double dt)
 {
-    auto& data = player.get_platformer_data();
 
-
-    if (data.velocity.y == 0)
+    if (player.get_velocity().y == 0)
     {
         player.set_gravity(true);
         return new IdleState(player);
     }
 
-    if (!data.touching_wall)
+    if (!player.touching_wall())
     {
         player.set_gravity(true);
         return new FallingState(player);

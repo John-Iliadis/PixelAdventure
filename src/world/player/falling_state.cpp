@@ -17,14 +17,13 @@ FallingState::FallingState(Player &player)
 
 PlayerState* FallingState::handle_event(Player &player, const sf::Event &event)
 {
-    auto& data = player.get_platformer_data();
-
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
     {
-        if (!data.previously_jumped)
+        if (!player.previously_jumped())
             return new JumpingState(player);
 
-        if (!data.previously_double_jumped)
+
+        if (!player.previously_double_jumped())
             return new DoubleJumpingState(player);
     }
 
@@ -33,17 +32,15 @@ PlayerState* FallingState::handle_event(Player &player, const sf::Event &event)
 
 PlayerState* FallingState::update(Player &player, double dt)
 {
-    auto& data = player.get_platformer_data();
-
-    if (data.velocity.y == 0)
+    if (player.get_velocity().y == 0)
     {
-        if (data.velocity.x != 0)
+        if (player.get_velocity().x != 0)
             return new RunningState(player);
 
         return new IdleState(player);
     }
 
-    if (data.touching_wall)
+    if (player.touching_wall())
         return new WallSlidingState(player);
 
     return nullptr;

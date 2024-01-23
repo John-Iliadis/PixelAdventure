@@ -118,8 +118,8 @@ namespace Collision
     {
         std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
         const auto& map_tiles = tile_map.get_colliders();
-        auto& velocity = player.get_platformer_data().velocity;
-        player.get_platformer_data().touching_wall = false;
+        auto velocity = player.get_velocity();
+        player.set_touching_wall(false);
 
         for (const auto& tile : map_tiles)
         {
@@ -127,7 +127,7 @@ namespace Collision
 
             if (ray_cast(player.get_hitbox(), l_velocity, tile))
             {
-                player.get_platformer_data().touching_wall = true;
+                player.set_touching_wall(true);
                 break;
             }
         }
@@ -155,19 +155,19 @@ namespace Collision
         }
         else
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width +
-                    player.get_hitbox().width / 2.f;
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x
+                    + map_tiles.at(highest_overlapping_rect_index).width + player.get_hitbox().width / 2.f;
             player.set_position(new_pos, player.get_position().y);
         }
 
-        velocity.x = 0;
+        player.set_velocity(0, velocity.y);
     }
 
     void handle_y_axis_collisions(Player& player, TileMap& tile_map, double dt)
     {
         std::vector<std::pair<uint32_t, sf::FloatRect>> colliding_rectangles;
         const auto& map_tiles = tile_map.get_colliders();
-        auto& velocity = player.get_platformer_data().velocity;
+        auto velocity = player.get_velocity();
 
         if (velocity.y == 0) return;
 
@@ -190,11 +190,11 @@ namespace Collision
         }
         else
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y + map_tiles.at(highest_overlapping_rect_index).height +
-                    player.get_hitbox().height;
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y +
+                    map_tiles.at(highest_overlapping_rect_index).height + player.get_hitbox().height;
             player.set_position(player.get_position().x, new_pos);
         }
 
-        velocity.y = 0;
+        player.set_velocity(velocity.x, 0);
     }
 };

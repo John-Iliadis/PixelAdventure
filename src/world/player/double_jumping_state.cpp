@@ -9,12 +9,9 @@
 
 DoubleJumpingState::DoubleJumpingState(Player &player)
 {
-    auto& data = player.get_platformer_data();
-
     player.set_animation("double_jumping");
-
-    data.previously_double_jumped = true;
-    data.velocity.y = data.jump_speed;
+    player.set_previously_double_jumped(true);
+    player.jump();
 }
 
 PlayerState* DoubleJumpingState::handle_event(Player &player, const sf::Event &event)
@@ -24,9 +21,7 @@ PlayerState* DoubleJumpingState::handle_event(Player &player, const sf::Event &e
 
 PlayerState* DoubleJumpingState::update(Player &player, double dt)
 {
-    auto& data = player.get_platformer_data();
-
-    if (data.velocity.y > 0)
+    if (player.get_velocity().y > 0)
         return new FallingState(player);
 
     return nullptr;
