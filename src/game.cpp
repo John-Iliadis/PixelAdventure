@@ -12,7 +12,7 @@ Game::Game()
 {
     sf::VideoMode window_size {INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT};
     m_window.create(window_size, "Platformer");
-    m_window.setFramerateLimit(get_max_refresh_rate());
+    m_window.setFramerateLimit(utils::get_max_refresh_rate());
 
     m_view = sf::View({0, 0, INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT});
 
@@ -47,7 +47,7 @@ Game::Game()
 
 void Game::run()
 {
-    const double time_per_frame = 1.0 / get_max_refresh_rate();
+    const double time_per_frame = 1.0 / utils::get_max_refresh_rate();
     double ellapsed = 0;
     sf::Clock clock;
 
@@ -125,7 +125,7 @@ void Game::update_fps_stats(sf::Time elapsed)
 
     if (fps_update_time >= sf::seconds(1.f))
     {
-        std::cout << fps_num_frames << '\n';
+        //std::cout << fps_num_frames << '\n';
 
         fps_update_time -= sf::seconds(1);
         fps_num_frames = 0;

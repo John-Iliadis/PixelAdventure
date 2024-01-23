@@ -107,7 +107,7 @@ namespace Collision
         {
             sf::FloatRect l_rect;
 
-            if (player.get_rectangle().intersects(map_tiles.at(i), l_rect))
+            if (player.get_hitbox().intersects(map_tiles.at(i), l_rect))
                 rects.emplace_back(i, std::move(l_rect));
         }
 
@@ -123,9 +123,9 @@ namespace Collision
 
         for (const auto& tile : map_tiles)
         {
-            sf::Vector2f l_velocity = player.get_platformer_data().facing_right? sf::Vector2f(1, 0) : sf::Vector2f(-1, 0);
+            sf::Vector2f l_velocity = player.get_orientation() == SpriteOrientation::FACES_RIGHT? sf::Vector2f(1, 0) : sf::Vector2f(-1, 0);
 
-            if (ray_cast(player.get_rectangle(), l_velocity, tile))
+            if (ray_cast(player.get_hitbox(), l_velocity, tile))
             {
                 player.get_platformer_data().touching_wall = true;
                 break;
@@ -149,12 +149,14 @@ namespace Collision
 
         if (velocity.x > 0)
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x - player.get_rectangle().width / 2.f;
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x -
+                    player.get_hitbox().width / 2.f;
             player.set_position(new_pos, player.get_position().y);
         }
         else
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width + player.get_rectangle().width / 2.f;
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().x + map_tiles.at(highest_overlapping_rect_index).width +
+                    player.get_hitbox().width / 2.f;
             player.set_position(new_pos, player.get_position().y);
         }
 
@@ -188,7 +190,8 @@ namespace Collision
         }
         else
         {
-            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y + map_tiles.at(highest_overlapping_rect_index).height + player.get_rectangle().height;
+            float new_pos = map_tiles.at(highest_overlapping_rect_index).getPosition().y + map_tiles.at(highest_overlapping_rect_index).height +
+                    player.get_hitbox().height;
             player.set_position(player.get_position().x, new_pos);
         }
 

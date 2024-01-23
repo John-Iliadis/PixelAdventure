@@ -13,9 +13,7 @@ RunningState::RunningState(Player &player)
 {
     auto& data = player.get_platformer_data();
 
-    running_animation = LoopingAnimation(32, 32, 12, sf::milliseconds(50));
-    player.set_texture("running");
-    player.set_texture_rect(static_cast<sf::IntRect>(running_animation.get_current_frame(player.facing_right())));
+    player.set_animation("running");
 
     data.previously_jumped = false;
     data.previously_double_jumped = false;
@@ -38,9 +36,6 @@ PlayerState* RunningState::update(Player &player, double dt)
 
     if (data.velocity.x == 0)
         return new IdleState(player);
-
-    running_animation.update();
-    player.set_texture_rect(static_cast<sf::IntRect>(running_animation.get_current_frame(data.facing_right)));
 
     return nullptr;
 }

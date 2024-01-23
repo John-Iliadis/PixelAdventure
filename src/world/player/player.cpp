@@ -8,29 +8,19 @@
 Player::Player()
 {
     m_textures.load_directory_list("../data/player/player_textures.json");
+    m_animations.load_from_file("../data/player/animations.json");
 
     current_state = new IdleState(*this);
 
-    data.collision_rect.setPosition(200, 150);
-
-    m_sprite.setScale(2, 2);
-    m_sprite.setPosition(200, 150);
-    set_origin_mid_bottom(m_sprite);
+    m_sprite_collider.set_hitbox_size(18, 26); // todo: load json
+    m_sprite_collider.setPosition(200, 150);
+    m_sprite_collider.setScale(2, 2); // todo: load json
+    m_sprite_collider.set_origin_mid_bottom();
 }
 
 Player::~Player()
 {
     delete current_state;
-}
-
-void Player::handle_event(const sf::Event &event)
-{
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
-         data.time_since_last_jump_button_pressed.restart();
-
-    PlayerState* new_state = current_state->handle_event(*this, event);
-
-    change_state(new_state);
 }
 
 void Player::update(double dt)
@@ -45,61 +35,76 @@ void Player::update(double dt)
     apply_gravity();
     y_axis_collision_callback(dt);
 
-    m_sprite.setPosition(data.collision_rect.getPosition());
+    m_animations.update(dt);
+    set_animation_frame();
 }
 
-void Player::set_texture(const std::string &texture_id)
+void Player::handle_event(const sf::Event &event)
 {
-    m_sprite.setTexture(m_textures.get(texture_id), true);
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
+         m_data.time_since_last_jump_button_pressed.restart();
+
+    PlayerState* new_state = current_state->handle_event(*this, event);
+
+    change_state(new_state);
 }
 
-void Player::set_texture_rect(const sf::IntRect &rect)
+void Player::set_collision_callbacks(std::function<void(double)> x, std::function<void(double)> y)
 {
-    m_sprite.setTextureRect(rect);
+    x_axis_collision_callback = std::move(x);
+    y_axis_collision_callback = std::move(y);
+}
+
+void Player::set_animation(const std::string &id)
+{
+    m_animations.set_animation(id);
+    m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
+    m_sprite_collider.set_texture(m_textures.get(id));
 }
 
 void Player::set_position(float x, float y)
 {
-    data.collision_rect.setPosition(x, y);
+    m_sprite_collider.setPosition(x, y);
 }
 
 void Player::move(float x, float y)
 {
-    data.collision_rect.move(x, y);
+    m_sprite_collider.move(x, y);
 }
 
-void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void Player::set_gravity(bool on)
 {
-    target.draw(m_sprite);
-    target.draw(data.collision_rect);
+    m_data.gravity = on ? m_data.gravity_speed : 0;
 }
 
-sf::FloatRect Player::get_rectangle() const
+sf::FloatRect Player::get_hitbox() const
 {
-    return data.collision_rect.getGlobalBounds();
+    return m_sprite_collider.get_hitbox();
 }
 
 sf::Vector2f Player::get_center() const
 {
-    auto rect = m_sprite.getGlobalBounds();
+    return m_sprite_collider.get_sprite_center();
+}
 
-    return {rect.left + rect.width / 2.f,
-            rect.top + rect.height / 2.f};
+sf::Vector2f Player::get_position() const
+{
+    return m_sprite_collider.getPosition();
 }
 
 PlatformerData &Player::get_platformer_data()
 {
-    return data;
+    return m_data;
 }
 
-sf::Sprite &Player::get_sprite()
+SpriteOrientation Player::get_orientation() const
 {
-    return m_sprite;
+    return m_sprite_collider.get_orientation();
 }
 
-bool Player::facing_right()
+void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    return data.facing_right;
+    target.draw(m_sprite_collider);
 }
 
 void Player::handle_real_time_input()
@@ -107,23 +112,23 @@ void Player::handle_real_time_input()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
         || (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
     {
-        data.velocity.x = 0;
+        m_data.velocity.x = 0;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        data.velocity.x = -data.move_speed;
-        data.facing_right = false;
+        m_data.velocity.x = -m_data.move_speed;
+        m_sprite_collider.set_orientation(SpriteOrientation::FACES_LEFT);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        data.velocity.x = data.move_speed;
-        data.facing_right = true;
+        m_data.velocity.x = m_data.move_speed;
+        m_sprite_collider.set_orientation(SpriteOrientation::FACES_RIGHT);
     }
 }
 
 void Player::apply_gravity()
 {
-    data.velocity.y += data.gravity;
+    m_data.velocity.y += m_data.gravity;
 }
 
 void Player::change_state(PlayerState *new_state)
@@ -135,18 +140,7 @@ void Player::change_state(PlayerState *new_state)
     }
 }
 
-void Player::set_collision_callbacks(std::function<void(double)> x, std::function<void(double)> y)
+void Player::set_animation_frame()
 {
-    x_axis_collision_callback = std::move(x);
-    y_axis_collision_callback = std::move(y);
-}
-
-sf::Vector2f Player::get_position() const
-{
-    return data.collision_rect.getPosition();
-}
-
-void Player::set_gravity(bool on)
-{
-    data.gravity = on ? data.gravity_speed : 0;
+    m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
 }

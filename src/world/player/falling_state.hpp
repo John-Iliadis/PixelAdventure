@@ -6,7 +6,6 @@
 #define PLATFORMER_FALLING_STATE_HPP
 
 #include "player_state.hpp"
-#include "../../utilities/utils.hpp"
 
 
 class FallingState : public PlayerState
@@ -16,9 +15,6 @@ public:
 
     PlayerState* handle_event(Player &player, const sf::Event &event) override;
     PlayerState* update(Player &player, double dt) override;
-
-private:
-    bool last_direction;
 };
 
 

@@ -12,15 +12,10 @@ JumpingState::JumpingState(Player &player)
 {
     auto& data = player.get_platformer_data();
 
+    player.set_animation("jumping");
+
     data.previously_jumped = true;
     data.velocity.y = data.jump_speed;
-
-    player.set_texture("jumping");
-
-    last_direction = data.facing_right;
-
-    if (!data.facing_right)
-        flip_sprite_x(player.get_sprite(), data.facing_right);
 }
 
 PlayerState* JumpingState::handle_event(Player &player, const sf::Event &event)
@@ -37,12 +32,6 @@ PlayerState* JumpingState::update(Player &player, double dt)
 
     if (data.velocity.y >= 0)
         return new FallingState(player);
-
-    if (data.facing_right != last_direction)
-    {
-        flip_sprite_x(player.get_sprite(), data.facing_right);
-        last_direction = data.facing_right;
-    }
 
     return nullptr;
 }

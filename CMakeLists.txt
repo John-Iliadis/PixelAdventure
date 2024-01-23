@@ -40,10 +40,6 @@ add_executable(Platformer
         src/world/collision.hpp
         src/animation/animation.cpp
         src/animation/animation.hpp
-        src/animation/looping_animation.cpp
-        src/animation/looping_animation.hpp
-        src/animation/non_looping_animation.cpp
-        src/animation/non_looping_animation.hpp
         src/world/player/player_state.hpp
         src/world/player/idle_state.cpp
         src/world/player/idle_state.hpp
@@ -59,7 +55,12 @@ add_executable(Platformer
         src/world/player/double_jumping_state.hpp
         src/world/player/death_state.cpp
         src/world/player/death_state.hpp
-        src/world/player/player_platformer_data.hpp)
+        src/world/player/player_platformer_data.hpp
+        src/world/sprite_collider.cpp
+        src/world/sprite_collider.hpp
+        src/world/enums.hpp
+        src/animation/animation_manager.cpp
+        src/animation/animation_manager.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

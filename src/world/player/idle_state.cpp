@@ -13,10 +13,7 @@ IdleState::IdleState(Player &player)
 {
     auto& data = player.get_platformer_data();
 
-    idle_animation = LoopingAnimation(32, 32, 11, sf::milliseconds(50), true);
-
-    player.set_texture("idle");
-    player.set_texture_rect(static_cast<sf::IntRect>(idle_animation.get_current_frame(player.facing_right())));
+    player.set_animation("idle");
 
     data.previously_jumped = false;
     data.previously_double_jumped = false;
@@ -39,9 +36,6 @@ PlayerState* IdleState::update(Player &player, double dt)
 
     if (data.velocity.x != 0)
         return new RunningState(player);
-
-    idle_animation.update();
-    player.set_texture_rect(static_cast<sf::IntRect>(idle_animation.get_current_frame(data.facing_right)));
 
     return nullptr;
 }

@@ -12,14 +12,7 @@
 
 FallingState::FallingState(Player &player)
 {
-    auto& data = player.get_platformer_data();
-
-    player.set_texture("falling");
-
-    last_direction = data.facing_right;
-
-    if (!data.facing_right)
-        flip_sprite_x(player.get_sprite(), data.facing_right);
+    player.set_animation("falling");
 }
 
 PlayerState* FallingState::handle_event(Player &player, const sf::Event &event)
@@ -52,12 +45,6 @@ PlayerState* FallingState::update(Player &player, double dt)
 
     if (data.touching_wall)
         return new WallSlidingState(player);
-
-    if (data.facing_right != last_direction)
-    {
-        flip_sprite_x(player.get_sprite(), data.facing_right);
-        last_direction = data.facing_right;
-    }
 
     return nullptr;
 }

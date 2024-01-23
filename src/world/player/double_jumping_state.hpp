@@ -6,7 +6,6 @@
 #define PLATFORMER_DOUBLE_JUMPING_STATE_HPP
 
 #include "player_state.hpp"
-#include "../../animation/non_looping_animation.hpp"
 
 
 class DoubleJumpingState : public PlayerState
@@ -16,9 +15,6 @@ public:
 
     PlayerState* handle_event(Player &player, const sf::Event &event) override;
     PlayerState* update(Player &player, double dt) override;
-
-private:
-    NonLoopingAnimation double_jump_anim;
 };
 
 

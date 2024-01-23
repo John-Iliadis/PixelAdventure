@@ -11,10 +11,7 @@ DoubleJumpingState::DoubleJumpingState(Player &player)
 {
     auto& data = player.get_platformer_data();
 
-    double_jump_anim = NonLoopingAnimation(32, 32, 6, sf::milliseconds(50), true);
-
-    player.set_texture("double_jumping");
-    player.set_texture_rect(static_cast<sf::IntRect>(double_jump_anim.get_current_frame(data.facing_right)));
+    player.set_animation("double_jumping");
 
     data.previously_double_jumped = true;
     data.velocity.y = data.jump_speed;
@@ -31,9 +28,6 @@ PlayerState* DoubleJumpingState::update(Player &player, double dt)
 
     if (data.velocity.y > 0)
         return new FallingState(player);
-
-    double_jump_anim.update();
-    player.set_texture_rect(static_cast<sf::IntRect>(double_jump_anim.get_current_frame(data.facing_right)));
 
     return nullptr;
 }
