@@ -22,7 +22,6 @@ PlayerState* FallingState::handle_event(Player &player, const sf::Event &event)
         if (!player.previously_jumped())
             return new JumpingState(player);
 
-
         if (!player.previously_double_jumped())
             return new DoubleJumpingState(player);
     }

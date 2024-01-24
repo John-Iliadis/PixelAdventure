@@ -26,11 +26,12 @@ Player::~Player()
 
 void Player::update(double dt)
 {
+    m_jump_pressed_ellapsed_time -= dt;
+
     handle_real_time_input();
     x_axis_collision_callback(dt);
 
     PlayerState* new_state = current_state->update(*this, dt);
-
     change_state(new_state);
 
     apply_gravity();
@@ -43,7 +44,7 @@ void Player::update(double dt)
 void Player::handle_event(const sf::Event &event)
 {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
-        m_time_since_last_jump_button_pressed.restart();
+        m_jump_pressed_ellapsed_time = m_jump_pressed_remember_time;
 
     PlayerState* new_state = current_state->handle_event(*this, event);
 
@@ -151,11 +152,6 @@ float Player::get_wall_sliding_speed() const
     return m_wall_sliding_speed;
 }
 
-float Player::get_jump_pressed_remember_time() const
-{
-    return m_jump_pressed_remember_time;
-}
-
 bool Player::previously_jumped() const
 {
     return m_previously_jumped;
@@ -187,11 +183,10 @@ void Player::init_platformer_data()
     m_wall_sliding_speed = json["wall_sliding_speed"].get<float>();
     m_jump_speed = json["jump_speed"].get<float>();
     m_jump_pressed_remember_time = json["jump_pressed_remember_time"].get<float>();
+    m_jump_pressed_ellapsed_time = 0;
     m_previously_jumped = false;
     m_previously_double_jumped = false;
     m_touching_wall = false;
-
-    std::this_thread::sleep_for(std::chrono::duration<double>(m_jump_pressed_remember_time));
 
     file.close();
 }
@@ -206,13 +201,9 @@ void Player::set_previously_double_jumped(bool prev_double_jumped)
     m_previously_double_jumped = prev_double_jumped;
 }
 
-sf::Time Player::time_since_last_jump_button_pressed() const
-{
-    return m_time_since_last_jump_button_pressed.getElapsedTime();
-}
-
 void Player::jump()
 {
+    m_jump_pressed_ellapsed_time = 0;
     m_velocity.y = m_jump_speed;
 }
 
@@ -224,4 +215,9 @@ void Player::set_velocity(float x, float y)
 void Player::set_touching_wall(bool touching_wall)
 {
     m_touching_wall = touching_wall;
+}
+
+float Player::get_jump_pressed_ellapsed_time() const
+{
+    return m_jump_pressed_ellapsed_time;
 }

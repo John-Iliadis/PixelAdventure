@@ -23,7 +23,7 @@ PlayerState* RunningState::handle_event(Player &player, const sf::Event &event)
 
 PlayerState* RunningState::update(Player &player, double dt)
 {
-    if (player.time_since_last_jump_button_pressed().asSeconds() <= player.get_jump_pressed_remember_time())
+    if (player.get_jump_pressed_ellapsed_time() > 0)
         return new JumpingState(player);
 
     if (player.get_velocity().y > 0)
