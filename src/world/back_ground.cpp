@@ -5,19 +5,23 @@
 #include "back_ground.hpp"
 
 
-BackGround::BackGround(TextureManager &texture_manager, const sf::Vector2u& window_size)
-    : m_window_size(window_size)
-    , scroll_speed(50) // todo: not hardcode
+static const float SCROLL_SPEED = 50;
+
+BackGround::BackGround(TextureManager &texture_manager, const sf::Vector2u& map_texture_height)
+    : m_scroll_speed(SCROLL_SPEED)
 {
-    auto& texture = texture_manager.get("Purple");
+    // todo: remove this
+    auto size = texture_manager.get("test_map3").getSize();
+
+    auto& texture = texture_manager.get("Purple"); // todo: texture should come from parameter
     texture.setRepeated(true);
 
-    uint32_t texture_height = texture.getSize().x;
-    uint32_t sprite_height = window_size.y + (texture_height - window_size.y % texture_height);
+    uint32_t texture_height = texture.getSize().y;
+    uint32_t sprite_height = size.y + (texture_height - size.y % texture_height);
 
     sf::IntRect sprite_rect {
         0, 0,
-        static_cast<int>(window_size.x),
+        static_cast<int>(size.x),
         static_cast<int>(sprite_height)
     };
 
@@ -32,13 +36,13 @@ void BackGround::update(double dt)
 {
     static bool current = false;
 
-    m_sprites[0].move(0, scroll_speed * dt);
-    m_sprites[1].move(0, scroll_speed * dt);
+    m_sprites[0].move(0, m_scroll_speed * dt);
+    m_sprites[1].move(0, m_scroll_speed * dt);
 
     if (m_sprites[current].getPosition().y > 0)
     {
         current = !current;
-        m_sprites[current].setPosition(0, m_sprites[!current].getPosition().y - m_sprites[current].getGlobalBounds().height);
+        m_sprites[current].setPosition(0, int(m_sprites[!current].getPosition().y - m_sprites[current].getGlobalBounds().height));
     }
 }
 

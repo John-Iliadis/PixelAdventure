@@ -13,8 +13,7 @@
 class BackGround : public sf::Drawable
 {
 public:
-    BackGround(TextureManager& texture_manager, const sf::Vector2u& window_size);
-
+    BackGround(TextureManager& texture_manager, const sf::Vector2u& map_texture_height);
     void update(double dt);
 
 private:
@@ -22,8 +21,7 @@ private:
 
 private:
     sf::Sprite m_sprites[2];
-    sf::Vector2u m_window_size;
-    const float scroll_speed;
+    const float m_scroll_speed;
 };
 
 
