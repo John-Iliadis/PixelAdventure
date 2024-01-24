@@ -98,6 +98,7 @@ void AnimationManager::set_animation(const std::string& id)
 
     m_current_animation_id = id;
     m_current_frame_index = 0;
+    m_ellapsed = sf::Time::Zero;
     m_playing = true;
 }
 

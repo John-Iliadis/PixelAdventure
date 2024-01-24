@@ -29,8 +29,8 @@
         {
             "id": "double_jumping",
             "frame_count": 6,
-            "frame_time_milliseconds": 50,
-            "looped": true
+            "frame_time_milliseconds": 60,
+            "looped": false
         },
         {
             "id": "wall_sliding",
