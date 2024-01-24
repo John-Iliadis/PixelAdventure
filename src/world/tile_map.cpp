@@ -7,7 +7,7 @@
 
 TileMap::TileMap(const std::string &file_name)
 {
-    if (!map_texture.loadFromFile("../assets/textures/test_map2.png"))
+    if (!map_texture.loadFromFile("../assets/textures/test_map3.png")) // todo: figure out texture loading
         throw std::runtime_error("TileMap::TileMap - Failed to load texture\n");
 
     m_map_sprite.setTexture(map_texture);
@@ -41,11 +41,13 @@ TileMap::TileMap(const std::string &file_name)
 
     std::vector<int> solid_tiles = get_data("solid_tiles");
     std::vector<int> enemy_colliders = get_data("enemy_colliders");
-    std::vector<int> enemy_spawn_positions = get_data("enemy_layer");
+    std::vector<int> spawn_positions = get_data("enemy_layer");
+    std::vector<int> player_spawn_pos = get_data("player_spawn");
 
     setup_tiles(solid_tiles, m_solid_tiles);
     setup_tiles(enemy_colliders, m_enemy_colliders);
-    setup_positions(enemy_spawn_positions, m_enemy_spawn_positions);
+    setup_positions(spawn_positions, m_enemy_spawn_positions);
+    find_player_spawn_pos(player_spawn_pos);
 }
 
 void TileMap::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -106,4 +108,27 @@ void TileMap::setup_positions(const std::vector<int> &data, std::vector<std::pai
             }
         }
     }
+}
+
+void TileMap::find_player_spawn_pos(const std::vector<int> &data)
+{
+    for (int i = 0; i < total_tiles_y; ++i)
+    {
+        for (int j = 0; j < total_tiles_x; ++j)
+        {
+            if (data.at(i * total_tiles_x + j) != 0)
+            {
+                float x_pos = j * tile_width + tile_width / 2.f;
+                float y_pos = (i + 1) * tile_height;
+
+                m_player_spawn_pos = {x_pos, y_pos};
+                return;
+            }
+        }
+    }
+}
+
+sf::Vector2f TileMap::get_player_spawn_pos() const
+{
+    return m_player_spawn_pos;
 }

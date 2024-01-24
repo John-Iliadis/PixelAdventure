@@ -7,9 +7,10 @@
 
 World::World(GameContext& context)
     : m_context(context)
-    , m_tile_map("../data/tmx/test_map2.tmj")
-    , m_background(*m_context.texture_manager, m_context.window->getSize())
+    , m_tile_map("../data/tmx/test_map3.tmj")
+    , m_background(*m_context.texture_manager, m_context.window->getSize()) // todo: fix background texture size
 {
+    m_player.set_position(m_tile_map.get_player_spawn_pos());
     m_player.set_collision_callbacks([this] (double dt) {Collision::handle_x_axis_collisions(m_player, m_tile_map, dt);},
                                      [this] (double dt) {Collision::handle_y_axis_collisions(m_player, m_tile_map, dt);});
 }

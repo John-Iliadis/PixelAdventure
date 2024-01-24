@@ -13,8 +13,7 @@ Player::Player()
 
     current_state = new IdleState(*this);
 
-    m_sprite_collider.set_hitbox_size(18, 26); // todo: load json
-    m_sprite_collider.setPosition(200, 300);
+    m_sprite_collider.set_hitbox_size(m_hitbox_size.x, m_hitbox_size.y);
     m_sprite_collider.set_origin_mid_bottom();
 }
 
@@ -176,6 +175,7 @@ void Player::init_platformer_data()
     nlohmann::json json = nlohmann::json::parse(file);
 
     m_velocity = {};
+    m_hitbox_size = {json["hitbox"]["width"].get<float>(), json["hitbox"]["height"].get<float>()};
     m_move_speed = json["move_speed"].get<float>();
     m_gravity_speed = json["gravity_speed"].get<float>();
     m_gravity = m_gravity_speed;
@@ -219,4 +219,9 @@ void Player::set_touching_wall(bool touching_wall)
 float Player::get_jump_pressed_ellapsed_time() const
 {
     return m_jump_pressed_ellapsed_time;
+}
+
+void Player::set_position(const sf::Vector2f &pos)
+{
+    set_position(pos.x, pos.y);
 }

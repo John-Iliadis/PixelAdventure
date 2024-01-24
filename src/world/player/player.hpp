@@ -25,7 +25,7 @@
 class Player : public sf::Drawable
 {
 public:
-    Player(); // todo: pass map data for world scale
+    Player();
     ~Player();
 
     void handle_event(const sf::Event& event);
@@ -33,6 +33,7 @@ public:
 
     void set_animation(const std::string& id);
     void set_position(float x, float y);
+    void set_position(const sf::Vector2f& pos);
     void set_velocity(float x, float y);
     void move(float x, float y);
     void jump();
@@ -74,6 +75,7 @@ private:
 
 private:
     sf::Vector2f m_velocity;
+    sf::Vector2f m_hitbox_size;
     float m_move_speed;
     float m_gravity;
     float m_gravity_speed;
