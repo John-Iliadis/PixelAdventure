@@ -15,7 +15,6 @@ Player::Player()
 
     m_sprite_collider.set_hitbox_size(18, 26); // todo: load json
     m_sprite_collider.setPosition(200, 300);
-    m_sprite_collider.setScale(2, 2); // todo: load json
     m_sprite_collider.set_origin_mid_bottom();
 }
 

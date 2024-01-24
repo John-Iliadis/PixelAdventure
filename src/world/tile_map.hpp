@@ -23,7 +23,6 @@ public:
     TileMap(const std::string& file_name);
 
     const std::vector<sf::FloatRect>& get_solid_tiles() const;
-    const std::vector<sf::FloatRect>& get_platforms() const;
     const std::vector<sf::FloatRect>& get_enemy_colliders() const; // todo: change name
     const std::vector<std::pair<uint32_t, sf::Vector2f>>& get_enemy_spawn_positions() const;
 
@@ -34,7 +33,6 @@ private:
 
 private:
     std::vector<sf::FloatRect> m_solid_tiles;
-    std::vector<sf::FloatRect> m_platforms;
     std::vector<sf::FloatRect> m_enemy_colliders;
     std::vector<std::pair<uint32_t, sf::Vector2f>> m_enemy_spawn_positions;
 

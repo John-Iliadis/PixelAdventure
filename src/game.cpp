@@ -7,14 +7,16 @@
 
 #define INITIAL_WINDOW_WIDTH 1280
 #define INITIAL_WINDOW_HEIGHT 720
+#define INITIAL_VIEWPORT_WIDTH INITIAL_WINDOW_WIDTH / 2
+#define INITIAL_VIEWPORT_HEIGHT INITIAL_WINDOW_HEIGHT / 2
 
 Game::Game()
 {
     sf::VideoMode window_size {INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT};
     m_window.create(window_size, "Platformer");
-    m_window.setFramerateLimit(utils::get_max_refresh_rate());
+    m_window.setVerticalSyncEnabled(true);
 
-    m_view = sf::View({0, 0, INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT});
+    m_view = sf::View({0, 0, INITIAL_VIEWPORT_WIDTH, INITIAL_VIEWPORT_HEIGHT});
 
     m_texture_manager.load_directory("../assets/textures");
     m_font_manager.load_directory("../assets/fonts");
@@ -52,7 +54,7 @@ void Game::run()
         }
 
         update_fps_stats(elapsed_time);
-        draw();
+        draw(); // todo: limit frame rate
     }
 }
 
@@ -79,7 +81,8 @@ void Game::handle_events()
 
             case sf::Event::Resized:
             {
-                m_view.setSize(event.size.width, event.size.height);
+                float aspect_ratio = static_cast<float>(event.size.width) / static_cast<float>(event.size.height);
+                m_view.setSize(int(INITIAL_VIEWPORT_HEIGHT * aspect_ratio), int(INITIAL_VIEWPORT_HEIGHT));
                 break;
             }
         }
@@ -104,8 +107,6 @@ void Game::draw()
     m_window.display();
 }
 
-#include <iostream>
-
 void Game::update_fps_stats(sf::Time elapsed)
 {
     fps_update_time += elapsed;
@@ -113,7 +114,7 @@ void Game::update_fps_stats(sf::Time elapsed)
 
     if (fps_update_time >= sf::seconds(1.f))
     {
-        //std::cout << fps_num_frames << '\n';
+        std::cout << fps_num_frames << '\n';
 
         fps_update_time -= sf::seconds(1);
         fps_num_frames = 0;

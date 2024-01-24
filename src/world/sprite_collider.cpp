@@ -64,7 +64,6 @@ void SpriteCollider::draw(sf::RenderTarget &target, sf::RenderStates states) con
 {
     states.transform *= getTransform();
     target.draw(m_sprite, states);
-    target.draw(m_hit_box, states);
 }
 
 SpriteOrientation SpriteCollider::get_orientation() const

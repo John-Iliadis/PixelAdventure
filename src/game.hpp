@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 #include <fstream>
+#include <iostream>
 #include "utilities/utils.hpp"
 #include "vendor/json.hpp"
 #include "states/state_stack.hpp"
