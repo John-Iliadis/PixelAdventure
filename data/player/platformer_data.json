@@ -3,8 +3,7 @@
     "gravity_speed": 8,
     "wall_sliding_speed": 75,
     "jump_speed": -400,
-    "jump_pressed_remember_time": 0.3,
-    "facing_right": true,
+    "jump_pressed_remember_time": 0.2,
     "hitbox": {
         "width": 18,
         "height": 26

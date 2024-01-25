@@ -16,12 +16,7 @@ IdleState::IdleState(Player &player)
     player.set_previously_double_jumped(false);
 }
 
-PlayerState* IdleState::handle_event(Player &player, const sf::Event &event)
-{
-    return nullptr;
-}
-
-PlayerState* IdleState::update(Player &player, double dt)
+PlayerState* IdleState::update(Player &player)
 {
     if (player.get_jump_pressed_ellapsed_time() > 0)
         return new JumpingState(player);

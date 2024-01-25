@@ -14,6 +14,7 @@ Game::Game()
 {
     sf::VideoMode window_size {INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT};
     m_window.create(window_size, "Platformer");
+    m_window.setKeyRepeatEnabled(false);
     m_window.setFramerateLimit(240); // todo: implement in game loop
 
     m_view = sf::View({0, 0, INITIAL_VIEWPORT_WIDTH, INITIAL_VIEWPORT_HEIGHT});

@@ -59,7 +59,8 @@ add_executable(Platformer
         src/world/sprite_collider.hpp
         src/world/enums.hpp
         src/animation/animation_manager.cpp
-        src/animation/animation_manager.hpp)
+        src/animation/animation_manager.hpp
+        src/world/player/player_data.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

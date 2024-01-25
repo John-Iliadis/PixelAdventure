@@ -14,12 +14,7 @@ DoubleJumpingState::DoubleJumpingState(Player &player)
     player.jump();
 }
 
-PlayerState* DoubleJumpingState::handle_event(Player &player, const sf::Event &event)
-{
-    return nullptr;
-}
-
-PlayerState* DoubleJumpingState::update(Player &player, double dt)
+PlayerState* DoubleJumpingState::update(Player &player)
 {
     if (player.get_velocity().y > 0)
         return new FallingState(player);

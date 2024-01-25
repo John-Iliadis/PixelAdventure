@@ -15,16 +15,11 @@ JumpingState::JumpingState(Player &player)
     player.jump();
 }
 
-PlayerState* JumpingState::handle_event(Player &player, const sf::Event &event)
+PlayerState* JumpingState::update(Player &player)
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
+    if (player.get_jump_pressed_ellapsed_time() > 0)
         return new DoubleJumpingState(player);
 
-    return nullptr;
-}
-
-PlayerState* JumpingState::update(Player &player, double dt)
-{
     if (player.get_velocity().y >= 0)
         return new FallingState(player);
 

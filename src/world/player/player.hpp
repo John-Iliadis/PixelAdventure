@@ -5,21 +5,15 @@
 #ifndef PLATFORMER_PLAYER_HPP
 #define PLATFORMER_PLAYER_HPP
 
-// todo: clean up includes
 #include <functional>
-#include <fstream>
-#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Window/Event.hpp>
-#include "../../states/game_context.hpp"
+#include "idle_state.hpp"
+#include "player_data.hpp"
+#include "../sprite_collider.hpp"
 #include "../../asset_managers/texture_manager.hpp"
 #include "../../asset_managers/sound_buffer_manager.hpp"
-#include "../../utilities/utils.hpp"
-#include "idle_state.hpp"
-#include "../sprite_collider.hpp"
 #include "../../animation/animation_manager.hpp"
-#include "../enums.hpp"
 
 
 class Player : public sf::Drawable
@@ -28,7 +22,7 @@ public:
     Player();
     ~Player();
 
-    void handle_event(const sf::Event& event);
+    void handle_events(const sf::Event& event);
     void update(double dt);
 
     void set_animation(const std::string& id);
@@ -41,14 +35,13 @@ public:
     void set_previously_jumped(bool prev_jumped);
     void set_previously_double_jumped(bool prev_double_jumped);
     void set_touching_wall(bool touching_wall);
-    void set_collision_callbacks(std::function<void(double)> x, std::function<void(double)> y);
+    void set_collision_callback(std::function<void(double)> callback);
 
     sf::FloatRect get_hitbox() const;
     sf::Vector2f get_center() const;
     sf::Vector2f get_position() const;
-    SpriteOrientation get_orientation() const;
-
     sf::Vector2f get_velocity() const;
+    SpriteOrientation get_orientation() const;
     float get_wall_sliding_speed() const;
     float get_jump_pressed_ellapsed_time() const;
     bool previously_jumped() const;
@@ -56,36 +49,24 @@ public:
     bool touching_wall() const;
 
 private:
+    void handle_input();
+    void update_physics(double dt);
+    void handle_state();
+    void update_animation(double dt);
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-    void handle_real_time_input();
+
     void apply_gravity();
     void change_state(PlayerState* new_state);
     void set_animation_frame();
-    void init_platformer_data();
 
 private:
+    PlayerData m_player_data;
     TextureManager m_textures;
     SoundBufferManager m_sound_buffers;
     SpriteCollider m_sprite_collider;
     AnimationManager m_animations;
-    PlayerState* current_state;
-
-    std::function<void(double)> x_axis_collision_callback;
-    std::function<void(double)> y_axis_collision_callback;
-
-private:
-    sf::Vector2f m_velocity;
-    sf::Vector2f m_hitbox_size;
-    float m_move_speed;
-    float m_gravity;
-    float m_gravity_speed;
-    float m_wall_sliding_speed;
-    float m_jump_speed;
-    float m_jump_pressed_remember_time;
-    float m_jump_pressed_ellapsed_time;
-    bool m_previously_jumped;
-    bool m_previously_double_jumped;
-    bool m_touching_wall;
+    PlayerState* m_current_state;
+    std::function<void(double)> m_resolve_collision_callback;
 };
 
 

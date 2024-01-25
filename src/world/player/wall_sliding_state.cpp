@@ -17,19 +17,13 @@ WallSlidingState::WallSlidingState(Player &player)
     player.set_velocity(player.get_velocity().x, player.get_wall_sliding_speed());
 }
 
-PlayerState* WallSlidingState::handle_event(Player &player, const sf::Event &event)
+PlayerState* WallSlidingState::update(Player &player)
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
+    if (player.get_jump_pressed_ellapsed_time() > 0)
     {
         player.set_gravity(true);
         return new JumpingState(player);
     }
-
-    return nullptr;
-}
-
-PlayerState* WallSlidingState::update(Player &player, double dt)
-{
 
     if (player.get_velocity().y == 0)
     {

@@ -12,9 +12,7 @@ class FallingState : public PlayerState
 {
 public:
     FallingState(Player& player);
-
-    PlayerState* handle_event(Player &player, const sf::Event &event) override;
-    PlayerState* update(Player &player, double dt) override;
+    PlayerState* update(Player &player) override;
 };
 
 
