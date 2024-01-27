@@ -6,11 +6,20 @@
 #define PLATFORMER_ENUMS_HPP
 
 
-enum class SpriteOrientation
+enum class Orientation
 {
     FACES_LEFT,
     FACES_RIGHT
 };
 
+enum class Origin
+{
+    TOP_LEFT,
+    CENTER,
+    CENTER_TOP,
+    CENTER_BOTTOM,
+    CENTER_LEFT,
+    CENTER_RIGHT
+};
 
 #endif //PLATFORMER_ENUMS_HPP

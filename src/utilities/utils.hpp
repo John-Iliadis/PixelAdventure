@@ -18,13 +18,13 @@ namespace utils
     uint32_t get_max_refresh_rate();
 
     void set_origin_center(sf::Sprite& sprite);
-    void set_origin_center(sf::RectangleShape& shape);
+    void set_origin_center(sf::Shape& shape);
 
     void set_origin_top_left(sf::Sprite& sprite);
-    void set_origin_top_left(sf::RectangleShape& shape);
+    void set_origin_top_left(sf::Shape& shape);
 
     void set_origin_mid_bottom(sf::Sprite& sprite);
-    void set_origin_mid_bottom(sf::RectangleShape& shape);
+    void set_origin_mid_bottom(sf::Shape& shape);
 
     void flip_sprite(sf::Sprite& sprite);
 }

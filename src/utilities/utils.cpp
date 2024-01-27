@@ -26,7 +26,7 @@ namespace utils
         sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
     }
 
-    void set_origin_center(sf::RectangleShape& shape)
+    void set_origin_center(sf::Shape& shape)
     {
         auto rect = shape.getLocalBounds();
 
@@ -38,7 +38,7 @@ namespace utils
         sprite.setOrigin(0, 0);
     }
 
-    void set_origin_top_left(sf::RectangleShape& shape)
+    void set_origin_top_left(sf::Shape& shape)
     {
         shape.setOrigin(0, 0);
     }
@@ -49,7 +49,7 @@ namespace utils
         sprite.setOrigin(rect.width / 2.f, rect.height);
     }
 
-    void set_origin_mid_bottom(sf::RectangleShape& shape)
+    void set_origin_mid_bottom(sf::Shape& shape)
     {
         auto rect = shape.getLocalBounds();
         shape.setOrigin(rect.width / 2.f, rect.height);

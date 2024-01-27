@@ -5,6 +5,7 @@
 #ifndef PLATFORMER_PLAYER_DATA_HPP
 #define PLATFORMER_PLAYER_DATA_HPP
 
+#include <fstream>
 #include <string>
 #include <SFML/System/Vector2.hpp>
 #include "../../vendor/json.hpp"

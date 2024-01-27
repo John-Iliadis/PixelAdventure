@@ -14,6 +14,7 @@
 #include "../../asset_managers/texture_manager.hpp"
 #include "../../asset_managers/sound_buffer_manager.hpp"
 #include "../../animation/animation_manager.hpp"
+#include "../../utilities/utils.hpp"
 
 
 class Player : public sf::Drawable
@@ -35,13 +36,14 @@ public:
     void set_previously_jumped(bool prev_jumped);
     void set_previously_double_jumped(bool prev_double_jumped);
     void set_touching_wall(bool touching_wall);
+    void set_orientation(Orientation orientation);
     void set_collision_callback(std::function<void(double)> callback);
 
-    sf::FloatRect get_hitbox() const;
+    sf::FloatRect get_collider() const;
     sf::Vector2f get_center() const;
     sf::Vector2f get_position() const;
     sf::Vector2f get_velocity() const;
-    SpriteOrientation get_orientation() const;
+    Orientation get_orientation() const;
     float get_wall_sliding_speed() const;
     float get_jump_pressed_ellapsed_time() const;
     bool previously_jumped() const;
@@ -64,6 +66,7 @@ private:
     TextureManager m_textures;
     SoundBufferManager m_sound_buffers;
     SpriteCollider m_sprite_collider;
+    Orientation m_orientation;
     AnimationManager m_animations;
     PlayerState* m_current_state;
     std::function<void(double)> m_resolve_collision_callback;

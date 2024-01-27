@@ -11,10 +11,12 @@ Player::Player()
     m_animations.load_from_file("../data/player/animations.json");
     m_player_data.load_from_file("../data/player/platformer_data.json");
 
+    m_orientation = Orientation::FACES_RIGHT;
     m_current_state = new IdleState(*this);
 
-    m_sprite_collider.set_hitbox_size(m_player_data.hitbox_size.x, m_player_data.hitbox_size.y);
-    m_sprite_collider.set_origin_mid_bottom();
+    m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
+    m_sprite_collider.set_collider_size(m_player_data.hitbox_size.x, m_player_data.hitbox_size.y);
+    m_sprite_collider.set_origin(Origin::CENTER_BOTTOM);
 }
 
 Player::~Player()
@@ -51,12 +53,12 @@ void Player::handle_input()
     else if (key_pressed(Keyboard::Right))
     {
         m_player_data.velocity.x = m_player_data.move_speed;
-        m_sprite_collider.set_orientation(SpriteOrientation::FACES_RIGHT);
+        set_orientation(Orientation::FACES_RIGHT);
     }
     else if (key_pressed(Keyboard::Left))
     {
         m_player_data.velocity.x = -m_player_data.move_speed;
-        m_sprite_collider.set_orientation(SpriteOrientation::FACES_LEFT);
+        set_orientation(Orientation::FACES_LEFT);
     }
 }
 
@@ -86,13 +88,12 @@ void Player::set_collision_callback(std::function<void(double)> callback)
 void Player::set_animation(const std::string &id)
 {
     m_animations.set_animation(id);
-    m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
     m_sprite_collider.set_texture(m_textures.get(id));
 }
 
 void Player::set_position(float x, float y)
 {
-    m_sprite_collider.setPosition(x, y);
+    m_sprite_collider.set_position(x, y);
 }
 
 void Player::move(float x, float y)
@@ -105,24 +106,27 @@ void Player::set_gravity(bool on)
     m_player_data.gravity = on ? m_player_data.gravity_speed : 0;
 }
 
-sf::FloatRect Player::get_hitbox() const
+sf::FloatRect Player::get_collider() const
 {
-    return m_sprite_collider.get_hitbox();
+    return m_sprite_collider.get_collider();
 }
 
 sf::Vector2f Player::get_center() const
 {
-    return m_sprite_collider.get_sprite_center();
+    auto rect = m_sprite_collider.get_sprite_rect();
+
+    return {rect.left + rect.width / 2.f,
+            rect.top + rect.height / 2.f};
 }
 
 sf::Vector2f Player::get_position() const
 {
-    return m_sprite_collider.getPosition();
+    return m_sprite_collider.get_position();
 }
 
-SpriteOrientation Player::get_orientation() const
+Orientation Player::get_orientation() const
 {
-    return m_sprite_collider.get_orientation();
+    return m_orientation;
 }
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -208,4 +212,13 @@ float Player::get_jump_pressed_ellapsed_time() const
 void Player::set_position(const sf::Vector2f &pos)
 {
     set_position(pos.x, pos.y);
+}
+
+void Player::set_orientation(Orientation orientation)
+{
+    if (m_orientation == orientation)
+        return;
+
+    m_orientation = orientation;
+    m_sprite_collider.scale(-1, 1);
 }
