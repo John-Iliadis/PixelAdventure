@@ -60,7 +60,14 @@ add_executable(Platformer
         src/world/enums.hpp
         src/animation/animation_manager.cpp
         src/animation/animation_manager.hpp
-        src/world/player/player_data.hpp)
+        src/world/player/player_data.hpp
+        src/world/world_data.hpp
+        src/world/enemies/enemy.cpp
+        src/world/enemies/enemy.hpp
+        src/world/enemies/animated_enemy.cpp
+        src/world/enemies/animated_enemy.hpp
+        src/world/movable_object.cpp
+        src/world/movable_object.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
