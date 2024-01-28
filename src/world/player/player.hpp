@@ -7,20 +7,21 @@
 
 #include <functional>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Event.hpp>
-#include "idle_state.hpp"
-#include "player_data.hpp"
-#include "../sprite_collider.hpp"
-#include "../../asset_managers/texture_manager.hpp"
 #include "../../asset_managers/sound_buffer_manager.hpp"
+#include "../../asset_managers/texture_manager.hpp"
 #include "../../animation/animation_manager.hpp"
+#include "../../states/game_context.hpp"
 #include "../../utilities/utils.hpp"
-
+#include "../sprite_collider.hpp"
+#include "player_data.hpp"
+#include "idle_state.hpp"
 
 class Player : public sf::Drawable
 {
 public:
-    Player();
+    Player(GameContext& context);
     ~Player();
 
     void handle_events(const sf::Event& event);
@@ -61,14 +62,17 @@ private:
     void change_state(PlayerState* new_state);
     void set_animation_frame();
 
+    void setup_textures(const TextureManager& textures);
+    void setup_sound_buffers(const SoundBufferManager& sound_buffers);
+
 private:
-    PlayerData m_player_data;
-    TextureManager m_textures;
-    SoundBufferManager m_sound_buffers;
+    PlayerData m_data;
     SpriteCollider m_sprite_collider;
     Orientation m_orientation;
     AnimationManager m_animations;
     PlayerState* m_current_state;
+    std::unordered_map<std::string, const sf::Texture*> m_textures;
+    std::unordered_map<std::string, const sf::SoundBuffer*> m_sound_buffers;
     std::function<void(double)> m_resolve_collision_callback;
 };
 

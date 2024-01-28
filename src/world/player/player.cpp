@@ -5,17 +5,22 @@
 #include "player.hpp"
 
 
-Player::Player()
+static std::string animation_filepath = "../data/player/animations.json";
+static std::string platformer_data_path = "../data/player/platformer_data.json";
+
+Player::Player(GameContext& context)
 {
-    m_textures.load_directory_list("../data/player/player_textures.json");
-    m_animations.load_from_file("../data/player/animations.json");
-    m_player_data.load_from_file("../data/player/platformer_data.json");
+    setup_textures(*context.texture_manager);
+    setup_sound_buffers(*context.sound_buffer_manager);
+
+    m_animations.load_from_file(animation_filepath);
+    m_data.load_from_file(platformer_data_path);
 
     m_orientation = Orientation::FACES_RIGHT;
     m_current_state = new IdleState(*this);
 
     m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
-    m_sprite_collider.set_collider_size(m_player_data.hitbox_size.x, m_player_data.hitbox_size.y);
+    m_sprite_collider.set_collider_size(m_data.hitbox_size.x, m_data.hitbox_size.y);
     m_sprite_collider.set_origin(Origin::CENTER_BOTTOM);
 }
 
@@ -27,7 +32,7 @@ Player::~Player()
 void Player::handle_events(const sf::Event &event)
 {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
-        m_player_data.jump_pressed_ellapsed_time = m_player_data.jump_pressed_remember_time;
+        m_data.jump_pressed_ellapsed_time = m_data.jump_pressed_remember_time;
 }
 
 void Player::update(double dt)
@@ -37,7 +42,7 @@ void Player::update(double dt)
     handle_state();
     update_animation(dt);
 
-    m_player_data.jump_pressed_ellapsed_time -= dt;
+    m_data.jump_pressed_ellapsed_time -= dt;
 }
 
 void Player::handle_input()
@@ -48,16 +53,16 @@ void Player::handle_input()
     if (key_pressed(Keyboard::Left) && key_pressed(Keyboard::Right)
         || (!key_pressed(Keyboard::Left) && !key_pressed(Keyboard::Right)))
     {
-        m_player_data.velocity.x = 0;
+        m_data.velocity.x = 0;
     }
     else if (key_pressed(Keyboard::Right))
     {
-        m_player_data.velocity.x = m_player_data.move_speed;
+        m_data.velocity.x = m_data.move_speed;
         set_orientation(Orientation::FACES_RIGHT);
     }
     else if (key_pressed(Keyboard::Left))
     {
-        m_player_data.velocity.x = -m_player_data.move_speed;
+        m_data.velocity.x = -m_data.move_speed;
         set_orientation(Orientation::FACES_LEFT);
     }
 }
@@ -88,7 +93,7 @@ void Player::set_collision_callback(std::function<void(double)> callback)
 void Player::set_animation(const std::string &id)
 {
     m_animations.set_animation(id);
-    m_sprite_collider.set_texture(m_textures.get(id));
+    m_sprite_collider.set_texture(*m_textures[id]);
 }
 
 void Player::set_position(float x, float y)
@@ -103,7 +108,7 @@ void Player::move(float x, float y)
 
 void Player::set_gravity(bool on)
 {
-    m_player_data.gravity = on ? m_player_data.gravity_speed : 0;
+    m_data.gravity = on ? m_data.gravity_speed : 0;
 }
 
 sf::FloatRect Player::get_collider() const
@@ -136,7 +141,7 @@ void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Player::apply_gravity()
 {
-    m_player_data.velocity.y += m_player_data.gravity;
+    m_data.velocity.y += m_data.gravity;
 }
 
 void Player::change_state(PlayerState *new_state)
@@ -155,58 +160,58 @@ void Player::set_animation_frame()
 
 sf::Vector2f Player::get_velocity() const
 {
-    return m_player_data.velocity;
+    return m_data.velocity;
 }
 
 float Player::get_wall_sliding_speed() const
 {
-    return m_player_data.wall_sliding_speed;
+    return m_data.wall_sliding_speed;
 }
 
 bool Player::previously_jumped() const
 {
-    return m_player_data.previously_jumped;
+    return m_data.previously_jumped;
 }
 
 bool Player::previously_double_jumped() const
 {
-    return m_player_data.previously_double_jumped;
+    return m_data.previously_double_jumped;
 }
 
 bool Player::touching_wall() const
 {
-    return m_player_data.touching_wall;
+    return m_data.touching_wall;
 }
 
 void Player::set_previously_jumped(bool prev_jumped)
 {
-    m_player_data.previously_jumped = prev_jumped;
+    m_data.previously_jumped = prev_jumped;
 }
 
 void Player::set_previously_double_jumped(bool prev_double_jumped)
 {
-    m_player_data.previously_double_jumped = prev_double_jumped;
+    m_data.previously_double_jumped = prev_double_jumped;
 }
 
 void Player::jump()
 {
-    m_player_data.jump_pressed_ellapsed_time = 0;
-    m_player_data.velocity.y = m_player_data.jump_speed;
+    m_data.jump_pressed_ellapsed_time = 0;
+    m_data.velocity.y = m_data.jump_speed;
 }
 
 void Player::set_velocity(float x, float y)
 {
-    m_player_data.velocity = {x, y};
+    m_data.velocity = {x, y};
 }
 
 void Player::set_touching_wall(bool touching_wall)
 {
-    m_player_data.touching_wall = touching_wall;
+    m_data.touching_wall = touching_wall;
 }
 
 float Player::get_jump_pressed_ellapsed_time() const
 {
-    return m_player_data.jump_pressed_ellapsed_time;
+    return m_data.jump_pressed_ellapsed_time;
 }
 
 void Player::set_position(const sf::Vector2f &pos)
@@ -221,4 +226,19 @@ void Player::set_orientation(Orientation orientation)
 
     m_orientation = orientation;
     m_sprite_collider.scale(-1, 1);
+}
+
+void Player::setup_textures(const TextureManager &textures)
+{
+    m_textures["idle"] = &textures.get("idle");
+    m_textures["falling"] = &textures.get("falling");
+    m_textures["running"] = &textures.get("running");
+    m_textures["jumping"] = &textures.get("jumping");
+    m_textures["wall_sliding"] = &textures.get("wall_sliding");
+    m_textures["double_jumping"] = &textures.get("double_jumping");
+}
+
+void Player::setup_sound_buffers(const SoundBufferManager &sound_buffers)
+{
+
 }
