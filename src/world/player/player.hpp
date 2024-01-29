@@ -15,8 +15,9 @@
 #include "../../states/game_context.hpp"
 #include "../../utilities/utils.hpp"
 #include "../sprite_collider.hpp"
-#include "player_data.hpp"
+#include "../../structs/player_data.hpp"
 #include "idle_state.hpp"
+
 
 class Player : public sf::Drawable
 {

@@ -31,8 +31,6 @@ add_executable(Platformer
         src/world/world.hpp
         src/world/player/player.cpp
         src/world/player/player.hpp
-        src/world/tile_map.cpp
-        src/world/tile_map.hpp
         src/world/back_ground.cpp
         src/world/back_ground.hpp
         src/vendor/json.hpp
@@ -60,14 +58,12 @@ add_executable(Platformer
         src/world/enums.hpp
         src/animation/animation_manager.cpp
         src/animation/animation_manager.hpp
-        src/world/player/player_data.hpp
-        src/world/world_data.hpp
-        src/world/enemies/enemy.cpp
-        src/world/enemies/enemy.hpp
-        src/world/enemies/animated_enemy.cpp
-        src/world/enemies/animated_enemy.hpp
+        src/structs/player_data.hpp
         src/world/movable_object.cpp
-        src/world/movable_object.hpp)
+        src/world/movable_object.hpp
+        src/world/tiled_json_loader.cpp
+        src/world/tiled_json_loader.hpp
+        src/structs/map_data.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

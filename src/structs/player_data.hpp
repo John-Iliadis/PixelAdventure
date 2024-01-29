@@ -8,7 +8,7 @@
 #include <fstream>
 #include <string>
 #include <SFML/System/Vector2.hpp>
-#include "../../vendor/json.hpp"
+#include "../vendor/json.hpp"
 
 struct PlayerData
 {

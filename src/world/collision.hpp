@@ -24,8 +24,8 @@ namespace Collision
 
     bool ray_cast(const sf::FloatRect& movable, const sf::Vector2f& velocity, const sf::FloatRect& target);
 
-    void handle_x_axis_collisions(Player& player, TileMap& tile_map, double dt);
-    void handle_y_axis_collisions(Player& player, TileMap& tile_map, double dt);
+    void handle_x_axis_collisions(Player& player, const std::vector<sf::Rect<float>>& solid_tiles, double dt);
+    void handle_y_axis_collisions(Player& player, const std::vector<sf::Rect<float>>& solid_tiles, double dt);
 };
 
 

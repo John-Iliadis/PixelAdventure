@@ -7,15 +7,30 @@
 
 World::World(GameContext& context)
     : m_context(context)
-    , m_tile_map("../data/tmx/test_map3.tmj")
+  //  , m_tile_map("../data/tmx/test_map3.tmj")
     , m_player(context)
     , m_background(*m_context.texture_manager, m_context.window->getSize()) // todo: fix background texture size
 {
-    m_player.set_position(m_tile_map.get_player_spawn_pos());
+    std::ifstream file("../data/tmx/test_map3.tmj");
+
+    if (!file.is_open())
+        throw std::runtime_error("World::World: Failed to open file");
+
+    nlohmann::json map_data = nlohmann::json::parse(file);
+
+    file.close();
+
+    m_solid_tiles = TiledJsonLoader::get_tiles(map_data, "solid_tiles");
+
+    auto player_pos = TiledJsonLoader::get_position(map_data, "spawn_positions", "player_spawn_pos");
+
+    m_player.set_position(player_pos);
     m_player.set_collision_callback([this] (double dt) {
-        Collision::handle_x_axis_collisions(m_player, m_tile_map, dt);
-        Collision::handle_y_axis_collisions(m_player, m_tile_map, dt);
+        Collision::handle_x_axis_collisions(m_player, m_solid_tiles, dt);
+        Collision::handle_y_axis_collisions(m_player, m_solid_tiles, dt);
     });
+
+    background_map.setTexture(m_context.texture_manager->get("test_map3"));
 }
 
 void World::handle_events(const sf::Event &event)
@@ -36,6 +51,6 @@ void World::draw()
     sf::RenderWindow& window = *m_context.window;
 
     window.draw(m_background);
-    window.draw(m_tile_map);
+    window.draw(background_map);
     window.draw(m_player);
 }
