@@ -13,6 +13,7 @@
 #include "collision.hpp"
 #include "tiled_json_loader.hpp"
 #include "enemies/spike.hpp"
+#include "camera.hpp"
 
 #include <thread>
 

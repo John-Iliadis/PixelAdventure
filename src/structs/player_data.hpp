@@ -24,6 +24,7 @@ struct PlayerData
     bool previously_jumped;
     bool previously_double_jumped;
     bool touching_wall;
+    bool accepting_input;
 
     void load_from_file(const std::string& file_name)
     {
@@ -48,6 +49,7 @@ struct PlayerData
         previously_jumped = false;
         previously_double_jumped = false;
         touching_wall = false;
+        accepting_input = true;
     }
 };
 

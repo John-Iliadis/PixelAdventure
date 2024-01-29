@@ -31,7 +31,7 @@ Player::~Player()
 
 void Player::handle_events(const sf::Event &event)
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up && m_data.accepting_input)
         m_data.jump_pressed_ellapsed_time = m_data.jump_pressed_remember_time;
 }
 
@@ -47,6 +47,8 @@ void Player::update(double dt)
 
 void Player::handle_input()
 {
+    if (!m_data.accepting_input) return;
+
     using namespace sf;
     bool (*key_pressed)(Keyboard::Key) = Keyboard::isKeyPressed;
 
@@ -241,4 +243,9 @@ void Player::setup_textures(const TextureManager &textures)
 void Player::setup_sound_buffers(const SoundBufferManager &sound_buffers)
 {
 
+}
+
+void Player::set_accepting_input(bool accepting_input)
+{
+    m_data.accepting_input = accepting_input;
 }

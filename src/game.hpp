@@ -17,6 +17,7 @@
 #include "asset_managers/font_manager.hpp"
 #include "asset_managers/sound_buffer_manager.hpp"
 #include "asset_managers/music_manager.hpp"
+#include "world/camera.hpp"
 
 
 class Game
@@ -34,7 +35,7 @@ private:
 
 private:
     sf::RenderWindow m_window;
-    sf::View m_view;
+    Camera m_camera;
     StateStack m_state_stack;
     GameContext m_context;
     TextureManager m_texture_manager;

@@ -4,6 +4,7 @@
 
 #include "world.hpp"
 
+static bool following_player = true;
 
 World::World(GameContext& context)
     : m_context(context)
@@ -36,6 +37,16 @@ World::World(GameContext& context)
 
 void World::handle_events(const sf::Event &event)
 {
+    if (event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::M && following_player)
+        {
+            following_player = false;
+            m_player.set_accepting_input(false);
+            m_context.camera->set_target({1000, 1000}, [this] () {m_player.set_accepting_input(true); following_player = true;});
+        }
+    }
+
     m_player.handle_events(event);
 }
 
@@ -44,7 +55,8 @@ void World::update(double dt)
     m_background.update(dt);
     m_player.update(dt);
 
-    m_context.view->setCenter(m_player.get_center());
+    if (following_player)
+        m_context.camera->set_center(m_player.get_center());
 }
 
 void World::draw()

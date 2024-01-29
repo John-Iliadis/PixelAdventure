@@ -9,9 +9,9 @@
 namespace sf
 {
     class RenderWindow;
-    class View;
 }
 
+class Camera;
 class Settings;
 class TextureManager;
 class FontManager;
@@ -20,13 +20,13 @@ class MusicManager;
 
 struct GameContext
 {
-    sf::RenderWindow* window = nullptr;
-    sf::View* view = nullptr;
-    TextureManager* texture_manager = nullptr;
-    FontManager* font_manager = nullptr;
-    SoundBufferManager* sound_buffer_manager = nullptr;
-    MusicManager* music_manager = nullptr;
-    Settings* settings = nullptr;
+    sf::RenderWindow* window;
+    Camera* camera;
+    TextureManager* texture_manager;
+    FontManager* font_manager;
+    SoundBufferManager* sound_buffer_manager;
+    MusicManager* music_manager;
+    Settings* settings;
 };
 
 #endif //PLATFORMER_GAME_CONTEXT_HPP

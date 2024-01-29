@@ -1,0 +1,85 @@
+//
+// Created by Gianni on 29/01/2024.
+//
+
+#ifndef PLATFORMER_CAMERA_HPP
+#define PLATFORMER_CAMERA_HPP
+
+#include <cstdint>
+#include <functional>
+#include <cmath>
+#include <SFML/Graphics/View.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Time.hpp>
+#include "movable_object.hpp"
+
+class Camera : sf::NonCopyable
+{
+public:
+    Camera() = default;
+    Camera(sf::RenderWindow* window, uint32_t width, uint32_t height);
+    ~Camera();
+
+    void resize(float aspect_ratio);
+    void update(double dt);
+
+    void set_target(const sf::Vector2f& target, std::function<void()> callback = nullptr);
+
+    void set_size(uint32_t width, uint32_t height);
+    void set_size(const sf::Vector2u& size);
+    void set_center(float x, float y);
+    void set_center(const sf::Vector2f& center);
+
+    sf::Vector2f get_center() const;
+
+    Camera& operator=(Camera&& other) noexcept
+    {
+        if (this != &other)
+        {
+            m_window = other.m_window;
+            m_camera = other.m_camera;
+            m_size = other.m_size;
+            m_current_state = other.m_current_state;
+
+            other.m_window = nullptr;
+            other.m_current_state = nullptr;
+        }
+
+        return *this;
+    }
+
+private:
+    class State
+    {
+    public:
+        virtual ~State() = default;
+        virtual State* update(Camera& camera, double dt) { return nullptr; };
+    };
+
+    class TargetTransitionState : public State
+    {
+    public:
+        TargetTransitionState(Camera& camera, const sf::Vector2f& target_pos, std::function<void()> callback = nullptr);
+        State* update(Camera &camera, double dt) override;
+
+    private:
+        std::function<void()> m_callback;
+        sf::Vector2f m_start_pos;
+        sf::Vector2f m_target_pos;
+        float m_duration;
+        float m_total_ellapsed;
+    };
+
+    class IdleState : public State
+    {
+    };
+
+private:
+    sf::RenderWindow* m_window;
+    sf::View m_camera;
+    sf::Vector2u m_size;
+    State* m_current_state;
+};
+
+
+#endif //PLATFORMER_CAMERA_HPP

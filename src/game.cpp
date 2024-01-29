@@ -17,7 +17,7 @@ Game::Game()
     m_window.setKeyRepeatEnabled(false);
     m_window.setFramerateLimit(240); // todo: implement in game loop
 
-    m_view = sf::View({0, 0, INITIAL_VIEWPORT_WIDTH, INITIAL_VIEWPORT_HEIGHT});
+    m_camera = Camera(&m_window, INITIAL_VIEWPORT_WIDTH, INITIAL_VIEWPORT_HEIGHT);
 
     m_texture_manager.load_directory("../assets/textures");
     m_font_manager.load_directory("../assets/fonts");
@@ -25,7 +25,7 @@ Game::Game()
     m_music_manager.load_directory("../assets/music");
 
     m_context.window = &m_window;
-    m_context.view = &m_view;
+    m_context.camera = &m_camera;
     m_context.texture_manager = &m_texture_manager;
     m_context.font_manager = &m_font_manager;
     m_context.sound_buffer_manager = &m_sound_buffer_manager;
@@ -83,7 +83,7 @@ void Game::handle_events()
             case sf::Event::Resized:
             {
                 float aspect_ratio = static_cast<float>(event.size.width) / static_cast<float>(event.size.height);
-                m_view.setSize(int(INITIAL_VIEWPORT_HEIGHT * aspect_ratio), int(INITIAL_VIEWPORT_HEIGHT));
+                m_camera.resize(aspect_ratio);
                 break;
             }
         }
@@ -95,7 +95,7 @@ void Game::handle_events()
 void Game::update(double dt)
 {
     m_state_stack.update(dt);
-    m_window.setView(m_view);
+    m_camera.update(dt);
 
     if (m_state_stack.empty())
         m_window.close();
@@ -103,7 +103,7 @@ void Game::update(double dt)
 
 void Game::draw()
 {
-    m_window.clear({33, 31, 48, 255});
+    m_window.clear(sf::Color(33, 31, 48, 255));
     m_state_stack.draw();
     m_window.display();
 }
