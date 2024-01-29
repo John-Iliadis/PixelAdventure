@@ -8,12 +8,13 @@
 #include <memory>
 #include <SFML/Window/Event.hpp>
 #include <fstream>
-#include "tile_map.hpp"
 #include "back_ground.hpp"
 #include "player/player.hpp"
 #include "collision.hpp"
 #include "tiled_json_loader.hpp"
+#include "enemies/spike.hpp"
 
+#include <thread>
 
 class World
 {
@@ -25,12 +26,15 @@ public:
     void draw();
 
 private:
+    void setup_spikes(const nlohmann::json& spike_pos_layer);
+
+private:
     GameContext& m_context;
-    //TileMap m_tile_map;
     sf::Sprite background_map;
     BackGround m_background;
     Player m_player;
     std::vector<sf::Rect<float>> m_solid_tiles;
+    std::vector<Spike> spikes;
 };
 
 

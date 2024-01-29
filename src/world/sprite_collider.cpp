@@ -167,60 +167,74 @@ sf::FloatRect SpriteCollider::get_collider() const
 
 void SpriteCollider::set_origin(Origin origin)
 {
+    set_sprite_origin(origin);
+    set_collider_origin(origin);
+}
+
+void SpriteCollider::set_sprite_origin(Origin origin)
+{
     sf::Vector2f texture_size = static_cast<sf::Vector2f>(m_texture_rect.getSize());
-    sf::Vector2f collider_size = m_collider_rect.getSize();
 
     assert(texture_size != sf::Vector2f(0, 0));
+
+    switch (origin)
+    {
+        case Origin::TOP_LEFT:
+            m_sprite_origin = {};
+            break;
+
+        case Origin::CENTER:
+            m_sprite_origin = texture_size / 2.f;
+            break;
+
+        case Origin::CENTER_TOP:
+            m_sprite_origin = {texture_size.x / 2.f, 0};
+            break;
+
+        case Origin::CENTER_BOTTOM:
+            m_sprite_origin = {texture_size.x / 2.f, texture_size.y};
+            break;
+
+        case Origin::CENTER_LEFT:
+            m_sprite_origin = {0, texture_size.y / 2.f};
+            break;
+
+        case Origin::CENTER_RIGHT:
+            m_sprite_origin = {texture_size.x, texture_size.y / 2.f};
+            break;
+    }
+}
+
+void SpriteCollider::set_collider_origin(Origin origin)
+{
+    sf::Vector2f collider_size = m_collider_rect.getSize();
+
     assert(collider_size != sf::Vector2f(0, 0));
 
     switch (origin)
     {
         case Origin::TOP_LEFT:
-        {
-            m_sprite_origin = {};
             m_collider_origin = {};
-
             break;
-        }
 
         case Origin::CENTER:
-        {
-            m_sprite_origin = texture_size / 2.f;
             m_collider_origin = collider_size / 2.f;
-
             break;
-        }
 
         case Origin::CENTER_TOP:
-        {
-            m_sprite_origin = {texture_size.x / 2.f, 0};
             m_collider_origin = {collider_size.x / 2.f, 0};
-
             break;
-        }
 
         case Origin::CENTER_BOTTOM:
-        {
-            m_sprite_origin = {texture_size.x / 2.f, texture_size.y};
             m_collider_origin = {collider_size.x / 2.f, collider_size.y};
-
             break;
-        }
 
         case Origin::CENTER_LEFT:
-        {
-            m_sprite_origin = {0, texture_size.y / 2.f};
             m_collider_origin = {0, collider_size.y / 2.f};
-
             break;
-        }
 
         case Origin::CENTER_RIGHT:
-        {
-            m_sprite_origin = {texture_size.x, texture_size.y / 2.f};
             m_collider_origin = {collider_size.x, collider_size.y / 2.f};
-
             break;
-        }
     }
 }

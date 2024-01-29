@@ -63,7 +63,11 @@ add_executable(Platformer
         src/world/movable_object.hpp
         src/world/tiled_json_loader.cpp
         src/world/tiled_json_loader.hpp
-        src/structs/map_data.hpp)
+        src/structs/map_data.hpp
+        src/world/enemies/spike.cpp
+        src/world/enemies/spike.hpp
+        src/world/camera.cpp
+        src/world/camera.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

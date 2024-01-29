@@ -24,10 +24,10 @@ namespace TiledJsonLoader
     // returns tile rectangles in world coordinates
     std::vector<sf::Rect<float>> get_tiles(const nlohmann::json& json_data, const std::string& layer_name);
 
-    // returns the first position that matches pos_name in world coordinates
+    // returns the first position that matches pos_name
     sf::Vector2f get_position(const nlohmann::json& json_data, const std::string& layer_name, const std::string& pos_name);
 
-    // returns all positions that match pos_name in world coordinates. All positions start at bottom left
+    // returns all positions that match pos_name. All positions start at top left
     std::vector<sf::Vector2f> get_positions(const nlohmann::json& json_data, const std::string& layer_name, const std::string& pos_name);
 }
 

@@ -9,7 +9,6 @@
 #include <vector>
 #include <cmath>
 #include <SFML/Graphics/Rect.hpp>
-#include "tile_map.hpp"
 #include "player/player.hpp"
 
 

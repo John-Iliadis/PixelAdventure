@@ -7,7 +7,6 @@
 
 World::World(GameContext& context)
     : m_context(context)
-  //  , m_tile_map("../data/tmx/test_map3.tmj")
     , m_player(context)
     , m_background(*m_context.texture_manager, m_context.window->getSize()) // todo: fix background texture size
 {
@@ -31,6 +30,8 @@ World::World(GameContext& context)
     });
 
     background_map.setTexture(m_context.texture_manager->get("test_map3"));
+
+    setup_spikes(TiledJsonLoader::get_layer(map_data, "spike_positions"));
 }
 
 void World::handle_events(const sf::Event &event)
@@ -53,4 +54,23 @@ void World::draw()
     window.draw(m_background);
     window.draw(background_map);
     window.draw(m_player);
+}
+
+
+void World::setup_spikes(const nlohmann::json &spike_pos_layer)
+{
+    for (const auto& object : spike_pos_layer["objects"])
+    {
+        int rotation = object["properties"][0]["value"].get<int>();
+        sf::Vector2f position {
+            object["x"].get<float>(),
+            object["y"].get<float>()
+        };
+
+        spikes.emplace_back(
+                m_context.texture_manager->get("spike"),
+                position,
+                rotation
+                );
+    }
 }

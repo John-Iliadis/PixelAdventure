@@ -25,14 +25,15 @@ public:
     virtual ~SpriteCollider() = default;
 
     void set_texture(const sf::Texture& texture, bool reset_rect = true);
-    void set_texture_rect(const sf::IntRect& rect); // if rect is different size, origin has to be reset
-
+    void set_texture_rect(const sf::IntRect& rect);
     void set_position(const sf::Vector2f& pos);
     void set_position(float x, float y);
     void set_scale(const sf::Vector2f& scale);
     void set_scale(float x, float y);
     void set_rotation(float degrees);
     void set_origin(Origin origin);
+    void set_sprite_origin(Origin origin);
+    void set_collider_origin(Origin origin);
     void set_collider_size(float width, float height);
 
     void move(const sf::Vector2f& offset);
