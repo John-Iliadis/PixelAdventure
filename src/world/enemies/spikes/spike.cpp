@@ -39,3 +39,8 @@ sf::Rect<float> Spike::get_collider() const
 {
     return m_sprite_collider.get_collider();
 }
+
+void Spike::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(m_sprite_collider);
+}
