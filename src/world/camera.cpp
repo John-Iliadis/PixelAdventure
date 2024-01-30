@@ -10,7 +10,7 @@ Camera::Camera(sf::RenderWindow* window, uint32_t width, uint32_t height)
     : m_window(window)
     , m_camera({0, 0, static_cast<float>(width), static_cast<float>(height)})
     , m_size(width, height)
-    , m_current_state(new IdleState())
+    , m_current_state(new Camera::IdleState())
 {
 }
 
@@ -41,7 +41,7 @@ void Camera::set_target(const sf::Vector2f &target, std::function<void()> callba
 {
     delete m_current_state;
 
-    m_current_state = new TargetTransitionState(*this, target, callback);
+    m_current_state = new Camera::TargetTransitionState(*this, target, callback);
 }
 
 void Camera::set_size(uint32_t width, uint32_t height)
@@ -95,7 +95,7 @@ Camera::State* Camera::TargetTransitionState::update(Camera &camera, double dt)
     if (new_pos == m_target_pos)
     {
         m_callback? m_callback() : (void)0;
-        return new IdleState();
+        return new Camera::IdleState();
     }
 
     return nullptr;
