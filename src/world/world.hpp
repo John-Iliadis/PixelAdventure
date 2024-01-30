@@ -14,6 +14,7 @@
 #include "tiled_json_loader.hpp"
 #include "enemies/spike.hpp"
 #include "camera.hpp"
+#include "checkpoint_manager.hpp"
 
 #include <thread>
 
@@ -28,13 +29,15 @@ public:
 
 private:
     void setup_spikes(const nlohmann::json& spike_pos_layer);
+    void setup_checkpoints(const nlohmann::json& checkpoint_pos_layer);
 
 private:
     GameContext& m_context;
-    sf::Sprite background_map;
+    sf::Sprite background_map; // todo: should be in background class
     BackGround m_background;
     Player m_player;
     std::vector<sf::Rect<float>> m_solid_tiles;
+    CheckpointManager m_checkpoint_manager;
     std::vector<Spike> spikes;
 };
 

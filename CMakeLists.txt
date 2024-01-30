@@ -67,7 +67,13 @@ add_executable(Platformer
         src/world/enemies/spike.cpp
         src/world/enemies/spike.hpp
         src/world/camera.cpp
-        src/world/camera.hpp)
+        src/world/camera.hpp
+        src/world/checkpoint.cpp
+        src/world/checkpoint.hpp
+        src/world/checkpoint_manager.cpp
+        src/world/checkpoint_manager.hpp
+        src/world/death_particle.cpp
+        src/world/death_particle.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
