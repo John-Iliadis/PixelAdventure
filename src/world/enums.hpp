@@ -22,4 +22,9 @@ enum class Origin
     CENTER_RIGHT
 };
 
+enum class Particle
+{
+    PLAYER_DEATH
+};
+
 #endif //PLATFORMER_ENUMS_HPP

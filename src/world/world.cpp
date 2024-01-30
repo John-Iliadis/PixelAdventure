@@ -57,6 +57,8 @@ void World::update(double dt)
     m_player.update(dt);
     m_checkpoint_manager.update(m_player, dt);
 
+    m_spike_manager.handle_collisions(m_player);
+
     if (following_player)
         m_context.camera->set_center(m_player.get_center());
 }
@@ -69,26 +71,28 @@ void World::draw()
     window.draw(background_map);
     window.draw(m_checkpoint_manager);
     window.draw(m_player);
-
-    std::for_each(spikes.begin(), spikes.end(), [&window] (const Spike& s) {window.draw(s);});
+    window.draw(m_spike_manager);
 }
 
 
 void World::setup_spikes(const nlohmann::json &spike_pos_layer)
 {
+    static Spike prototype(m_context.texture_manager->get("spike"));
+
     for (const auto& object : spike_pos_layer["objects"])
     {
-        int rotation = object["properties"][0]["value"].get<int>();
+        int rotation = object["properties"][0]["value"].get<int>(); // todo: find property
+
         sf::Vector2f position {
             object["x"].get<float>(),
             object["y"].get<float>()
         };
 
-        spikes.emplace_back(
-                m_context.texture_manager->get("spike"),
-                position,
-                rotation
-                );
+        Spike l_spike = prototype;
+
+        l_spike.place(position, rotation);
+
+        m_spike_manager.push_back(std::move(l_spike));
     }
 }
 

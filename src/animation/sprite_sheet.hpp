@@ -33,30 +33,32 @@ public:
         std::string m_frame_tag;
     };
 
-    SpriteSheet();
-    SpriteSheet(int sprite_width, int sprite_height, uint32_t frame_count, sf::Time time_per_frame, bool looped = true);
+    using iterator = std::vector<Frame>::iterator;
+    using const_iterator = std::vector<Frame>::const_iterator;
+
+    SpriteSheet() = default;
+    SpriteSheet(int sprite_width, int sprite_height, uint32_t frame_count);
 
     void add_frame(const Frame& frame);
     void add_frame(const sf::IntRect& spritesheet_rect, const std::string& tag = "");
 
-    void set_time_pre_frame(sf::Time time_per_frame);
-    void set_looped(bool looped);
     void set_spritesheet_rect(size_t index, const sf::IntRect& rect);
     void set_frame_tag(size_t index, const std::string& tag);
 
     void clear_frames();
 
+    iterator begin();
+    iterator end();
+    const_iterator begin() const;
+    const_iterator end() const;
+
     const Frame& get_frame(size_t index) const;
     const sf::IntRect& get_frame_rect(size_t index) const;
     const std::string& get_frame_tag(size_t index) const;
-    sf::Time get_time_pre_frame() const;
     size_t get_frame_count() const;
-    bool is_looped() const;
 
 private:
     std::vector<Frame> m_frames;
-    sf::Time m_time_pre_frame;
-    bool m_looped;
 };
 
 

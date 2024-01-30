@@ -35,6 +35,7 @@ public:
     void set_sprite_origin(Origin origin);
     void set_collider_origin(Origin origin);
     void set_collider_size(float width, float height);
+    void set_collider_size(const sf::Vector2f& size);
 
     void move(const sf::Vector2f& offset);
     void move(float x, float y);

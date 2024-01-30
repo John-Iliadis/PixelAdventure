@@ -39,16 +39,7 @@ const std::string& SpriteSheet::Frame::get_frame_tag() const
 
 
 /* -- Animation -- */
-SpriteSheet::SpriteSheet()
-    : m_frames()
-    , m_time_pre_frame(sf::Time::Zero)
-    , m_looped(true)
-{
-}
-
-SpriteSheet::SpriteSheet(int sprite_width, int sprite_height, uint32_t frame_count, sf::Time time_per_frame, bool looped)
-    : m_looped(looped)
-    , m_time_pre_frame(time_per_frame)
+SpriteSheet::SpriteSheet(int sprite_width, int sprite_height, uint32_t frame_count)
 {
     m_frames.reserve(frame_count);
 
@@ -64,16 +55,6 @@ void SpriteSheet::add_frame(const SpriteSheet::Frame &frame)
 void SpriteSheet::add_frame(const sf::IntRect &spritesheet_rect, const std::string &tag)
 {
     m_frames.emplace_back(spritesheet_rect, tag);
-}
-
-void SpriteSheet::set_time_pre_frame(sf::Time time_per_frame)
-{
-    m_time_pre_frame = time_per_frame;
-}
-
-void SpriteSheet::set_looped(bool looped)
-{
-    m_looped = looped;
 }
 
 void SpriteSheet::set_spritesheet_rect(size_t index, const sf::IntRect &rect)
@@ -111,12 +92,22 @@ size_t SpriteSheet::get_frame_count() const
     return m_frames.size();
 }
 
-bool SpriteSheet::is_looped() const
+SpriteSheet::iterator SpriteSheet::begin()
 {
-    return m_looped;
+    return m_frames.begin();
 }
 
-sf::Time SpriteSheet::get_time_pre_frame() const
+SpriteSheet::iterator SpriteSheet::end()
 {
-    return m_time_pre_frame;
+    return m_frames.end();
+}
+
+SpriteSheet::const_iterator SpriteSheet::begin() const
+{
+    return m_frames.begin();
+}
+
+SpriteSheet::const_iterator SpriteSheet::end() const
+{
+    return m_frames.end();
 }

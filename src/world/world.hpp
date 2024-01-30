@@ -12,9 +12,10 @@
 #include "player/player.hpp"
 #include "collision.hpp"
 #include "tiled_json_loader.hpp"
-#include "enemies/spike.hpp"
+#include "enemies/spikes/spike.hpp"
 #include "camera.hpp"
-#include "checkpoint_manager.hpp"
+#include "checkpoint/checkpoint_manager.hpp"
+#include "enemies/spikes/spike_manager.hpp"
 
 #include <thread>
 
@@ -36,9 +37,9 @@ private:
     sf::Sprite background_map; // todo: should be in background class
     BackGround m_background;
     Player m_player;
-    std::vector<sf::Rect<float>> m_solid_tiles;
     CheckpointManager m_checkpoint_manager;
-    std::vector<Spike> spikes;
+    SpikeManager m_spike_manager;
+    std::vector<sf::Rect<float>> m_solid_tiles;
 };
 
 

@@ -11,38 +11,36 @@
 #include <cassert>
 #include <fstream>
 #include <SFML/System/Clock.hpp>
-#include "sprite_sheet.hpp"
 #include "../vendor/json.hpp"
+#include "animation.hpp"
 
 
-class AnimationManager
+class AnimationManager : public IAnimation
 {
 public:
-    AnimationManager();
+    AnimationManager() = default;
     AnimationManager(const std::string& file_name);
 
     void load_from_file(const std::string& file_name);
-    void add_animation(std::pair<std::string, SpriteSheet>&& sprite_sheet);
+    void add_animation(std::pair<std::string, Animation>&& animation);
 
-    void play();
-    void pause();
-    void reset();
+    void play() override;
+    void pause() override;
+    void reset() override;
 
     void set_animation(const std::string& id);
-    void update(double dt);
+    void update(double dt) override;
 
-    const SpriteSheet::Frame& get_current_frame() const;
-    const sf::IntRect& get_current_frame_rect() const;
-    const std::string& get_current_frame_tag() const;
+    const SpriteSheet::Frame& get_current_frame() const override;
+    const sf::IntRect& get_current_frame_rect() const override;
+    const std::string& get_current_frame_tag() const override;
 
-    bool animation_finished() const;
+    bool finished() const override;
+    bool playing() const override;
 
 private:
-    std::unordered_map<std::string, SpriteSheet> m_animations;
+    std::unordered_map<std::string, Animation> m_animations;
     std::string m_current_animation_id;
-    size_t m_current_frame_index;
-    sf::Time m_ellapsed;
-    bool m_playing;
 };
 
 

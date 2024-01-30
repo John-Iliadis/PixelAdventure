@@ -115,6 +115,11 @@ void SpriteCollider::set_collider_size(float width, float height)
     m_collider_rect.height = height;
 }
 
+void SpriteCollider::set_collider_size(const sf::Vector2f &size)
+{
+    set_collider_size(size.x, size.y);
+}
+
 void SpriteCollider::move(const sf::Vector2f &offset)
 {
     set_position(m_position + offset);
