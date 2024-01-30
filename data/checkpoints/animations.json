@@ -1,0 +1,24 @@
+{
+    "sprite_width": 64,
+    "sprite_height": 64,
+    "animations": [
+        {
+            "id": "checkpoint_idle",
+            "frame_count": 1,
+            "frame_time_milliseconds": 0,
+            "looped": false
+        },
+        {
+            "id": "checkpoint_triggered",
+            "frame_count": 26,
+            "frame_time_milliseconds": 50,
+            "looped": false
+        },
+        {
+            "id": "checkpoint_flag_out",
+            "frame_count": 10,
+            "frame_time_milliseconds": 50,
+            "looped": true
+        }
+    ]
+}

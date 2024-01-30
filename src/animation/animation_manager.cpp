@@ -152,3 +152,16 @@ const std::string &AnimationManager::get_current_frame_tag() const
     assert(!m_animations.empty());
     return m_animations.at(m_current_animation_id).get_frame_tag(m_current_frame_index);
 }
+
+bool AnimationManager::animation_finished() const
+{
+    auto& current_animation = m_animations.at(m_current_animation_id);
+
+    if (current_animation.is_looped())
+        return false;
+
+    if (current_animation.get_frame_count() == m_current_frame_index + 1)
+        return true;
+
+    return false;
+}

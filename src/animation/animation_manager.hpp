@@ -35,6 +35,8 @@ public:
     const sf::IntRect& get_current_frame_rect() const;
     const std::string& get_current_frame_tag() const;
 
+    bool animation_finished() const;
+
 private:
     std::unordered_map<std::string, Animation> m_animations;
     std::string m_current_animation_id;
