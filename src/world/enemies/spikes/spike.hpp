@@ -15,7 +15,9 @@ class Spike : public sf::Drawable
 {
 public:
     Spike() = default;
-    Spike(const sf::Texture& texture, const sf::Vector2f& pos, int rotation);
+    Spike(const sf::Texture& texture);
+
+    void place(const sf::Vector2f& pos, int rotation);
 
     sf::Rect<float> get_collider() const;
 
