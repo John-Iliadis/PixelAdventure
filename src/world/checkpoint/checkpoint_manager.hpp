@@ -9,7 +9,7 @@
 #include <cassert>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "checkpoint.hpp"
-#include "player/player.hpp"
+#include "../player/player.hpp"
 
 
 class CheckpointManager : public sf::Drawable

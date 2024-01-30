@@ -36,8 +36,8 @@ add_executable(Platformer
         src/vendor/json.hpp
         src/world/collision.cpp
         src/world/collision.hpp
-        src/animation/animation.cpp
-        src/animation/animation.hpp
+        src/animation/sprite_sheet.cpp
+        src/animation/sprite_sheet.hpp
         src/world/player/player_state.hpp
         src/world/player/idle_state.cpp
         src/world/player/idle_state.hpp
@@ -64,16 +64,23 @@ add_executable(Platformer
         src/world/tiled_json_loader.cpp
         src/world/tiled_json_loader.hpp
         src/structs/map_data.hpp
-        src/world/enemies/spike.cpp
-        src/world/enemies/spike.hpp
+        src/world/enemies/spikes/spike.cpp
+        src/world/enemies/spikes/spike.hpp
         src/world/camera.cpp
         src/world/camera.hpp
-        src/world/checkpoint.cpp
-        src/world/checkpoint.hpp
-        src/world/checkpoint_manager.cpp
-        src/world/checkpoint_manager.hpp
+        src/world/checkpoint/checkpoint.cpp
+        src/world/checkpoint/checkpoint.hpp
+        src/world/checkpoint/checkpoint_manager.cpp
+        src/world/checkpoint/checkpoint_manager.hpp
         src/world/death_particle.cpp
-        src/world/death_particle.hpp)
+        src/world/death_particle.hpp
+        src/world/enemies/spikes/spike_manager.cpp
+        src/world/enemies/spikes/spike_manager.hpp
+        src/world/death_particle_system.cpp
+        src/world/death_particle_system.hpp
+        src/animation/animation.cpp
+        src/animation/animation.hpp
+        src/animation/animation_interface.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

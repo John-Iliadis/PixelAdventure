@@ -7,11 +7,11 @@
 
 #include <unordered_map>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "../animation/animation_manager.hpp"
-#include "../asset_managers/texture_manager.hpp"
-#include "../asset_managers/sound_buffer_manager.hpp"
-#include "sprite_collider.hpp"
-#include "player/player.hpp"
+#include "../../animation/animation_manager.hpp"
+#include "../../asset_managers/texture_manager.hpp"
+#include "../../asset_managers/sound_buffer_manager.hpp"
+#include "../sprite_collider.hpp"
+#include "../player/player.hpp"
 
 
 class Checkpoint : public sf::Drawable

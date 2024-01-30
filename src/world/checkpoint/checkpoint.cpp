@@ -50,7 +50,7 @@ void Checkpoint::update(double dt)
     {
         case State::TRIGGERED:
         {
-            if (m_animations.animation_finished())
+            if (m_animations.finished())
             {
                 m_current_state = State::FLAG_OUT;
                 on_flag_out_enter();

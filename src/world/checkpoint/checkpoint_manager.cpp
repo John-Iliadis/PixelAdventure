@@ -12,7 +12,7 @@ CheckpointManager::CheckpointManager()
 
 void CheckpointManager::push_back(Checkpoint&& checkpoint)
 {
-    m_checkpoints.push_back(checkpoint);
+    m_checkpoints.push_back(std::move(checkpoint));
 }
 
 void CheckpointManager::update(Player &player, double dt)
