@@ -2,8 +2,8 @@
 // Created by Gianni on 18/01/2024.
 //
 
-#ifndef PLATFORMER_ANIMATION_HPP
-#define PLATFORMER_ANIMATION_HPP
+#ifndef PLATFORMER_SPRITE_SHEET_HPP
+#define PLATFORMER_SPRITE_SHEET_HPP
 
 #include <vector>
 #include <cstdint>
@@ -12,7 +12,7 @@
 #include <SFML/System/Clock.hpp>
 
 
-class Animation final
+class SpriteSheet
 {
 public:
     class Frame
@@ -33,8 +33,8 @@ public:
         std::string m_frame_tag;
     };
 
-    Animation();
-    Animation(int sprite_width, int sprite_height, uint32_t frame_count, sf::Time time_per_frame, bool looped = true);
+    SpriteSheet();
+    SpriteSheet(int sprite_width, int sprite_height, uint32_t frame_count, sf::Time time_per_frame, bool looped = true);
 
     void add_frame(const Frame& frame);
     void add_frame(const sf::IntRect& spritesheet_rect, const std::string& tag = "");
@@ -60,4 +60,4 @@ private:
 };
 
 
-#endif //PLATFORMER_ANIMATION_HPP
+#endif //PLATFORMER_SPRITE_SHEET_HPP

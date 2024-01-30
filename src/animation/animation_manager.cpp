@@ -43,7 +43,7 @@ void AnimationManager::load_from_file(const std::string &file_name)
 
     for (const auto& animation : json["animations"])
     {
-        Animation l_anim {
+        SpriteSheet l_anim {
             width,
             height,
             animation["frame_count"].get<uint32_t>(),
@@ -70,9 +70,9 @@ void AnimationManager::load_from_file(const std::string &file_name)
     file.close();
 }
 
-void AnimationManager::add_animation(std::pair<std::string, Animation>&& animation)
+void AnimationManager::add_animation(std::pair<std::string, SpriteSheet>&& sprite_sheet)
 {
-    m_animations.emplace(animation);
+    m_animations.emplace(sprite_sheet);
 }
 
 void AnimationManager::play()
@@ -110,7 +110,7 @@ void AnimationManager::update(double dt)
 
     m_ellapsed += sf::seconds(dt);
 
-    Animation& current_animation = m_animations[m_current_animation_id];
+    SpriteSheet& current_animation = m_animations[m_current_animation_id];
 
     if (current_animation.get_frame_count() <= 1) return;
 
@@ -135,7 +135,7 @@ void AnimationManager::update(double dt)
     }
 }
 
-const Animation::Frame& AnimationManager::get_current_frame() const
+const SpriteSheet::Frame& AnimationManager::get_current_frame() const
 {
     assert(!m_animations.empty());
     return m_animations.at(m_current_animation_id).get_frame(m_current_frame_index);

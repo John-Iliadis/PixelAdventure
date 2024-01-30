@@ -11,7 +11,7 @@
 #include <cassert>
 #include <fstream>
 #include <SFML/System/Clock.hpp>
-#include "animation.hpp"
+#include "sprite_sheet.hpp"
 #include "../vendor/json.hpp"
 
 
@@ -22,7 +22,7 @@ public:
     AnimationManager(const std::string& file_name);
 
     void load_from_file(const std::string& file_name);
-    void add_animation(std::pair<std::string, Animation>&& animation);
+    void add_animation(std::pair<std::string, SpriteSheet>&& sprite_sheet);
 
     void play();
     void pause();
@@ -31,14 +31,14 @@ public:
     void set_animation(const std::string& id);
     void update(double dt);
 
-    const Animation::Frame& get_current_frame() const;
+    const SpriteSheet::Frame& get_current_frame() const;
     const sf::IntRect& get_current_frame_rect() const;
     const std::string& get_current_frame_tag() const;
 
     bool animation_finished() const;
 
 private:
-    std::unordered_map<std::string, Animation> m_animations;
+    std::unordered_map<std::string, SpriteSheet> m_animations;
     std::string m_current_animation_id;
     size_t m_current_frame_index;
     sf::Time m_ellapsed;
