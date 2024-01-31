@@ -19,23 +19,23 @@ WallSlidingState::WallSlidingState(Player &player)
 
 PlayerState* WallSlidingState::update(Player &player)
 {
+    PlayerState* new_state = nullptr;
+
     if (player.get_jump_pressed_ellapsed_time() > 0)
     {
-        player.set_gravity(true);
-        return new JumpingState(player);
+        new_state = new JumpingState(player);
     }
-
-    if (player.get_velocity().y == 0)
+    else if (player.get_velocity().y == 0)
     {
-        player.set_gravity(true);
-        return new IdleState(player);
+        new_state = new IdleState(player);
     }
-
-    if (!player.touching_wall())
+    else if (!player.touching_wall())
     {
-        player.set_gravity(true);
-        return new FallingState(player);
+        new_state = new FallingState(player);
     }
 
-    return nullptr;
+    if (new_state)
+        player.set_gravity(true);
+
+    return new_state;
 }
