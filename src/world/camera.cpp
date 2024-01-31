@@ -37,11 +37,11 @@ void Camera::update(double dt)
     m_window->setView(m_camera);
 }
 
-void Camera::set_target(const sf::Vector2f &target, std::function<void()> callback)
+void Camera::set_target(const sf::Vector2f &target, float delay_time, std::function<void()> callback)
 {
     delete m_current_state;
 
-    m_current_state = new Camera::TargetTransitionState(*this, target, callback);
+    m_current_state = new Camera::TargetTransitionState(*this, target, delay_time, callback);
 }
 
 void Camera::set_size(uint32_t width, uint32_t height)
@@ -69,10 +69,27 @@ sf::Vector2f Camera::get_center() const
     return m_camera.getCenter();
 }
 
-Camera::TargetTransitionState::TargetTransitionState(Camera &camera, const sf::Vector2f &target_pos, std::function<void()> callback)
+Camera &Camera::operator=(Camera &&other) noexcept
+{
+    if (this != &other)
+    {
+        m_window = other.m_window;
+        m_camera = other.m_camera;
+        m_size = other.m_size;
+        m_current_state = other.m_current_state;
+
+        other.m_window = nullptr;
+        other.m_current_state = nullptr;
+    }
+
+    return *this;
+}
+
+Camera::TargetTransitionState::TargetTransitionState(Camera &camera, const sf::Vector2f &target_pos, float delay_time, std::function<void()> callback)
     : m_callback(std::move(callback))
     , m_start_pos(camera.get_center())
     , m_target_pos(target_pos)
+    , m_delay_time(delay_time)
     , m_duration(2)
     , m_total_ellapsed()
 {
@@ -80,6 +97,12 @@ Camera::TargetTransitionState::TargetTransitionState(Camera &camera, const sf::V
 
 Camera::State* Camera::TargetTransitionState::update(Camera &camera, double dt)
 {
+    if (m_delay_time > 0)
+    {
+        m_delay_time -= dt;
+        return nullptr;
+    }
+
     m_total_ellapsed += dt;
 
     float t = m_total_ellapsed / m_duration;

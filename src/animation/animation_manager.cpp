@@ -28,14 +28,11 @@ void AnimationManager::load_from_file(const std::string &file_name)
 
     file.close();
 
-    int width = json["sprite_width"].get<int>();
-    int height = json["sprite_height"].get<int>();
-
-    for (const auto& animation : json["animations"])
+    for (const auto& animation : json)
     {
         SpriteSheet l_sprite_sheet {
-            width,
-            height,
+            animation["sprite_width"].get<int>(),
+            animation["sprite_height"].get<int>(),
             animation["frame_count"].get<uint32_t>()
         };
 

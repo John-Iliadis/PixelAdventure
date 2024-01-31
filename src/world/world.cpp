@@ -4,7 +4,6 @@
 
 #include "world.hpp"
 
-static bool following_player = true;
 
 World::World(GameContext& context)
     : m_context(context)
@@ -27,9 +26,20 @@ World::World(GameContext& context)
 
     m_player.set_position(player_pos);
     m_player.set_respawn_position(player_pos);
+
     m_player.set_collision_callback([this] (double dt) {
         Collision::handle_x_axis_collisions(m_player, m_solid_tiles, dt);
         Collision::handle_y_axis_collisions(m_player, m_solid_tiles, dt);
+    });
+
+    m_player.set_death_particle_callback([this] () {
+        m_death_articles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
+    });
+
+    m_player.set_camera_transition_callback([this] () {
+        sf::Vector2f player_respawn_pos = m_player.get_respawn_pos();
+        sf::Vector2f camera_target(player_respawn_pos.x, player_respawn_pos.y - m_player.get_sprite_size().height / 2.f);
+        m_context.camera->set_target(camera_target, 1.2, [this] () {m_player.respawn();});
     });
 
     background_map.setTexture(m_context.texture_manager->get("test_map3"));
@@ -42,13 +52,7 @@ void World::handle_events(const sf::Event &event)
 {
     if (event.type == sf::Event::KeyPressed)
     {
-        if (event.key.code == sf::Keyboard::M && following_player)
-        {
-            following_player = false;
-            m_player.set_accepting_input(false);
-            m_context.camera->set_target({1200, 1200}, [this] () {m_player.set_accepting_input(true); following_player = true;});
-        }
-        else if (event.key.code == sf::Keyboard::P)
+        if (event.key.code == sf::Keyboard::P)
         {
             m_death_articles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
         }
@@ -70,7 +74,7 @@ void World::update(double dt)
 
     m_spike_manager.handle_collisions(m_player);
 
-    if (following_player)
+    if (m_player.is_alive())
         m_context.camera->set_center(m_player.get_center());
 }
 

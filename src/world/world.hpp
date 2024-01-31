@@ -18,7 +18,6 @@
 #include "enemies/spikes/spike_manager.hpp"
 #include "particles/death_particle_system.hpp"
 
-#include <thread>
 
 class World
 {

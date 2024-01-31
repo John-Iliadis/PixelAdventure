@@ -9,6 +9,7 @@ SpriteCollider::SpriteCollider()
         : m_texture_ptr(nullptr)
         , m_scale(1, 1)
         , m_rotation()
+        , m_origin(Origin::TOP_LEFT)
 {
 }
 
@@ -21,12 +22,16 @@ void SpriteCollider::set_texture(const sf::Texture& texture, bool reset_rect)
 
 void SpriteCollider::set_texture_rect(const sf::IntRect &rect)
 {
-    if (rect != m_texture_rect)
-    {
-        m_texture_rect = rect;
-        update_positions();
-        update_texture_coords();
-    }
+    if (rect == m_texture_rect) return;
+
+    auto previous_size = m_texture_rect.getSize();
+
+    m_texture_rect = rect;
+    update_positions();
+    update_texture_coords();
+
+    if (m_texture_rect.getSize() != previous_size)
+        set_origin(m_origin);
 }
 
 void SpriteCollider::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -109,6 +114,12 @@ void SpriteCollider::set_rotation(float degrees)
     m_rotation = degrees;
 }
 
+void SpriteCollider::set_color(sf::Color color)
+{
+    for (auto& vertex : m_sprite_vertices)
+        vertex.color = color;
+}
+
 void SpriteCollider::set_collider_size(float width, float height)
 {
     m_collider_rect.width = width;
@@ -172,74 +183,41 @@ sf::FloatRect SpriteCollider::get_collider() const
 
 void SpriteCollider::set_origin(Origin origin)
 {
-    set_sprite_origin(origin);
-    set_collider_origin(origin);
-}
+    m_origin = origin;
 
-void SpriteCollider::set_sprite_origin(Origin origin)
-{
     sf::Vector2f texture_size = static_cast<sf::Vector2f>(m_texture_rect.getSize());
-
-    assert(texture_size != sf::Vector2f(0, 0));
-
-    switch (origin)
-    {
-        case Origin::TOP_LEFT:
-            m_sprite_origin = {};
-            break;
-
-        case Origin::CENTER:
-            m_sprite_origin = texture_size / 2.f;
-            break;
-
-        case Origin::CENTER_TOP:
-            m_sprite_origin = {texture_size.x / 2.f, 0};
-            break;
-
-        case Origin::CENTER_BOTTOM:
-            m_sprite_origin = {texture_size.x / 2.f, texture_size.y};
-            break;
-
-        case Origin::CENTER_LEFT:
-            m_sprite_origin = {0, texture_size.y / 2.f};
-            break;
-
-        case Origin::CENTER_RIGHT:
-            m_sprite_origin = {texture_size.x, texture_size.y / 2.f};
-            break;
-    }
-}
-
-void SpriteCollider::set_collider_origin(Origin origin)
-{
     sf::Vector2f collider_size = m_collider_rect.getSize();
 
-    assert(collider_size != sf::Vector2f(0, 0));
+    if (texture_size == sf::Vector2f(0, 0))
+        puts("Warning: SpriteCollider::set_origin: Texture size is {0,0}");
+
+    if (collider_size == sf::Vector2f(0, 0))
+        puts("Warning: SpriteCollider::set_origin: Collider size is {0, 0}");
 
     switch (origin)
     {
         case Origin::TOP_LEFT:
+        {
+            m_sprite_origin = {};
             m_collider_origin = {};
+
             break;
+        }
 
         case Origin::CENTER:
+        {
+            m_sprite_origin = texture_size / 2.f;
             m_collider_origin = collider_size / 2.f;
-            break;
 
-        case Origin::CENTER_TOP:
-            m_collider_origin = {collider_size.x / 2.f, 0};
             break;
+        }
 
         case Origin::CENTER_BOTTOM:
+        {
+            m_sprite_origin = {texture_size.x / 2.f, texture_size.y};
             m_collider_origin = {collider_size.x / 2.f, collider_size.y};
-            break;
 
-        case Origin::CENTER_LEFT:
-            m_collider_origin = {0, collider_size.y / 2.f};
             break;
-
-        case Origin::CENTER_RIGHT:
-            m_collider_origin = {collider_size.x, collider_size.y / 2.f};
-            break;
+        }
     }
 }

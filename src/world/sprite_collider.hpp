@@ -8,6 +8,7 @@
 #include <array>
 #include <cmath>
 #include <cassert>
+#include <iostream>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transform.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -31,9 +32,9 @@ public:
     void set_scale(const sf::Vector2f& scale);
     void set_scale(float x, float y);
     void set_rotation(float degrees);
+    void set_color(sf::Color color);
     void set_origin(Origin origin);
-    void set_sprite_origin(Origin origin);
-    void set_collider_origin(Origin origin);
+
     void set_collider_size(float width, float height);
     void set_collider_size(const sf::Vector2f& size);
 
@@ -64,6 +65,7 @@ private:
     sf::IntRect m_texture_rect;
     sf::FloatRect m_collider_rect;
 
+    Origin m_origin;
     sf::Vector2f m_sprite_origin;
     sf::Vector2f m_collider_origin;
 

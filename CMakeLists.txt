@@ -51,8 +51,6 @@ add_executable(Platformer
         src/world/player/wall_sliding_state.hpp
         src/world/player/double_jumping_state.cpp
         src/world/player/double_jumping_state.hpp
-        src/world/player/death_state.cpp
-        src/world/player/death_state.hpp
         src/world/sprite_collider.cpp
         src/world/sprite_collider.hpp
         src/world/enums.hpp
@@ -80,7 +78,9 @@ add_executable(Platformer
         src/world/particles/death_particle_system.hpp
         src/animation/animation.cpp
         src/animation/animation.hpp
-        src/animation/animation_interface.hpp)
+        src/animation/animation_interface.hpp
+        src/world/player/respawning_state.cpp
+        src/world/player/respawning_state.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

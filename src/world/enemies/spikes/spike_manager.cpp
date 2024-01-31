@@ -19,9 +19,9 @@ void SpikeManager::handle_collisions(Player &player)
 {
     for (const auto& spike : m_spikes)
     {
-        if (player.get_collider().intersects(spike.get_collider()))
+        if (player.get_collider().intersects(spike.get_collider()) && player.is_alive())
         {
-            puts("Spike collision\n");
+            player.die();
         }
     }
 }

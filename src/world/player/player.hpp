@@ -17,6 +17,7 @@
 #include "../sprite_collider.hpp"
 #include "../../structs/player_data.hpp"
 #include "idle_state.hpp"
+#include "respawning_state.hpp"
 
 
 class Player : public sf::Drawable, sf::NonCopyable
@@ -35,25 +36,33 @@ public:
     void set_velocity(float x, float y);
     void move(float x, float y);
     void jump();
+    void die();
     void respawn();
+    void set_alive(bool alive);
     void set_gravity(bool on);
+    void set_origin(Origin origin);
     void set_previously_jumped(bool prev_jumped);
     void set_previously_double_jumped(bool prev_double_jumped);
     void set_touching_wall(bool touching_wall);
-    void set_accepting_input(bool accepting_input);
     void set_orientation(Orientation orientation);
     void set_collision_callback(std::function<void(double)> callback);
+    void set_camera_transition_callback(std::function<void()> callback);
+    void set_death_particle_callback(std::function<void()> callback);
 
     sf::FloatRect get_collider() const;
+    sf::FloatRect get_sprite_size() const;
     sf::Vector2f get_center() const;
     sf::Vector2f get_position() const;
     sf::Vector2f get_velocity() const;
+    sf::Vector2f get_respawn_pos() const;
     Orientation get_orientation() const;
     float get_wall_sliding_speed() const;
     float get_jump_pressed_ellapsed_time() const;
     bool previously_jumped() const;
     bool previously_double_jumped() const;
     bool touching_wall() const;
+    bool is_alive() const;
+    bool animation_finished() const;
 
 private:
     void handle_input();
@@ -78,6 +87,8 @@ private:
     std::unordered_map<std::string, const sf::Texture*> m_textures;
     std::unordered_map<std::string, const sf::SoundBuffer*> m_sound_buffers;
     std::function<void(double)> m_resolve_collision_callback;
+    std::function<void()> m_camera_transition_callback;
+    std::function<void()> m_spawn_death_particle_callback;
 };
 
 

@@ -23,7 +23,7 @@ public:
     void resize(float aspect_ratio);
     void update(double dt);
 
-    void set_target(const sf::Vector2f& target, std::function<void()> callback = nullptr);
+    void set_target(const sf::Vector2f& target, float delay_time = 0, std::function<void()> callback = nullptr);
 
     void set_size(uint32_t width, uint32_t height);
     void set_size(const sf::Vector2u& size);
@@ -32,21 +32,7 @@ public:
 
     sf::Vector2f get_center() const;
 
-    Camera& operator=(Camera&& other) noexcept
-    {
-        if (this != &other)
-        {
-            m_window = other.m_window;
-            m_camera = other.m_camera;
-            m_size = other.m_size;
-            m_current_state = other.m_current_state;
-
-            other.m_window = nullptr;
-            other.m_current_state = nullptr;
-        }
-
-        return *this;
-    }
+    Camera& operator=(Camera&& other) noexcept;
 
 private:
     class State
@@ -59,13 +45,14 @@ private:
     class TargetTransitionState : public State
     {
     public:
-        TargetTransitionState(Camera& camera, const sf::Vector2f& target_pos, std::function<void()> callback = nullptr);
+        TargetTransitionState(Camera& camera, const sf::Vector2f& target_pos, float delay_time = 0, std::function<void()> callback = nullptr);
         State* update(Camera &camera, double dt) override;
 
     private:
         std::function<void()> m_callback;
         sf::Vector2f m_start_pos;
         sf::Vector2f m_target_pos;
+        float m_delay_time;
         float m_duration;
         float m_total_ellapsed;
     };

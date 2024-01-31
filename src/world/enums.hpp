@@ -16,10 +16,7 @@ enum class Origin
 {
     TOP_LEFT,
     CENTER,
-    CENTER_TOP,
     CENTER_BOTTOM,
-    CENTER_LEFT,
-    CENTER_RIGHT
 };
 
 enum class ParticleType

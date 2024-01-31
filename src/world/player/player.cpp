@@ -31,7 +31,7 @@ Player::~Player()
 
 void Player::handle_events(const sf::Event &event)
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up && m_data.accepting_input)
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
         m_data.jump_pressed_ellapsed_time = m_data.jump_pressed_remember_time;
 }
 
@@ -47,7 +47,7 @@ void Player::update(double dt)
 
 void Player::handle_input()
 {
-    if (!m_data.accepting_input) return;
+    if (!m_data.alive) return;
 
     using namespace sf;
     bool (*key_pressed)(Keyboard::Key) = Keyboard::isKeyPressed;
@@ -238,16 +238,12 @@ void Player::setup_textures(const TextureManager &textures)
     m_textures["jumping"] = &textures.get("jumping");
     m_textures["wall_sliding"] = &textures.get("wall_sliding");
     m_textures["double_jumping"] = &textures.get("double_jumping");
+    m_textures["respawning"] = &textures.get("respawning");
 }
 
 void Player::setup_sound_buffers(const SoundBufferManager &sound_buffers)
 {
 
-}
-
-void Player::set_accepting_input(bool accepting_input)
-{
-    m_data.accepting_input = accepting_input;
 }
 
 void Player::set_respawn_position(const sf::Vector2f &respawn_pos)
@@ -257,10 +253,57 @@ void Player::set_respawn_position(const sf::Vector2f &respawn_pos)
 
 void Player::respawn()
 {
-    set_position(m_data.respawn_position);
-    set_velocity(0, 0);
-    set_gravity(true);
-
     delete m_current_state;
-    m_current_state = new IdleState(*this);
+    m_current_state = new RespawningState(*this);
+
+    m_sprite_collider.set_color({255, 255, 255, 255});
+    m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
+}
+
+void Player::die()
+{
+    m_data.alive = false;
+    m_sprite_collider.set_color(sf::Color::Transparent);
+    m_spawn_death_particle_callback();
+    m_camera_transition_callback();
+}
+
+void Player::set_death_particle_callback(std::function<void()> callback)
+{
+    m_spawn_death_particle_callback = std::move(callback);
+}
+
+bool Player::is_alive() const
+{
+    return m_data.alive;
+}
+
+void Player::set_camera_transition_callback(std::function<void()> callback)
+{
+    m_camera_transition_callback = std::move(callback);
+}
+
+sf::Vector2f Player::get_respawn_pos() const
+{
+    return {m_data.respawn_position.x, m_data.respawn_position.y};
+}
+
+bool Player::animation_finished() const
+{
+    return m_animations.finished();
+}
+
+void Player::set_alive(bool alive)
+{
+    m_data.alive = alive;
+}
+
+void Player::set_origin(Origin origin)
+{
+    m_sprite_collider.set_origin(origin);
+}
+
+sf::FloatRect Player::get_sprite_size() const
+{
+    return m_sprite_collider.get_sprite_rect();
 }
