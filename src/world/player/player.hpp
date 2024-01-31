@@ -19,7 +19,7 @@
 #include "idle_state.hpp"
 
 
-class Player : public sf::Drawable
+class Player : public sf::Drawable, sf::NonCopyable
 {
 public:
     Player(GameContext& context);
