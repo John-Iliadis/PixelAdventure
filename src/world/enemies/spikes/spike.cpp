@@ -39,14 +39,6 @@ void Spike::place(const sf::Vector2f &pos, int rotation)
     }
 }
 
-//Spike::Spike(const sf::Texture &texture, const sf::Vector2f &pos, int rotation)
-//{
-//    m_sprite_collider.set_texture(texture);
-//    m_sprite_collider.set_rotation(rotation);
-//    m_sprite_collider.set_collider_size(collider_size.x, collider_size.y);
-//    m_sprite_collider.set_origin(Origin::CENTER_BOTTOM);
-//}
-
 sf::Rect<float> Spike::get_collider() const
 {
     return m_sprite_collider.get_collider();
