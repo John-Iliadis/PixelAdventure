@@ -31,6 +31,8 @@ void CheckpointManager::update(Player &player, double dt)
             m_current_active_index = i;
 
             checkpoint.activate();
+
+            player.set_respawn_position(checkpoint.get_position());
         }
 
         checkpoint.update(dt);
@@ -46,11 +48,4 @@ void CheckpointManager::draw(sf::RenderTarget &target, sf::RenderStates states) 
 bool CheckpointManager::empty() const
 {
     return m_checkpoints.empty();
-}
-
-sf::Vector2f CheckpointManager::get_current_checkpoint_pos() const
-{
-    assert(m_current_active_index != -1);
-
-    return m_checkpoints.at(m_current_active_index).get_position();
 }

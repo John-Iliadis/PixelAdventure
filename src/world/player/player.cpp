@@ -249,3 +249,18 @@ void Player::set_accepting_input(bool accepting_input)
 {
     m_data.accepting_input = accepting_input;
 }
+
+void Player::set_respawn_position(const sf::Vector2f &respawn_pos)
+{
+    m_data.respawn_position = respawn_pos;
+}
+
+void Player::respawn()
+{
+    set_position(m_data.respawn_position);
+    set_velocity(0, 0);
+    set_gravity(true);
+
+    delete m_current_state;
+    m_current_state = new IdleState(*this);
+}

@@ -26,6 +26,7 @@ World::World(GameContext& context)
     auto player_pos = TiledJsonLoader::get_position(map_data, "spawn_positions", "player_spawn_pos");
 
     m_player.set_position(player_pos);
+    m_player.set_respawn_position(player_pos);
     m_player.set_collision_callback([this] (double dt) {
         Collision::handle_x_axis_collisions(m_player, m_solid_tiles, dt);
         Collision::handle_y_axis_collisions(m_player, m_solid_tiles, dt);
@@ -50,6 +51,10 @@ void World::handle_events(const sf::Event &event)
         else if (event.key.code == sf::Keyboard::P)
         {
             m_death_articles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
+        }
+        else if (event.key.code == sf::Keyboard::R)
+        {
+            m_player.respawn();
         }
     }
 

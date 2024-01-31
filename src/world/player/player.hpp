@@ -31,9 +31,11 @@ public:
     void set_animation(const std::string& id);
     void set_position(float x, float y);
     void set_position(const sf::Vector2f& pos);
+    void set_respawn_position(const sf::Vector2f& respawn_pos);
     void set_velocity(float x, float y);
     void move(float x, float y);
     void jump();
+    void respawn();
     void set_gravity(bool on);
     void set_previously_jumped(bool prev_jumped);
     void set_previously_double_jumped(bool prev_double_jumped);

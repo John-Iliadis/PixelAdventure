@@ -22,8 +22,6 @@ public:
 
     bool empty() const;
 
-    sf::Vector2f get_current_checkpoint_pos() const;
-
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

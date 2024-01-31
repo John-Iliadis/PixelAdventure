@@ -14,6 +14,7 @@ struct PlayerData
 {
     sf::Vector2f velocity;
     sf::Vector2f hitbox_size;
+    sf::Vector2f respawn_position;
     float move_speed;
     float gravity;
     float gravity_speed;
@@ -37,7 +38,6 @@ struct PlayerData
 
         file.close();
 
-        velocity = {};
         hitbox_size = {json["hitbox"]["width"].get<float>(), json["hitbox"]["height"].get<float>()};
         move_speed = json["move_speed"].get<float>();
         gravity_speed = json["gravity_speed"].get<float>();
