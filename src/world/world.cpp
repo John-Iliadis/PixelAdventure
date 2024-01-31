@@ -42,8 +42,6 @@ World::World(GameContext& context)
         m_context.camera->set_target(camera_target, 1.2, [this] () {m_player.respawn();});
     });
 
-    background_map.setTexture(m_context.texture_manager->get("test_map3"));
-
     setup_spikes(TiledJsonLoader::get_layer(map_data, "spike_positions"));
     setup_checkpoints(TiledJsonLoader::get_layer(map_data, "checkpoint_positions"));
 }
@@ -83,7 +81,6 @@ void World::draw()
     sf::RenderWindow& window = *m_context.window;
 
     window.draw(m_background);
-    window.draw(background_map);
     window.draw(m_checkpoint_manager);
     window.draw(m_player);
     window.draw(m_spike_manager);

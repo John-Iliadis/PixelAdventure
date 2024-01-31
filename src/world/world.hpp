@@ -34,7 +34,7 @@ private:
 
 private:
     GameContext& m_context;
-    sf::Sprite background_map; // todo: should be in background class
+    //sf::Sprite background_map; // todo: should be in background class
     BackGround m_background;
     Player m_player;
     CheckpointManager m_checkpoint_manager;

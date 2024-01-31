@@ -20,7 +20,8 @@ private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 private:
-    sf::Sprite m_sprites[2];
+    sf::Sprite m_map;
+    sf::Sprite m_scrollable_background[2];
     const float m_scroll_speed;
 };
 
