@@ -72,12 +72,12 @@ add_executable(Platformer
         src/world/checkpoint/checkpoint.hpp
         src/world/checkpoint/checkpoint_manager.cpp
         src/world/checkpoint/checkpoint_manager.hpp
-        src/world/death_particle.cpp
-        src/world/death_particle.hpp
+        src/world/particles/death_particle.cpp
+        src/world/particles/death_particle.hpp
         src/world/enemies/spikes/spike_manager.cpp
         src/world/enemies/spikes/spike_manager.hpp
-        src/world/death_particle_system.cpp
-        src/world/death_particle_system.hpp
+        src/world/particles/death_particle_system.cpp
+        src/world/particles/death_particle_system.hpp
         src/animation/animation.cpp
         src/animation/animation.hpp
         src/animation/animation_interface.hpp)

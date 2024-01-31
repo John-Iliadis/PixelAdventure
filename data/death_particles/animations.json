@@ -1,0 +1,10 @@
+[
+    {
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "id": "player_death",
+        "frame_count": 7,
+        "frame_time_milliseconds": 80,
+        "looped": false
+    }
+]

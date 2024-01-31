@@ -22,7 +22,7 @@ enum class Origin
     CENTER_RIGHT
 };
 
-enum class Particle
+enum class ParticleType
 {
     PLAYER_DEATH
 };
