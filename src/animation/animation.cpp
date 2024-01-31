@@ -4,6 +4,7 @@
 
 #include "animation.hpp"
 
+
 Animation::Animation()
     : m_current_frame(nullptr)
     , m_playing(false)
@@ -20,7 +21,7 @@ Animation::Animation(int sprite_width, int sprite_height, uint32_t frame_count, 
 {
 }
 
-Animation::Animation(SpriteSheet &&sprite_sheet, sf::Time time_per_frame, bool looped)
+Animation::Animation(SpriteSheet&& sprite_sheet, sf::Time time_per_frame, bool looped)
     : m_sprite_sheet(std::move(sprite_sheet))
     , m_current_frame(m_sprite_sheet.begin())
     , m_time_per_frame(time_per_frame)

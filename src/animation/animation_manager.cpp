@@ -64,7 +64,7 @@ void AnimationManager::load_from_file(const std::string &file_name)
 
 void AnimationManager::add_animation(std::pair<std::string, Animation>&& animation)
 {
-    m_animations.emplace(animation);
+    m_animations.emplace(std::move(animation));
 }
 
 void AnimationManager::play()

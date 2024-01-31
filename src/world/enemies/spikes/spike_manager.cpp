@@ -10,9 +10,9 @@ void SpikeManager::draw(sf::RenderTarget &target, sf::RenderStates states) const
         target.draw(spike);
 }
 
-void SpikeManager::push_back(Spike &&spike)
+void SpikeManager::push_back(Spike&& spike)
 {
-    m_spikes.push_back(spike);
+    m_spikes.push_back(std::move(spike));
 }
 
 void SpikeManager::handle_collisions(Player &player)

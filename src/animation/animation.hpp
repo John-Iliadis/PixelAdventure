@@ -9,6 +9,7 @@
 #include "sprite_sheet.hpp"
 #include "animation_interface.hpp"
 
+
 class Animation : public IAnimation
 {
 public:
