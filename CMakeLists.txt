@@ -31,8 +31,8 @@ add_executable(Platformer
         src/world/world.hpp
         src/world/player/player.cpp
         src/world/player/player.hpp
-        src/world/back_ground.cpp
-        src/world/back_ground.hpp
+        src/world/background.cpp
+        src/world/background.hpp
         src/vendor/json.hpp
         src/world/collision.cpp
         src/world/collision.hpp

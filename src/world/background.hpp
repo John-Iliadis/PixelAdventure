@@ -2,8 +2,8 @@
 // Created by Gianni on 13/01/2024.
 //
 
-#ifndef PLATFORMER_BACK_GROUND_HPP
-#define PLATFORMER_BACK_GROUND_HPP
+#ifndef PLATFORMER_BACKGROUND_HPP
+#define PLATFORMER_BACKGROUND_HPP
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -26,4 +26,4 @@ private:
 };
 
 
-#endif //PLATFORMER_BACK_GROUND_HPP
+#endif //PLATFORMER_BACKGROUND_HPP

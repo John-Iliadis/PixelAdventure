@@ -2,7 +2,7 @@
 // Created by Gianni on 13/01/2024.
 //
 
-#include "back_ground.hpp"
+#include "background.hpp"
 
 
 static const float SCROLL_SPEED = 50;

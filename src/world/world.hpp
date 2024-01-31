@@ -8,7 +8,7 @@
 #include <memory>
 #include <SFML/Window/Event.hpp>
 #include <fstream>
-#include "back_ground.hpp"
+#include "background.hpp"
 #include "player/player.hpp"
 #include "collision.hpp"
 #include "tiled_json_loader.hpp"
@@ -34,7 +34,6 @@ private:
 
 private:
     GameContext& m_context;
-    //sf::Sprite background_map; // todo: should be in background class
     BackGround m_background;
     Player m_player;
     CheckpointManager m_checkpoint_manager;
