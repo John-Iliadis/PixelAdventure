@@ -7,7 +7,7 @@
 
 static const float SCROLL_SPEED = 50;
 
-BackGround::BackGround(TextureManager &texture_manager, const sf::Vector2u& map_texture_height)
+BackGround::BackGround(TextureManager &texture_manager)
     : m_scroll_speed(SCROLL_SPEED)
 {
     m_map.setTexture(texture_manager.get("test_map3"));

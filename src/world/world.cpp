@@ -8,8 +8,8 @@
 World::World(GameContext& context)
     : m_context(context)
     , m_player(context)
-    , m_background(*m_context.texture_manager, m_context.window->getSize()) // todo: fix background texture size
-    , m_death_articles(*context.texture_manager)
+    , m_background(*m_context.texture_manager)
+    , m_death_articles(*m_context.texture_manager)
 {
     std::ifstream file("../data/tmx/test_map3.tmj");
 

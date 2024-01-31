@@ -13,7 +13,7 @@
 class BackGround : public sf::Drawable
 {
 public:
-    BackGround(TextureManager& texture_manager, const sf::Vector2u& map_texture_height);
+    BackGround(TextureManager& texture_manager);
     void update(double dt);
 
 private:
