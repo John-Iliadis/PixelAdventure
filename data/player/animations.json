@@ -37,12 +37,6 @@
             "frame_count": 5,
             "frame_time_milliseconds": 50,
             "looped": true
-        },
-        {
-            "id": "dying",
-            "frame_count": 7,
-            "frame_time_milliseconds": 50,
-            "looped": false
         }
     ]
 }
