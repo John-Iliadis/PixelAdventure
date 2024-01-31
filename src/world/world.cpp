@@ -10,6 +10,7 @@ World::World(GameContext& context)
     : m_context(context)
     , m_player(context)
     , m_background(*m_context.texture_manager, m_context.window->getSize()) // todo: fix background texture size
+    , m_death_articles(*context.texture_manager)
 {
     std::ifstream file("../data/tmx/test_map3.tmj");
 
@@ -46,6 +47,10 @@ void World::handle_events(const sf::Event &event)
             m_player.set_accepting_input(false);
             m_context.camera->set_target({1200, 1200}, [this] () {m_player.set_accepting_input(true); following_player = true;});
         }
+        else if (event.key.code == sf::Keyboard::P)
+        {
+            m_death_articles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
+        }
     }
 
     m_player.handle_events(event);
@@ -56,6 +61,7 @@ void World::update(double dt)
     m_background.update(dt);
     m_player.update(dt);
     m_checkpoint_manager.update(m_player, dt);
+    m_death_articles.update(dt);
 
     m_spike_manager.handle_collisions(m_player);
 
@@ -72,8 +78,8 @@ void World::draw()
     window.draw(m_checkpoint_manager);
     window.draw(m_player);
     window.draw(m_spike_manager);
+    window.draw(m_death_articles);
 }
-
 
 void World::setup_spikes(const nlohmann::json &spike_pos_layer)
 {

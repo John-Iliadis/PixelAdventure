@@ -16,6 +16,7 @@
 #include "camera.hpp"
 #include "checkpoint/checkpoint_manager.hpp"
 #include "enemies/spikes/spike_manager.hpp"
+#include "particles/death_particle_system.hpp"
 
 #include <thread>
 
@@ -39,6 +40,7 @@ private:
     Player m_player;
     CheckpointManager m_checkpoint_manager;
     SpikeManager m_spike_manager;
+    DeathParticleSystem m_death_articles;
     std::vector<sf::Rect<float>> m_solid_tiles;
 };
 
