@@ -62,8 +62,8 @@ add_executable(Platformer
         src/world/tiled_json_loader.cpp
         src/world/tiled_json_loader.hpp
         src/structs/map_data.hpp
-        src/world/enemies/spikes/spike.cpp
-        src/world/enemies/spikes/spike.hpp
+        src/world/traps/spikes/spike.cpp
+        src/world/traps/spikes/spike.hpp
         src/world/camera.cpp
         src/world/camera.hpp
         src/world/checkpoint/checkpoint.cpp
@@ -72,8 +72,8 @@ add_executable(Platformer
         src/world/checkpoint/checkpoint_manager.hpp
         src/world/particles/death_particle.cpp
         src/world/particles/death_particle.hpp
-        src/world/enemies/spikes/spike_manager.cpp
-        src/world/enemies/spikes/spike_manager.hpp
+        src/world/traps/spikes/spike_manager.cpp
+        src/world/traps/spikes/spike_manager.hpp
         src/world/particles/death_particle_system.cpp
         src/world/particles/death_particle_system.hpp
         src/animation/animation.cpp
