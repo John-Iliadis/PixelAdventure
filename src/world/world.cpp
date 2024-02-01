@@ -11,6 +11,8 @@ World::World(GameContext& context)
     , m_background(*m_context.texture_manager)
     , m_death_articles(*m_context.texture_manager)
 {
+    m_map.setTexture(m_context.texture_manager->get("test_map3"));
+
     std::ifstream file("../data/tmx/test_map3.tmj");
 
     if (!file.is_open())
@@ -85,12 +87,13 @@ void World::draw()
     sf::RenderWindow& window = *m_context.window;
 
     window.draw(m_background);
+    window.draw(m_saw_manager);
+    window.draw(m_map);
     window.draw(m_checkpoint_manager);
     window.draw(m_player);
     window.draw(m_spike_manager);
     window.draw(m_death_articles);
     window.draw(m_fire_trap_manager);
-    window.draw(m_saw_manager);
 }
 
 void World::setup_spikes(const nlohmann::json &spike_pos_layer)

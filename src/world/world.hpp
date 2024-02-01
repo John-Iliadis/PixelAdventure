@@ -41,6 +41,7 @@ private:
 private:
     GameContext& m_context;
     BackGround m_background;
+    sf::Sprite m_map;
     Player m_player;
     CheckpointManager m_checkpoint_manager;
     SpikeManager m_spike_manager;

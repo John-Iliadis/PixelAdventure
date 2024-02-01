@@ -10,9 +10,7 @@ static const float SCROLL_SPEED = 50;
 BackGround::BackGround(TextureManager &texture_manager)
     : m_scroll_speed(SCROLL_SPEED)
 {
-    m_map.setTexture(texture_manager.get("test_map3"));
-
-    sf::Vector2u map_size = static_cast<sf::Vector2u>(m_map.getGlobalBounds().getSize());
+    sf::Vector2u map_size = static_cast<sf::Vector2u>(texture_manager.get("test_map3").getSize());
 
     sf::Texture& texture = texture_manager.get("Purple"); // todo: texture should come from parameter
     texture.setRepeated(true);
@@ -51,5 +49,4 @@ void BackGround::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_scrollable_background[0]);
     target.draw(m_scrollable_background[1]);
-    target.draw(m_map);
 }
