@@ -18,8 +18,8 @@ namespace TiledJsonLoader
     // gets tile width, height and tile count
     MapData get_map_data(const nlohmann::json& json_data);
 
-    // returns a tiled layer json object
-    nlohmann::json get_layer(const nlohmann::json& json_data, const std::string& layer_name);
+    // returns a json object if that object has a name property that matches object_name
+    nlohmann::json get_list_object(const nlohmann::json& list, const std::string& object_name);
 
     // returns tile rectangles in world coordinates
     std::vector<sf::Rect<float>> get_tiles(const nlohmann::json& json_data, const std::string& layer_name);
@@ -30,7 +30,7 @@ namespace TiledJsonLoader
     // returns all positions that match pos_name. All positions start at top left
     std::vector<sf::Vector2f> get_positions(const nlohmann::json& json_data, const std::string& layer_name, const std::string& pos_name);
 
-    // returns a property from a property array
+    // returns a property from an array
     template <typename T>
     T get_property(const nlohmann::json& property_array, const std::string& property_name);
 }

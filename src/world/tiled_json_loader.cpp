@@ -18,14 +18,14 @@ namespace TiledJsonLoader
         return map_data;
     }
 
-    nlohmann::json get_layer(const nlohmann::json& json_data, const std::string& layer_name)
+    nlohmann::json get_list_object(const nlohmann::json& list, const std::string& object_name)
     {
-        auto itr = std::find_if(json_data["layers"].begin(), json_data["layers"].end(),
-                                [&layer_name] (const nlohmann::json& layer) {
-                                    return (layer["name"].get<std::string>() == layer_name);
+        auto itr = std::find_if(list["layers"].begin(), list["layers"].end(),
+                                [&object_name] (const nlohmann::json& layer) {
+                                    return (layer["name"].get<std::string>() == object_name);
                                 });
 
-        assert(itr != json_data["layers"].end());
+        assert(itr != list["layers"].end());
 
         return *itr;
     }
@@ -36,7 +36,7 @@ namespace TiledJsonLoader
 
         MapData map_data = get_map_data(json_data);
 
-        std::vector<int> layer_data = get_layer(json_data, layer_name)["data"].get<std::vector<int>>();
+        std::vector<int> layer_data = get_list_object(json_data, layer_name)["data"].get<std::vector<int>>();
 
         for (int i = 0; i < map_data.total_tiles_y; ++i)
         {
@@ -61,7 +61,7 @@ namespace TiledJsonLoader
 
     sf::Vector2f get_position(const nlohmann::json& json_data, const std::string& layer_name, const std::string& pos_name)
     {
-        nlohmann::json objects = get_layer(json_data, layer_name)["objects"];
+        nlohmann::json objects = get_list_object(json_data, layer_name)["objects"];
 
         auto itr = std::find_if(objects.begin(), objects.end(),
             [&pos_name] (const nlohmann::json& object) {
@@ -80,7 +80,7 @@ namespace TiledJsonLoader
     {
         std::vector<sf::Vector2f> positions;
 
-        nlohmann::json objects = get_layer(json_data, layer_name)["objects"];
+        nlohmann::json objects = get_list_object(json_data, layer_name)["objects"];
 
         for (const auto& object : objects)
         {
