@@ -85,7 +85,16 @@ add_executable(Platformer
         src/world/traps/fire_trap/fire_trap.hpp
         src/world/traps/fire_trap/fire_trap_manager.cpp
         src/world/traps/fire_trap/fire_trap_manager.hpp
-        src/world/tiled_json_loader.inl)
+        src/world/tiled_json_loader.inl
+        src/world/traps/saw/saw.cpp
+        src/world/traps/saw/saw.hpp
+        src/world/traps/saw/chain_saw.cpp
+        src/world/traps/saw/chain_saw.hpp
+        src/world/traps/saw/floor_saw.cpp
+        src/world/traps/saw/floor_saw.hpp
+        src/structs/line_path.hpp
+        src/world/traps/saw/saw_manager.cpp
+        src/world/traps/saw/saw_manager.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

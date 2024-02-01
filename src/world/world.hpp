@@ -20,6 +20,7 @@
 #include "traps/fire_trap/fire_trap_manager.hpp"
 #include "traps/saw/saw_manager.hpp"
 #include "traps/saw/chain_saw.hpp"
+#include "traps/saw/floor_saw.hpp"
 
 
 class World

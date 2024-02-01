@@ -158,6 +158,7 @@ void World::setup_fire_traps(const nlohmann::json &fire_trap_layer)
 void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
 {
     static ChainSaw chain_saw_prototype(*m_context.texture_manager);
+    static FloorSaw floor_saw_prototype(*m_context.texture_manager);
 
     for (const auto& layer : saw_trap_layer["layers"])
     {
@@ -183,6 +184,37 @@ void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
             l_chain_saw->set_path(line_path);
 
             m_saw_manager.push_back(std::move(l_chain_saw));
+        }
+        else if (layer["name"] == "floor_saw")
+        {
+            auto l_floor_saw = std::make_unique<FloorSaw>(floor_saw_prototype);
+
+            std::vector<sf::Vector2f> path;
+            uint8_t spawn_pos{};
+
+            for (const auto& object : layer["objects"])
+            {
+                sf::Vector2f l_position {
+                    object["x"].get<float>(),
+                    object["y"].get<float>()
+                };
+
+                path.push_back(std::move(l_position));
+
+                if (object["name"] != "spawn_pos")
+                    continue;
+
+                spawn_pos = path.size() - 1;
+            }
+
+            l_floor_saw->set_path(std::move(path));
+            l_floor_saw->set_current_pos_index(spawn_pos);
+
+            m_saw_manager.push_back(std::move(l_floor_saw));
+        }
+        else
+        {
+            assert(false);
         }
     }
 }
