@@ -80,7 +80,12 @@ add_executable(Platformer
         src/animation/animation.hpp
         src/animation/animation_interface.hpp
         src/world/player/respawning_state.cpp
-        src/world/player/respawning_state.hpp)
+        src/world/player/respawning_state.hpp
+        src/world/traps/fire_trap/fire_trap.cpp
+        src/world/traps/fire_trap/fire_trap.hpp
+        src/world/traps/fire_trap/fire_trap_manager.cpp
+        src/world/traps/fire_trap/fire_trap_manager.hpp
+        src/world/tiled_json_loader.inl)
 
 set(SFML_STATIC_LIBRARIES true)
 

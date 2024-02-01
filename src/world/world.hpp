@@ -12,11 +12,12 @@
 #include "player/player.hpp"
 #include "collision.hpp"
 #include "tiled_json_loader.hpp"
-#include "enemies/spikes/spike.hpp"
+#include "traps/spikes/spike.hpp"
 #include "camera.hpp"
 #include "checkpoint/checkpoint_manager.hpp"
-#include "enemies/spikes/spike_manager.hpp"
+#include "traps/spikes/spike_manager.hpp"
 #include "particles/death_particle_system.hpp"
+#include "traps/fire_trap/fire_trap_manager.hpp"
 
 
 class World
@@ -29,8 +30,9 @@ public:
     void draw();
 
 private:
-    void setup_spikes(const nlohmann::json& spike_pos_layer);
     void setup_checkpoints(const nlohmann::json& checkpoint_pos_layer);
+    void setup_spikes(const nlohmann::json& spike_pos_layer);
+    void setup_fire_traps(const nlohmann::json& fire_trap_layer);
 
 private:
     GameContext& m_context;
@@ -38,6 +40,7 @@ private:
     Player m_player;
     CheckpointManager m_checkpoint_manager;
     SpikeManager m_spike_manager;
+    FireTrapManager m_fire_trap_manager;
     DeathParticleSystem m_death_articles;
     std::vector<sf::Rect<float>> m_solid_tiles;
 };

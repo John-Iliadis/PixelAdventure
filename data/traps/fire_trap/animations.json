@@ -1,0 +1,18 @@
+[
+    {
+        "sprite_width": 16,
+        "sprite_height": 32,
+        "id": "fire_off",
+        "frame_count": 1,
+        "frame_time_milliseconds": 0,
+        "looped": false
+    },
+    {
+        "sprite_width": 16,
+        "sprite_height": 32,
+        "id": "fire_on",
+        "frame_count": 3,
+        "frame_time_milliseconds": 50,
+        "looped": true
+    }
+]
