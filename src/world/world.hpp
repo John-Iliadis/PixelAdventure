@@ -18,6 +18,8 @@
 #include "traps/spikes/spike_manager.hpp"
 #include "particles/death_particle_system.hpp"
 #include "traps/fire_trap/fire_trap_manager.hpp"
+#include "traps/saw/saw_manager.hpp"
+#include "traps/saw/chain_saw.hpp"
 
 
 class World
@@ -33,6 +35,7 @@ private:
     void setup_checkpoints(const nlohmann::json& checkpoint_pos_layer);
     void setup_spikes(const nlohmann::json& spike_pos_layer);
     void setup_fire_traps(const nlohmann::json& fire_trap_layer);
+    void setup_saw_traps(const nlohmann::json& saw_trap_layer);
 
 private:
     GameContext& m_context;
@@ -42,6 +45,7 @@ private:
     SpikeManager m_spike_manager;
     FireTrapManager m_fire_trap_manager;
     DeathParticleSystem m_death_articles;
+    SawManager m_saw_manager;
     std::vector<sf::Rect<float>> m_solid_tiles;
 };
 

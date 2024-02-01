@@ -42,9 +42,10 @@ World::World(GameContext& context)
         m_context.camera->set_target(camera_target, 1.2, [this] () {m_player.respawn();});
     });
 
-    setup_checkpoints(TiledJsonLoader::get_layer(map_data, "checkpoint_positions"));
-    setup_spikes(TiledJsonLoader::get_layer(map_data, "spike_positions"));
-    setup_fire_traps(TiledJsonLoader::get_layer(map_data, "fire_trap_positions"));
+    setup_checkpoints(TiledJsonLoader::get_list_object(map_data, "checkpoint_positions"));
+    setup_spikes(TiledJsonLoader::get_list_object(map_data, "spike_positions"));
+    setup_fire_traps(TiledJsonLoader::get_list_object(map_data, "fire_trap_positions"));
+    setup_saw_traps(TiledJsonLoader::get_list_object(map_data, "saw_layer"));
 }
 
 void World::handle_events(const sf::Event &event)
@@ -71,6 +72,7 @@ void World::update(double dt)
     m_checkpoint_manager.update(m_player, dt);
     m_death_articles.update(dt);
     m_fire_trap_manager.update(m_player, dt);
+    m_saw_manager.update(m_player, dt);
 
     m_spike_manager.handle_collisions(m_player);
 
@@ -88,6 +90,7 @@ void World::draw()
     window.draw(m_spike_manager);
     window.draw(m_death_articles);
     window.draw(m_fire_trap_manager);
+    window.draw(m_saw_manager);
 }
 
 void World::setup_spikes(const nlohmann::json &spike_pos_layer)
@@ -149,5 +152,37 @@ void World::setup_fire_traps(const nlohmann::json &fire_trap_layer)
         l_fire_trap.set_timer(on_time, off_time);
 
         m_fire_trap_manager.push_back(std::move(l_fire_trap));
+    }
+}
+
+void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
+{
+    static ChainSaw chain_saw_prototype(*m_context.texture_manager);
+
+    for (const auto& layer : saw_trap_layer["layers"])
+    {
+        if (layer["name"] == "chain_saw")
+        {
+            auto l_chain_saw = std::make_unique<ChainSaw>(chain_saw_prototype);
+
+            std::unordered_map<std::string, sf::Vector2f> positions;
+
+            for (const auto& object : layer["objects"])
+            {
+                positions[object["name"].get<std::string>()] = {
+                        object["x"].get<float>(),
+                        object["y"].get<float>()
+                };
+            }
+
+            LinePath line_path {
+                positions.at("start"),
+                positions.at("finish"),
+            };
+
+            l_chain_saw->set_path(line_path);
+
+            m_saw_manager.push_back(std::move(l_chain_saw));
+        }
     }
 }
