@@ -36,6 +36,8 @@ void Spike::place(const sf::Vector2f &pos, int rotation)
         case 270:
             m_sprite_collider.set_position(pos.x + sprite_size.x, pos.y + sprite_size.y / 2.f);
             break;
+        default:
+            assert(false);
     }
 }
 

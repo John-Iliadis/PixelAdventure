@@ -4,6 +4,7 @@
 
 #include "spike_manager.hpp"
 
+
 void SpikeManager::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     for (const auto& spike : m_spikes)
