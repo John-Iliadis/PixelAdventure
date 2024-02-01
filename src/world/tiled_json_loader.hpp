@@ -29,7 +29,13 @@ namespace TiledJsonLoader
 
     // returns all positions that match pos_name. All positions start at top left
     std::vector<sf::Vector2f> get_positions(const nlohmann::json& json_data, const std::string& layer_name, const std::string& pos_name);
+
+    // returns a property from a property array
+    template <typename T>
+    T get_property(const nlohmann::json& property_array, const std::string& property_name);
 }
+
+#include "tiled_json_loader.inl"
 
 
 #endif //PLATFORMER_TILED_JSON_LOADER_HPP
