@@ -23,7 +23,6 @@ private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 private:
-    LinePath m_path;
     sf::Sprite m_chain;
     sf::Vector2f m_start_pos;
     sf::Vector2f m_target_pos;

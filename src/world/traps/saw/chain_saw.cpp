@@ -51,24 +51,22 @@ void ChainSaw::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void ChainSaw::set_path(const LinePath &path)
 {
-    m_path = path;
+    m_duration = 128 / path.get_distance();
 
-    m_start_pos = m_path.starting_point;
-    m_target_pos = m_path.end_point;
+    m_start_pos = path.starting_point;
+    m_target_pos = path.end_point;
 
-    m_sprite_collider.set_position(m_path.starting_point);
+    m_sprite_collider.set_position(path.starting_point);
 
     sf::Rect<int> chain_texture_rect {
         0, 0,
-        static_cast<int>(m_path.get_distance()),
+        static_cast<int>(path.get_distance()),
         static_cast<int>(m_chain.getGlobalBounds().height)
     };
 
     m_chain.setTextureRect(chain_texture_rect);
-    m_chain.setPosition(m_path.starting_point);
+    m_chain.setPosition(path.starting_point);
 
-    if (std::isinf(m_path.get_slope()))
+    if (std::isinf(path.get_slope()))
         m_chain.rotate(90);
-
-    m_duration = 128 / m_path.get_distance();
 }
