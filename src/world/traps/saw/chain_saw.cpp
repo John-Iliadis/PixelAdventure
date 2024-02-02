@@ -38,8 +38,7 @@ void ChainSaw::update(double dt)
     if (new_pos == m_target_pos)
     {
         m_ellapsed = 0;
-        m_target_pos = m_start_pos;
-        m_start_pos = new_pos;
+        std::swap(m_start_pos, m_target_pos);
     }
 }
 
