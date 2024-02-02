@@ -75,26 +75,4 @@ namespace TiledJsonLoader
                 (*itr)["y"].get<float>()
         };
     }
-
-    std::vector<sf::Vector2f> get_positions(const nlohmann::json& json_data, const std::string& layer_name, const std::string& pos_name)
-    {
-        std::vector<sf::Vector2f> positions;
-
-        nlohmann::json objects = get_list_object(json_data, layer_name)["objects"];
-
-        for (const auto& object : objects)
-        {
-            if (object["name"].get<std::string>() == pos_name)
-            {
-                sf::Vector2f pos {
-                        object["x"].get<float>(),
-                        object["y"].get<float>()
-                };
-
-                positions.push_back(std::move(pos));
-            }
-        }
-
-        return positions;
-    }
 }
