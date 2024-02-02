@@ -19,6 +19,11 @@ namespace utils
             throw std::runtime_error("get_max_refresh_rate() - Failed to retrieve monitor refresh rate\n");
     }
 
+    float get_distance(const sf::Vector2f& vec1, const sf::Vector2f& vec2)
+    {
+        return std::hypot(vec2.x - vec1.x, vec2.y - vec1.y);
+    }
+
     void set_origin_center(sf::Sprite& sprite)
     {
         auto rect = sprite.getLocalBounds();

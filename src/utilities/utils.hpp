@@ -8,6 +8,7 @@
 #include <windows.h>
 #include <cstdint>
 #include <stdexcept>
+#include <cmath>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "../world/enums.hpp"
@@ -16,6 +17,8 @@
 namespace utils
 {
     uint32_t get_max_refresh_rate();
+
+    float get_distance(const sf::Vector2f& vec1, const sf::Vector2f& vec2);
 
     void set_origin_center(sf::Sprite& sprite);
     void set_origin_center(sf::Shape& shape);
