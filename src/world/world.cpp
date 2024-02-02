@@ -231,8 +231,8 @@ void World::setup_spike_head_traps(const nlohmann::json &spike_head_layer)
         for (const auto& object : sub_layer["objects"])
         {
             sf::Vector2f l_position {
-                object["x"].get<float>(),
-                object["y"].get<float>()
+                object["x"].get<float>() + object["width"].get<float>() / 2.f,
+                object["y"].get<float>() + object["height"].get<float>() / 2.f
             };
 
             path.push_back(std::move(l_position));
