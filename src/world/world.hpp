@@ -15,12 +15,11 @@
 #include "traps/spikes/spike.hpp"
 #include "camera.hpp"
 #include "checkpoint/checkpoint_manager.hpp"
-#include "traps/spikes/spike_manager.hpp"
 #include "particles/death_particle_system.hpp"
-#include "traps/fire_trap/fire_trap_manager.hpp"
-#include "traps/saw/saw_manager.hpp"
 #include "traps/saw/chain_saw.hpp"
 #include "traps/saw/floor_saw.hpp"
+#include "traps/trap_manager.hpp"
+#include "traps/fire_trap/fire_trap.hpp"
 
 
 class World
@@ -44,10 +43,8 @@ private:
     sf::Sprite m_map;
     Player m_player;
     CheckpointManager m_checkpoint_manager;
-    SpikeManager m_spike_manager;
-    FireTrapManager m_fire_trap_manager;
+    TrapManager m_trap_manager;
     DeathParticleSystem m_death_articles;
-    SawManager m_saw_manager;
     std::vector<sf::Rect<float>> m_solid_tiles;
 };
 

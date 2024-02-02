@@ -72,8 +72,6 @@ add_executable(Platformer
         src/world/checkpoint/checkpoint_manager.hpp
         src/world/particles/death_particle.cpp
         src/world/particles/death_particle.hpp
-        src/world/traps/spikes/spike_manager.cpp
-        src/world/traps/spikes/spike_manager.hpp
         src/world/particles/death_particle_system.cpp
         src/world/particles/death_particle_system.hpp
         src/animation/animation.cpp
@@ -83,8 +81,6 @@ add_executable(Platformer
         src/world/player/respawning_state.hpp
         src/world/traps/fire_trap/fire_trap.cpp
         src/world/traps/fire_trap/fire_trap.hpp
-        src/world/traps/fire_trap/fire_trap_manager.cpp
-        src/world/traps/fire_trap/fire_trap_manager.hpp
         src/world/tiled_json_loader.inl
         src/world/traps/saw/saw.cpp
         src/world/traps/saw/saw.hpp
@@ -93,8 +89,11 @@ add_executable(Platformer
         src/world/traps/saw/floor_saw.cpp
         src/world/traps/saw/floor_saw.hpp
         src/structs/line_path.hpp
-        src/world/traps/saw/saw_manager.cpp
-        src/world/traps/saw/saw_manager.hpp)
+        src/world/traps/spike_head/spike_head.cpp
+        src/world/traps/spike_head/spike_head.hpp
+        src/world/traps/trap.hpp
+        src/world/traps/trap_manager.cpp
+        src/world/traps/trap_manager.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

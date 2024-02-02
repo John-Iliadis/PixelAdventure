@@ -73,10 +73,7 @@ void World::update(double dt)
     m_player.update(dt);
     m_checkpoint_manager.update(m_player, dt);
     m_death_articles.update(dt);
-    m_fire_trap_manager.update(m_player, dt);
-    m_saw_manager.update(m_player, dt);
-
-    m_spike_manager.handle_collisions(m_player);
+    m_trap_manager.update(m_player, dt);
 
     if (m_player.is_alive())
         m_context.camera->set_center(m_player.get_center());
@@ -87,13 +84,11 @@ void World::draw()
     sf::RenderWindow& window = *m_context.window;
 
     window.draw(m_background);
-    window.draw(m_saw_manager);
+    window.draw(m_trap_manager);
     window.draw(m_map);
     window.draw(m_checkpoint_manager);
     window.draw(m_player);
-    window.draw(m_spike_manager);
     window.draw(m_death_articles);
-    window.draw(m_fire_trap_manager);
 }
 
 void World::setup_spikes(const nlohmann::json &spike_pos_layer)
@@ -109,11 +104,11 @@ void World::setup_spikes(const nlohmann::json &spike_pos_layer)
             object["y"].get<float>()
         };
 
-        Spike l_spike = prototype;
+        auto l_spike = std::make_unique<Spike>(prototype);
 
-        l_spike.place(position, rotation);
+        l_spike->place(position, rotation);
 
-        m_spike_manager.push_back(std::move(l_spike));
+        m_trap_manager.push_back(std::move(l_spike));
     }
 }
 
@@ -150,11 +145,12 @@ void World::setup_fire_traps(const nlohmann::json &fire_trap_layer)
         float on_time = TiledJsonLoader::get_property<float>(object["properties"], "on_time");
         float off_time = TiledJsonLoader::get_property<float>(object["properties"], "off_time");
 
-        FireTrap l_fire_trap = prototype;
-        l_fire_trap.place(pos, rotation);
-        l_fire_trap.set_timer(on_time, off_time);
+        auto l_fire_trap = std::make_unique<FireTrap>(prototype);
 
-        m_fire_trap_manager.push_back(std::move(l_fire_trap));
+        l_fire_trap->place(pos, rotation);
+        l_fire_trap->set_timer(on_time, off_time);
+
+        m_trap_manager.push_back(std::move(l_fire_trap));
     }
 }
 
@@ -186,7 +182,7 @@ void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
 
             l_chain_saw->set_path(line_path);
 
-            m_saw_manager.push_back(std::move(l_chain_saw));
+            m_trap_manager.push_back(std::move(l_chain_saw));
         }
         else if (layer["name"] == "floor_saw")
         {
@@ -213,7 +209,7 @@ void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
             l_floor_saw->set_path(std::move(path));
             l_floor_saw->set_current_pos_index(spawn_pos);
 
-            m_saw_manager.push_back(std::move(l_floor_saw));
+            m_trap_manager.push_back(std::move(l_floor_saw));
         }
         else
         {
