@@ -9,20 +9,20 @@
 #include "../../../asset_managers/texture_manager.hpp"
 #include "../../../animation/animation_manager.hpp"
 #include "../../sprite_collider.hpp"
+#include "../trap.hpp"
 
 
-class FireTrap : public sf::Drawable
+class FireTrap : public Trap
 {
 public:
-    FireTrap() = default;
     FireTrap(const TextureManager& textures);
 
     void place(const sf::Vector2f& pos, int rotation);
     void set_timer(float on_time, float off_time);
 
-    void update(double dt);
+    void update(double dt) override;
 
-    sf::Rect<float> get_collider() const;
+    sf::Rect<float> get_collider() const override;
 
 private:
     void update_animation(double dt);

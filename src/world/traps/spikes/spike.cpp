@@ -41,6 +41,10 @@ void Spike::place(const sf::Vector2f &pos, int rotation)
     }
 }
 
+void Spike::update(double dt)
+{
+}
+
 sf::Rect<float> Spike::get_collider() const
 {
     return m_sprite_collider.get_collider();

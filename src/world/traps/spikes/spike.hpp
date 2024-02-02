@@ -8,10 +8,11 @@
 #include <stdexcept>
 #include <cstdint>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "../trap.hpp"
 #include "../../sprite_collider.hpp"
 
 
-class Spike : public sf::Drawable
+class Spike : public Trap
 {
 public:
     Spike() = default;
@@ -19,7 +20,9 @@ public:
 
     void place(const sf::Vector2f& pos, int rotation);
 
-    sf::Rect<float> get_collider() const;
+    void update(double dt) override;
+
+    sf::Rect<float> get_collider() const override;
 
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

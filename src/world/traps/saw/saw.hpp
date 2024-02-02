@@ -5,19 +5,20 @@
 #ifndef PLATFORMER_SAW_HPP
 #define PLATFORMER_SAW_HPP
 
-#include "../../sprite_collider.hpp"
 #include "../../../animation/animation.hpp"
+#include "../../sprite_collider.hpp"
+#include "../trap.hpp"
 
 
-class Saw : public sf::Drawable
+class Saw : public Trap
 {
 public:
     Saw(const sf::Texture& texture);
     virtual ~Saw() = default;
 
-    virtual void update(double dt);
+    void update(double dt) override;
 
-    sf::Rect<float> get_collider() const;
+    sf::Rect<float> get_collider() const override;
 
 protected:
     Animation m_animation;

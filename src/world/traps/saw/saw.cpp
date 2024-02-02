@@ -16,13 +16,13 @@ Saw::Saw(const sf::Texture& texture)
     m_sprite_collider.set_origin(Origin::CENTER);
 }
 
-sf::Rect<float> Saw::get_collider() const
-{
-    return m_sprite_collider.get_collider();
-}
-
 void Saw::update(double dt)
 {
     m_animation.update(dt);
     m_sprite_collider.set_texture_rect(m_animation.get_current_frame_rect());
+}
+
+sf::Rect<float> Saw::get_collider() const
+{
+    return m_sprite_collider.get_collider();
 }
