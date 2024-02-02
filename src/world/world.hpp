@@ -20,6 +20,7 @@
 #include "traps/saw/floor_saw.hpp"
 #include "traps/trap_manager.hpp"
 #include "traps/fire_trap/fire_trap.hpp"
+#include "traps/spike_head/spike_head.hpp"
 
 
 class World
@@ -36,6 +37,7 @@ private:
     void setup_spikes(const nlohmann::json& spike_pos_layer);
     void setup_fire_traps(const nlohmann::json& fire_trap_layer);
     void setup_saw_traps(const nlohmann::json& saw_trap_layer);
+    void setup_spike_head_traps(const nlohmann::json& spike_head_layer);
 
 private:
     GameContext& m_context;

@@ -48,6 +48,7 @@ World::World(GameContext& context)
     setup_spikes(TiledJsonLoader::get_list_object(map_data, "spike_positions"));
     setup_fire_traps(TiledJsonLoader::get_list_object(map_data, "fire_trap_positions"));
     setup_saw_traps(TiledJsonLoader::get_list_object(map_data, "saw_layer"));
+    setup_spike_head_traps(TiledJsonLoader::get_list_object(map_data, "spike_head_layer"));
 }
 
 void World::handle_events(const sf::Event &event)
@@ -72,8 +73,8 @@ void World::update(double dt)
     m_background.update(dt);
     m_player.update(dt);
     m_checkpoint_manager.update(m_player, dt);
-    m_death_articles.update(dt);
     m_trap_manager.update(m_player, dt);
+    m_death_articles.update(dt);
 
     if (m_player.is_alive())
         m_context.camera->set_center(m_player.get_center());
@@ -159,15 +160,15 @@ void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
     static ChainSaw chain_saw_prototype(*m_context.texture_manager);
     static FloorSaw floor_saw_prototype(*m_context.texture_manager);
 
-    for (const auto& layer : saw_trap_layer["layers"])
+    for (const auto& sub_layer : saw_trap_layer["layers"])
     {
-        if (layer["name"] == "chain_saw")
+        if (sub_layer["name"] == "chain_saw")
         {
             auto l_chain_saw = std::make_unique<ChainSaw>(chain_saw_prototype);
 
             std::unordered_map<std::string, sf::Vector2f> positions;
 
-            for (const auto& object : layer["objects"])
+            for (const auto& object : sub_layer["objects"])
             {
                 positions[object["name"].get<std::string>()] = {
                         object["x"].get<float>(),
@@ -184,14 +185,14 @@ void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
 
             m_trap_manager.push_back(std::move(l_chain_saw));
         }
-        else if (layer["name"] == "floor_saw")
+        else if (sub_layer["name"] == "floor_saw")
         {
             auto l_floor_saw = std::make_unique<FloorSaw>(floor_saw_prototype);
 
             std::vector<sf::Vector2f> path;
             uint8_t spawn_pos{};
 
-            for (const auto& object : layer["objects"])
+            for (const auto& object : sub_layer["objects"])
             {
                 sf::Vector2f l_position {
                     object["x"].get<float>(),
@@ -200,10 +201,8 @@ void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
 
                 path.push_back(std::move(l_position));
 
-                if (object["name"] != "spawn_pos")
-                    continue;
-
-                spawn_pos = path.size() - 1;
+                if (object["name"] == "spawn_pos")
+                    spawn_pos = path.size() - 1;
             }
 
             l_floor_saw->set_path(std::move(path));
@@ -215,5 +214,36 @@ void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
         {
             assert(false);
         }
+    }
+}
+
+void World::setup_spike_head_traps(const nlohmann::json &spike_head_layer)
+{
+    static SpikeHead spike_head_prototype(*m_context.texture_manager);
+
+    for (const auto& sub_layer : spike_head_layer["layers"])
+    {
+        auto l_spike_head = std::make_unique<SpikeHead>(spike_head_prototype);
+
+        std::vector<sf::Vector2f> path;
+        uint8_t spawn_pos{};
+
+        for (const auto& object : sub_layer["objects"])
+        {
+            sf::Vector2f l_position {
+                object["x"].get<float>(),
+                object["y"].get<float>()
+            };
+
+            path.push_back(std::move(l_position));
+
+            if (object["name"] == "spawn_pos")
+                spawn_pos = path.size() - 1;
+        }
+
+        l_spike_head->set_path(std::move(path));
+        l_spike_head->set_spawn_pos_index(spawn_pos);
+
+        m_trap_manager.push_back(std::move(l_spike_head));
     }
 }
