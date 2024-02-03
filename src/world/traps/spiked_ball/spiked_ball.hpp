@@ -31,7 +31,7 @@ protected:
     float m_length;
     float m_angular_velocity;
 
-private: // todo: maybe make this protected
+private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 };
 

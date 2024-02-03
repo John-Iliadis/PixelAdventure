@@ -44,27 +44,16 @@ World::World(GameContext& context)
         m_context.camera->set_target(camera_target, 1.2, [this] () {m_player.respawn();});
     });
 
-    setup_checkpoints(TiledJsonLoader::get_list_object(map_data, "checkpoint_positions"));
-    setup_spikes(TiledJsonLoader::get_list_object(map_data, "spike_positions"));
-    setup_fire_traps(TiledJsonLoader::get_list_object(map_data, "fire_trap_positions"));
-    setup_saw_traps(TiledJsonLoader::get_list_object(map_data, "saw_layer"));
-    setup_spike_head_traps(TiledJsonLoader::get_list_object(map_data, "spike_head_layer"));
+    setup_checkpoints(TiledJsonLoader::get_list_object(map_data["layers"], "checkpoint_positions"));
+    setup_spikes(TiledJsonLoader::get_list_object(map_data["layers"], "spike_positions"));
+    setup_fire_traps(TiledJsonLoader::get_list_object(map_data["layers"], "fire_trap_positions"));
+    //setup_saw_traps(TiledJsonLoader::get_list_object(map_data["layers"], "saw_layer"));
+    setup_spike_head_traps(TiledJsonLoader::get_list_object(map_data["layers"], "spike_head_layer"));
+    setup_spiked_balls(TiledJsonLoader::get_list_object(map_data["layers"], "spiked_ball_layer"));
 }
 
 void World::handle_events(const sf::Event &event)
 {
-    if (event.type == sf::Event::KeyPressed)
-    {
-        if (event.key.code == sf::Keyboard::P)
-        {
-            m_death_articles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
-        }
-        else if (event.key.code == sf::Keyboard::R)
-        {
-            m_player.respawn();
-        }
-    }
-
     m_player.handle_events(event);
 }
 
@@ -92,6 +81,24 @@ void World::draw()
     window.draw(m_death_articles);
 }
 
+void World::setup_checkpoints(const nlohmann::json &checkpoint_pos_layer)
+{
+    static Checkpoint prototype(*m_context.texture_manager);
+
+    for (const auto& object : checkpoint_pos_layer["objects"])
+    {
+        sf::Vector2f pos {
+                object["x"].get<float>(),
+                object["y"].get<float>()
+        };
+
+        Checkpoint l_checkpoint = prototype;
+        l_checkpoint.set_position(pos);
+
+        m_checkpoint_manager.push_back(std::move(l_checkpoint));
+    }
+}
+
 void World::setup_spikes(const nlohmann::json &spike_pos_layer)
 {
     static Spike prototype(m_context.texture_manager->get("spike"));
@@ -110,24 +117,6 @@ void World::setup_spikes(const nlohmann::json &spike_pos_layer)
         l_spike->place(position, rotation);
 
         m_trap_manager.push_back(std::move(l_spike));
-    }
-}
-
-void World::setup_checkpoints(const nlohmann::json &checkpoint_pos_layer)
-{
-    static Checkpoint prototype(*m_context.texture_manager);
-
-    for (const auto& object : checkpoint_pos_layer["objects"])
-    {
-        sf::Vector2f pos {
-            object["x"].get<float>(),
-            object["y"].get<float>()
-        };
-
-        Checkpoint l_checkpoint = prototype;
-        l_checkpoint.set_position(pos);
-
-        m_checkpoint_manager.push_back(std::move(l_checkpoint));
     }
 }
 
@@ -217,7 +206,7 @@ void World::setup_saw_traps(const nlohmann::json &saw_trap_layer)
     }
 }
 
-void World::setup_spike_head_traps(const nlohmann::json &spike_head_layer)
+void World::setup_spike_head_traps(const nlohmann::json& spike_head_layer)
 {
     static SpikeHead spike_head_prototype(*m_context.texture_manager);
 
@@ -245,5 +234,50 @@ void World::setup_spike_head_traps(const nlohmann::json &spike_head_layer)
         l_spike_head->set_spawn_pos_index(spawn_pos);
 
         m_trap_manager.push_back(std::move(l_spike_head));
+    }
+}
+
+void World::setup_spiked_balls(const nlohmann::json& spiked_ball_layer)
+{
+    static PendulumSpikedBall pendulum_spiked_ball_prototype(*m_context.texture_manager);
+    static CircularSpikedBall circular_spiked_ball_prototype(*m_context.texture_manager);
+
+    for (const auto& sub_layer : spiked_ball_layer["layers"])
+    {
+        auto base = TiledJsonLoader::get_list_object(sub_layer["objects"], "base");
+        auto bob = TiledJsonLoader::get_list_object(sub_layer["objects"], "bob");
+
+        sf::Vector2f base_position {
+            base["x"].get<float>() + base["width"].get<float>() / 2.f,
+            base["y"].get<float>() + base["height"].get<float>() / 2.f
+        };
+
+        sf::Vector2f bob_position {
+            bob["x"].get<float>() + bob["width"].get<float>() / 2.f,
+            bob["y"].get<float>() + bob["height"].get<float>() / 2.f
+        };
+
+        float length = utils::get_distance(base_position, bob_position);
+
+        if (sub_layer["name"] == "pendulum")
+        {
+            auto l_pendulum_spiked_ball = std::make_unique<PendulumSpikedBall>(pendulum_spiked_ball_prototype);
+
+            l_pendulum_spiked_ball->place(base_position, length);
+
+            m_trap_manager.push_back(std::move(l_pendulum_spiked_ball));
+        }
+        else if (sub_layer["name"] == "circular")
+        {
+            auto l_circular_spiked_ball = std::make_unique<CircularSpikedBall>(circular_spiked_ball_prototype);
+
+            l_circular_spiked_ball->place(base_position, length);
+
+            m_trap_manager.push_back(std::move(l_circular_spiked_ball));
+        }
+        else
+        {
+            assert(false);
+        }
     }
 }

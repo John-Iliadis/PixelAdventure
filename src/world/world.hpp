@@ -21,6 +21,8 @@
 #include "traps/trap_manager.hpp"
 #include "traps/fire_trap/fire_trap.hpp"
 #include "traps/spike_head/spike_head.hpp"
+#include "traps/spiked_ball/pendulum_spiked_ball.hpp"
+#include "traps/spiked_ball/circular_spiked_ball.hpp"
 
 
 class World
@@ -38,6 +40,7 @@ private:
     void setup_fire_traps(const nlohmann::json& fire_trap_layer);
     void setup_saw_traps(const nlohmann::json& saw_trap_layer);
     void setup_spike_head_traps(const nlohmann::json& spike_head_layer);
+    void setup_spiked_balls(const nlohmann::json& spiked_ball_layer);
 
 private:
     GameContext& m_context;

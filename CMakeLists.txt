@@ -93,7 +93,13 @@ add_executable(Platformer
         src/world/traps/spike_head/spike_head.hpp
         src/world/traps/trap.hpp
         src/world/traps/trap_manager.cpp
-        src/world/traps/trap_manager.hpp)
+        src/world/traps/trap_manager.hpp
+        src/world/traps/spiked_ball/spiked_ball.cpp
+        src/world/traps/spiked_ball/spiked_ball.hpp
+        src/world/traps/spiked_ball/pendulum_spiked_ball.cpp
+        src/world/traps/spiked_ball/pendulum_spiked_ball.hpp
+        src/world/traps/spiked_ball/circular_spiked_ball.cpp
+        src/world/traps/spiked_ball/circular_spiked_ball.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
