@@ -30,6 +30,9 @@ namespace utils
     void set_origin_mid_bottom(sf::Shape& shape);
 
     void flip_sprite(sf::Sprite& sprite);
+
+    float to_radians(float degrees);
+    float to_degrees(float radians);
 }
 
 

@@ -65,4 +65,14 @@ namespace utils
         auto sprite_scale = sprite.getScale();
         sprite.setScale(-sprite_scale.x, sprite_scale.y);
     }
+
+    float to_radians(float degrees)
+    {
+        return degrees * M_PI / 180;
+    }
+
+    float to_degrees(float radians)
+    {
+        return radians * 180 / M_PI;
+    }
 }
