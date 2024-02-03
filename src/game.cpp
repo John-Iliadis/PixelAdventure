@@ -15,7 +15,6 @@ Game::Game()
     sf::VideoMode window_size {INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT};
     m_window.create(window_size, "Platformer");
     m_window.setKeyRepeatEnabled(false);
-    m_window.setFramerateLimit(240); // todo: implement in game loop
 
     m_camera = Camera(&m_window, INITIAL_VIEWPORT_WIDTH, INITIAL_VIEWPORT_HEIGHT);
 
@@ -38,7 +37,7 @@ Game::Game()
 
 void Game::run()
 {
-    const double time_per_frame = 1.0 / utils::get_max_refresh_rate();
+    const double time_per_frame = 1.0 / 240;
     double ellapsed = 0;
     sf::Clock clock;
 
@@ -55,7 +54,7 @@ void Game::run()
         }
 
         update_fps_stats(elapsed_time);
-        draw(); // todo: limit frame rate
+        draw();
     }
 }
 
