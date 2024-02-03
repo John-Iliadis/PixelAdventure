@@ -20,12 +20,12 @@ namespace TiledJsonLoader
 
     nlohmann::json get_list_object(const nlohmann::json& list, const std::string& object_name)
     {
-        auto itr = std::find_if(list["layers"].begin(), list["layers"].end(),
-                                [&object_name] (const nlohmann::json& layer) {
-                                    return (layer["name"].get<std::string>() == object_name);
+        auto itr = std::find_if(list.begin(), list.end(),
+                                [&object_name] (const nlohmann::json& object) {
+                                    return (object["name"].get<std::string>() == object_name);
                                 });
 
-        assert(itr != list["layers"].end());
+        assert(itr != list.end());
 
         return *itr;
     }
@@ -36,7 +36,7 @@ namespace TiledJsonLoader
 
         MapData map_data = get_map_data(json_data);
 
-        std::vector<int> layer_data = get_list_object(json_data, layer_name)["data"].get<std::vector<int>>();
+        std::vector<int> layer_data = get_list_object(json_data["layers"], layer_name)["data"].get<std::vector<int>>();
 
         for (int i = 0; i < map_data.total_tiles_y; ++i)
         {
@@ -61,7 +61,7 @@ namespace TiledJsonLoader
 
     sf::Vector2f get_position(const nlohmann::json& json_data, const std::string& layer_name, const std::string& pos_name)
     {
-        nlohmann::json objects = get_list_object(json_data, layer_name)["objects"];
+        nlohmann::json objects = get_list_object(json_data["layers"], layer_name)["objects"];
 
         auto itr = std::find_if(objects.begin(), objects.end(),
             [&pos_name] (const nlohmann::json& object) {
