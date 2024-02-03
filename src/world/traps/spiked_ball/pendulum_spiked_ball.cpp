@@ -45,6 +45,6 @@ void PendulumSpikedBall::update(double dt)
 
     if (angle < 0) angle = 180 + angle;
 
-    m_chain.setRotation(std::abs(angle));
+    m_chain.setRotation(angle);
     m_spiked_ball.set_position(base_position.x + x, base_position.y + y);
 }
