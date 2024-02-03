@@ -7,7 +7,6 @@
 
 #include <vector>
 #include <unordered_map>
-#include <iostream>
 #include "../../../asset_managers/texture_manager.hpp"
 #include "../../../animation/animation_manager.hpp"
 #include "../../../utilities/utils.hpp"
