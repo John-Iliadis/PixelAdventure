@@ -188,12 +188,6 @@ void SpriteCollider::set_origin(Origin origin)
     sf::Vector2f texture_size = static_cast<sf::Vector2f>(m_texture_rect.getSize());
     sf::Vector2f collider_size = m_collider_rect.getSize();
 
-    if (texture_size == sf::Vector2f(0, 0))
-        puts("Warning: SpriteCollider::set_origin: Texture size is {0,0}");
-
-    if (collider_size == sf::Vector2f(0, 0))
-        puts("Warning: SpriteCollider::set_origin: Collider size is {0, 0}");
-
     switch (origin)
     {
         case Origin::TOP_LEFT:
