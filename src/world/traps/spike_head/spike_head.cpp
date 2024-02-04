@@ -6,7 +6,7 @@
 
 
 static const std::string animations_filename = "../data/traps/spike_head/animations.json";
-static const sf::Vector2f collider_size {42, 40};
+static const sf::Vector2f collider_size {26, 24};
 
 SpikeHead::SpikeHead(const TextureManager &textures)
     : m_current_state(State::MOVING)

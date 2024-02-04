@@ -5,7 +5,7 @@
 #include "saw.hpp"
 
 
-static const sf::Vector2f collider_size = {38, 38};
+static const sf::Vector2f collider_size = {20, 20};
 
 Saw::Saw(const sf::Texture& texture)
 {

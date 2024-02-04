@@ -5,7 +5,7 @@
 #include "spiked_ball.hpp"
 
 
-static const sf::Vector2f collider_size = {24, 24};
+static const sf::Vector2f collider_size = {14, 14};
 
 SpikedBall::SpikedBall(TextureManager &textures)
     : m_angle()

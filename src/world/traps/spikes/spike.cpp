@@ -5,7 +5,7 @@
 #include "spike.hpp"
 
 
-static const sf::Vector2f collider_size = {16, 7};
+static const sf::Vector2f collider_size = {6, 4};
 
 Spike::Spike(const sf::Texture &texture)
 {

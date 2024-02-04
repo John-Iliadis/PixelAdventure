@@ -53,7 +53,7 @@ World::World(GameContext& context)
     setup_checkpoints(TiledJsonLoader::get_list_object(map_data["layers"], "checkpoint_positions"));
     setup_spikes(TiledJsonLoader::get_list_object(map_data["layers"], "spike_positions"));
     setup_fire_traps(TiledJsonLoader::get_list_object(map_data["layers"], "fire_trap_positions"));
-    //setup_saw_traps(TiledJsonLoader::get_list_object(map_data["layers"], "saw_layer"));
+    setup_saw_traps(TiledJsonLoader::get_list_object(map_data["layers"], "saw_layer"));
     setup_spike_head_traps(TiledJsonLoader::get_list_object(map_data["layers"], "spike_head_layer"));
     setup_spiked_balls(TiledJsonLoader::get_list_object(map_data["layers"], "spiked_ball_layer"));
 }
