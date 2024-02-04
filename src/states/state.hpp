@@ -33,16 +33,16 @@ protected:
     void request_stack_clear();
 
 protected:
-    GameContext& context;
+    GameContext& m_context;
 
     enum class Status
     {
         CURRENT,
         OBSCURED
-    } status;
+    } m_status;
 
 private:
-    StateStack& state_stack;
+    StateStack& m_state_stack;
 };
 
 

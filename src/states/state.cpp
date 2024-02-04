@@ -7,33 +7,33 @@
 
 
 State::State(StateStack& state_stack, GameContext& context)
-    : state_stack(state_stack)
-    , context(context)
-    , status(Status::CURRENT)
+    : m_state_stack(state_stack)
+    , m_context(context)
+    , m_status(Status::CURRENT)
 {
 }
 
 void State::on_exit()
 {
-    status = Status::OBSCURED;
+    m_status = Status::OBSCURED;
 }
 
 void State::on_return()
 {
-    status = Status::CURRENT;
+    m_status = Status::CURRENT;
 }
 
 void State::request_stack_push(StateID state_id)
 {
-    state_stack.push(state_id);
+    m_state_stack.push(state_id);
 }
 
 void State::request_stack_pop()
 {
-    state_stack.pop();
+    m_state_stack.pop();
 }
 
 void State::request_stack_clear()
 {
-    state_stack.clear();
+    m_state_stack.clear();
 }
