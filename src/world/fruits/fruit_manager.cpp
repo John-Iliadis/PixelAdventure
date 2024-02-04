@@ -42,7 +42,7 @@ void FruitManager::update(Player& player, double dt)
     {
         fruit->update(dt);
 
-        if (player.get_collider().intersects(fruit->get_collider()) && player.is_alive())
+        if (player.get_collider().intersects(fruit->get_collider()))
         {
             m_collected_animations.emplace_back(*m_collected_texture, fruit->get_position());
             fruit = m_fruits.erase(fruit);
@@ -58,9 +58,13 @@ void FruitManager::update(Player& player, double dt)
         collected_animation->update(dt);
 
         if (collected_animation->finished())
+        {
             collected_animation = m_collected_animations.erase(collected_animation);
+        }
         else
+        {
             ++collected_animation;
+        }
     }
 }
 

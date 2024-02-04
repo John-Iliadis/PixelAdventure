@@ -16,7 +16,7 @@ void TrapManager::update(Player &player, double dt)
     {
         trap->update(dt);
 
-        if (player.get_collider().intersects(trap->get_collider()) && player.is_alive())
+        if (player.get_collider().intersects(trap->get_collider()))
         {
             player.die();
         }

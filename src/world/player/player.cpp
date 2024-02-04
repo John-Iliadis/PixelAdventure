@@ -20,7 +20,7 @@ Player::Player(GameContext& context)
     m_current_state = new IdleState(*this);
 
     m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
-    m_sprite_collider.set_collider_size(m_data.hitbox_size.x, m_data.hitbox_size.y);
+    m_sprite_collider.set_collider_size(m_data.collider_size);
     m_sprite_collider.set_origin(Origin::CENTER_BOTTOM);
 }
 
@@ -257,6 +257,7 @@ void Player::respawn()
     delete m_current_state;
     m_current_state = new RespawningState(*this);
 
+    m_sprite_collider.set_collider_size(m_data.collider_size);
     m_sprite_collider.set_color({255, 255, 255, 255});
     m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
 }
@@ -265,6 +266,7 @@ void Player::die()
 {
     m_data.alive = false;
     m_sprite_collider.set_color(sf::Color::Transparent);
+    m_sprite_collider.set_collider_size(0, 0);
     m_spawn_death_particle_callback();
     m_camera_transition_callback();
 }
