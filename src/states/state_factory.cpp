@@ -8,7 +8,7 @@
 
 
 #define FACTORY_FUNCTION(T) [&] (UINT_PTR user_ptr = 0) \
-    { return std::make_unique<T>(state_stack, context); }
+    { return std::make_unique<T>(state_stack, context, user_ptr); }
 
 StateFactory::StateFactory(StateStack& state_stack, GameContext& context)
 {
@@ -24,6 +24,5 @@ std::unique_ptr<State> StateFactory::create_state(StateID id, UINT_PTR user_ptr)
         return result->second(user_ptr);
     }
 
-    // todo: implement macro that will print the id
     throw std::runtime_error("StateFactory::create_state - State not registered\n");
 }
