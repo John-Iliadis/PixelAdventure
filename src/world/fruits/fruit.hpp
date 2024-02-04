@@ -17,6 +17,7 @@ public:
     void update(double dt);
 
     sf::Rect<float> get_collider() const;
+    sf::Vector2f get_position() const;
 
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

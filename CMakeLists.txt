@@ -101,7 +101,9 @@ add_executable(Platformer
         src/world/traps/spiked_ball/circular_spiked_ball.cpp
         src/world/traps/spiked_ball/circular_spiked_ball.hpp
         src/world/fruits/fruit.cpp
-        src/world/fruits/fruit.hpp)
+        src/world/fruits/fruit.hpp
+        src/world/fruits/fruit_manager.cpp
+        src/world/fruits/fruit_manager.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

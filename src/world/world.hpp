@@ -23,7 +23,7 @@
 #include "traps/spike_head/spike_head.hpp"
 #include "traps/spiked_ball/pendulum_spiked_ball.hpp"
 #include "traps/spiked_ball/circular_spiked_ball.hpp"
-
+#include "fruits/fruit_manager.hpp"
 
 class World
 {
@@ -49,6 +49,7 @@ private:
     Player m_player;
     CheckpointManager m_checkpoint_manager;
     TrapManager m_trap_manager;
+    FruitManager m_fruit_manager;
     DeathParticleSystem m_death_articles;
     std::vector<sf::Rect<float>> m_solid_tiles;
 };

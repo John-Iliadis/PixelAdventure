@@ -32,3 +32,8 @@ void Fruit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_fruit);
 }
+
+sf::Vector2f Fruit::get_position() const
+{
+    return m_fruit.get_position();
+}
