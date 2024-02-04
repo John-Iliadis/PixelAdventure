@@ -5,13 +5,11 @@
 #ifndef PLATFORMER_UTILS_HPP
 #define PLATFORMER_UTILS_HPP
 
-#include <windows.h>
-#include <cstdint>
-#include <stdexcept>
 #include <cmath>
 #include <cassert>
+#include <limits>
+#include <random>
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
 #include "../world/enums.hpp"
 
 
@@ -23,6 +21,8 @@ namespace utils
 
     float to_radians(float degrees);
     float to_degrees(float radians);
+
+    int random(int min = std::numeric_limits<int>::min(), int max = std::numeric_limits<int>::max());
 }
 
 

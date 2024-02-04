@@ -44,4 +44,18 @@ namespace utils
     {
         return radians * 180 / M_PI;
     }
+
+    int random(int min, int max)
+    {
+        static std::random_device m_random_device;
+        static std::mt19937 m_engine(m_random_device());
+        static std::uniform_int_distribution<int> m_int_distribution;
+
+        if (min > max) std::swap(min, max);
+
+        if (min != m_int_distribution.min() || max != m_int_distribution.max())
+            m_int_distribution = std::uniform_int_distribution<int>(min, max);
+
+        return m_int_distribution(m_engine);
+    }
 }
