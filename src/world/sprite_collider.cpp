@@ -185,7 +185,7 @@ void SpriteCollider::set_origin(Origin origin)
 {
     m_origin = origin;
 
-    sf::Vector2f texture_size = static_cast<sf::Vector2f>(m_texture_rect.getSize());
+    sf::Vector2i texture_size = m_texture_rect.getSize();
     sf::Vector2f collider_size = m_collider_rect.getSize();
 
     switch (origin)
@@ -200,7 +200,12 @@ void SpriteCollider::set_origin(Origin origin)
 
         case Origin::CENTER:
         {
-            m_sprite_origin = texture_size / 2.f;
+            sf::Vector2i sprite_origin {
+                  texture_size.x / 2,
+                  texture_size.y / 2
+            };
+
+            m_sprite_origin = static_cast<sf::Vector2f>(sprite_origin);
             m_collider_origin = collider_size / 2.f;
 
             break;
@@ -208,7 +213,12 @@ void SpriteCollider::set_origin(Origin origin)
 
         case Origin::CENTER_BOTTOM:
         {
-            m_sprite_origin = {texture_size.x / 2.f, texture_size.y};
+            sf::Vector2i sprite_origin {
+                texture_size.x / 2,
+                texture_size.y
+            };
+
+            m_sprite_origin = static_cast<sf::Vector2f>(sprite_origin);
             m_collider_origin = {collider_size.x / 2.f, collider_size.y};
 
             break;
