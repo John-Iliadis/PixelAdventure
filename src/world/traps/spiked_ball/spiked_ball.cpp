@@ -17,7 +17,7 @@ SpikedBall::SpikedBall(TextureManager &textures)
     m_spiked_ball.set_origin(Origin::CENTER);
 
     m_base.setTexture(textures.get("spiked_ball_base"));
-    utils::set_origin_center(m_base);
+    utils::set_origin(m_base, Origin::CENTER);
 
     sf::Texture& chain_texture = textures.get("spiked_ball_chain");
     chain_texture.setRepeated(true);

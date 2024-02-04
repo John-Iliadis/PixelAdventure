@@ -22,7 +22,7 @@ DeathParticle::DeathParticle(Animation animation, const sf::Texture &texture, co
     m_sprite.setTexture(texture);
     m_sprite.setPosition(pos.x, pos.y - m_sprite.getGlobalBounds().height / 2.f);
     m_sprite.setTextureRect(m_animation.get_current_frame_rect());
-    utils::set_origin_center(m_sprite);
+    utils::set_origin(m_sprite, Origin::CENTER);
 
     if (orientation == Orientation::FACES_LEFT)
         m_sprite.setScale(-1, 1);
