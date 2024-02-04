@@ -31,8 +31,8 @@ add_executable(Platformer
         src/world/world.hpp
         src/world/player/player.cpp
         src/world/player/player.hpp
-        src/world/scrolling_background.cpp
-        src/world/scrolling_background.hpp
+        src/scrolling_background/scrolling_background.cpp
+        src/scrolling_background/scrolling_background.hpp
         src/vendor/json.hpp
         src/world/collision.cpp
         src/world/collision.hpp
@@ -64,8 +64,8 @@ add_executable(Platformer
         src/structs/map_data.hpp
         src/world/traps/spikes/spike.cpp
         src/world/traps/spikes/spike.hpp
-        src/world/camera.cpp
-        src/world/camera.hpp
+        src/camera/camera.cpp
+        src/camera/camera.hpp
         src/world/checkpoint/checkpoint.cpp
         src/world/checkpoint/checkpoint.hpp
         src/world/checkpoint/checkpoint_manager.cpp

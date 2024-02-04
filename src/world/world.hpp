@@ -9,12 +9,12 @@
 #include <SFML/Window/Event.hpp>
 #include <fstream>
 #include "../structs/level_details.hpp"
-#include "scrolling_background.hpp"
+#include "../scrolling_background/scrolling_background.hpp"
 #include "player/player.hpp"
 #include "collision.hpp"
 #include "tiled_json_loader.hpp"
 #include "traps/spikes/spike.hpp"
-#include "camera.hpp"
+#include "../camera/camera.hpp"
 #include "checkpoint/checkpoint_manager.hpp"
 #include "particles/death_particle_system.hpp"
 #include "traps/saw/chain_saw.hpp"
