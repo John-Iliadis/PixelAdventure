@@ -10,23 +10,14 @@ World::World(GameContext& context, const LevelDetails& level_details)
     , m_player(context)
     , m_death_particles(*m_context.texture_manager)
 {
-    sf::Texture& map_texture = m_context.texture_manager->get(level_details.map_texture_id);
-    sf::Texture& scrolling_bg_texture = m_context.texture_manager->get(level_details.scrolling_background_texture_id);
-
-    sf::Vector2i map_size = static_cast<sf::Vector2i>(map_texture.getSize());
-    sf::Vector2i scrolling_bg_texture_size = static_cast<sf::Vector2i>(scrolling_bg_texture.getSize());
-
+    const sf::Texture& map_texture = m_context.texture_manager->get(level_details.map_texture_id);
     m_map.setTexture(map_texture);
 
-    sf::Vector2i scrolling_background_size {
-        map_size.x,
-        map_size.y + (scrolling_bg_texture_size.y - map_size.y % scrolling_bg_texture_size.y)
-    };
-
-    m_scrolling_background = ScrollingBackground(scrolling_bg_texture, scrolling_background_size);
+    sf::Texture& scrolling_bg_texture = m_context.texture_manager->get(level_details.scrolling_background_texture_id);
+    sf::Vector2i map_size = static_cast<sf::Vector2i>(map_texture.getSize());
+    m_scrolling_background = ScrollingBackground(scrolling_bg_texture, map_size);
 
     std::ifstream file(level_details.json_file_name);
-
     assert(file.is_open());
 
     nlohmann::json map_data = nlohmann::json::parse(file);

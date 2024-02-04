@@ -11,7 +11,14 @@ ScrollingBackground::ScrollingBackground(sf::Texture& texture, const sf::Vector2
 {
     texture.setRepeated(true);
 
-    sf::Rect<int> sprite_rect {{0, 0}, size};
+    sf::Vector2i texture_size = static_cast<sf::Vector2i>(texture.getSize());
+
+    sf::Vector2i bg_size {
+        size.x,
+        size.y + (texture_size.y - size.y % texture_size.y)
+    };
+
+    sf::Rect<int> sprite_rect {{0, 0}, bg_size};
 
     m_scrollable_background.front().setTexture(texture);
     m_scrollable_background.front().setTextureRect(sprite_rect);
