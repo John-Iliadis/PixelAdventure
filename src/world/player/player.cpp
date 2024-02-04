@@ -43,6 +43,7 @@ void Player::update(double dt)
     update_animation(dt);
 
     m_data.jump_pressed_ellapsed_time -= dt;
+    m_move_camera_callback();
 }
 
 void Player::handle_input()
@@ -306,4 +307,9 @@ void Player::set_origin(Origin origin)
 sf::FloatRect Player::get_sprite_size() const
 {
     return m_sprite_collider.get_sprite_rect();
+}
+
+void Player::set_move_camera_callback(std::function<void()> callback)
+{
+    m_move_camera_callback = std::move(callback);
 }

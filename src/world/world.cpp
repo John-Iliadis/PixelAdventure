@@ -44,6 +44,10 @@ World::World(GameContext& context)
         m_context.camera->set_target(camera_target, 1.2, [this] () {m_player.respawn();});
     });
 
+    m_player.set_move_camera_callback([this] () {
+        if (m_player.is_alive()) m_context.camera->set_center(m_player.get_center());
+    });
+
     m_fruit_manager = FruitManager(TiledJsonLoader::get_list_object(map_data["layers"], "fruit_layer"), *m_context.texture_manager);
 
     setup_checkpoints(TiledJsonLoader::get_list_object(map_data["layers"], "checkpoint_positions"));
@@ -67,9 +71,6 @@ void World::update(double dt)
     m_trap_manager.update(m_player, dt);
     m_fruit_manager.update(m_player, dt);
     m_death_articles.update(dt);
-
-    if (m_player.is_alive())
-        m_context.camera->set_center(m_player.get_center());
 }
 
 void World::draw()

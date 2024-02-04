@@ -14,8 +14,8 @@
 #include "../../animation/animation_manager.hpp"
 #include "../../states/game_context.hpp"
 #include "../../utilities/utils.hpp"
-#include "../sprite_collider.hpp"
 #include "../../structs/player_data.hpp"
+#include "../sprite_collider.hpp"
 #include "idle_state.hpp"
 #include "respawning_state.hpp"
 
@@ -48,6 +48,7 @@ public:
     void set_collision_callback(std::function<void(double)> callback);
     void set_camera_transition_callback(std::function<void()> callback);
     void set_death_particle_callback(std::function<void()> callback);
+    void set_move_camera_callback(std::function<void()> callback);
 
     sf::FloatRect get_collider() const;
     sf::FloatRect get_sprite_size() const;
@@ -89,6 +90,7 @@ private:
     std::function<void(double)> m_resolve_collision_callback;
     std::function<void()> m_camera_transition_callback;
     std::function<void()> m_spawn_death_particle_callback;
+    std::function<void()> m_move_camera_callback;
 };
 
 
