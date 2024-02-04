@@ -17,7 +17,7 @@ class StateStack;
 class State
 {
 public:
-    State(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
+    State(StateStack& state_stack, GameContext& context);
     virtual ~State() = default;
 
     virtual void on_exit();

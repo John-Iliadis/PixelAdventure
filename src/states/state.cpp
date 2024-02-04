@@ -6,7 +6,7 @@
 #include "state_stack.hpp"
 
 
-State::State(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr)
+State::State(StateStack& state_stack, GameContext& context)
     : state_stack(state_stack)
     , context(context)
     , status(Status::CURRENT)
