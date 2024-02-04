@@ -11,7 +11,8 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
-#include "movable_object.hpp"
+#include "../utilities/utils.hpp"
+
 
 class Camera : sf::NonCopyable
 {

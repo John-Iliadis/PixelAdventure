@@ -4,7 +4,6 @@
 
 #include "camera.hpp"
 
-#include <iostream>
 
 Camera::Camera(sf::RenderWindow* window, uint32_t width, uint32_t height)
     : m_window(window)
@@ -90,9 +89,10 @@ Camera::TargetTransitionState::TargetTransitionState(Camera &camera, const sf::V
     , m_start_pos(camera.get_center())
     , m_target_pos(target_pos)
     , m_delay_time(delay_time)
-    , m_duration(2)
     , m_total_ellapsed()
 {
+    m_duration = utils::get_distance(m_start_pos, m_target_pos) / 300;
+    m_duration = std::clamp(m_duration, 0.5f, 2.f);
 }
 
 Camera::State* Camera::TargetTransitionState::update(Camera &camera, double dt)
