@@ -23,8 +23,8 @@ add_executable(Platformer
         src/states/state_stack.hpp
         src/states/state_factory.cpp
         src/states/state_factory.hpp
-        src/states/menu_state.cpp
-        src/states/menu_state.hpp
+        src/states/main_menu_state.cpp
+        src/states/main_menu_state.hpp
         src/states/game_state.cpp
         src/states/game_state.hpp
         src/world/world.cpp

@@ -3,7 +3,7 @@
 //
 
 #include "state_factory.hpp"
-#include "menu_state.hpp"
+#include "main_menu_state.hpp"
 #include "game_state.hpp"
 
 
@@ -12,7 +12,7 @@
 
 StateFactory::StateFactory(StateStack& state_stack, GameContext& context)
 {
-    m_factory[StateID::MAIN_MENU] = FACTORY_FUNCTION(MenuState);
+    m_factory[StateID::MAIN_MENU] = FACTORY_FUNCTION(MainMenuState);
     m_factory[StateID::GAME] = FACTORY_FUNCTION(GameState);
 }
 
