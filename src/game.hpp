@@ -18,6 +18,7 @@
 #include "asset_managers/sound_buffer_manager.hpp"
 #include "asset_managers/music_manager.hpp"
 #include "world/camera.hpp"
+#include "structs/level_details.hpp"
 
 
 class Game

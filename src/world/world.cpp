@@ -5,18 +5,29 @@
 #include "world.hpp"
 
 
-World::World(GameContext& context)
+World::World(GameContext& context, const LevelDetails& level_details)
     : m_context(context)
     , m_player(context)
-    , m_background(*m_context.texture_manager)
-    , m_death_articles(*m_context.texture_manager)
+    , m_death_particles(*m_context.texture_manager)
 {
-    m_map.setTexture(m_context.texture_manager->get("test_map3"));
+    sf::Texture& map_texture = m_context.texture_manager->get(level_details.map_texture_id);
+    sf::Texture& scrolling_bg_texture = m_context.texture_manager->get(level_details.scrolling_background_texture_id);
 
-    std::ifstream file("../data/tmx/test_map3.tmj");
+    sf::Vector2i map_size = static_cast<sf::Vector2i>(map_texture.getSize());
+    sf::Vector2i scrolling_bg_texture_size = static_cast<sf::Vector2i>(scrolling_bg_texture.getSize());
 
-    if (!file.is_open())
-        throw std::runtime_error("World::World: Failed to open file");
+    m_map.setTexture(map_texture);
+
+    sf::Vector2i scrolling_background_size {
+        map_size.x,
+        map_size.y + (scrolling_bg_texture_size.y - map_size.y % scrolling_bg_texture_size.y)
+    };
+
+    m_scrolling_background = ScrollingBackground(scrolling_bg_texture, scrolling_background_size);
+
+    std::ifstream file(level_details.json_file_name);
+
+    assert(file.is_open());
 
     nlohmann::json map_data = nlohmann::json::parse(file);
 
@@ -35,7 +46,7 @@ World::World(GameContext& context)
     });
 
     m_player.set_death_particle_callback([this] () {
-        m_death_articles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
+        m_death_particles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
     });
 
     m_player.set_camera_transition_callback([this] () {
@@ -65,25 +76,25 @@ void World::handle_events(const sf::Event &event)
 
 void World::update(double dt)
 {
-    m_background.update(dt);
+    m_scrolling_background.update(dt);
     m_player.update(dt);
     m_checkpoint_manager.update(m_player, dt);
     m_trap_manager.update(m_player, dt);
     m_fruit_manager.update(m_player, dt);
-    m_death_articles.update(dt);
+    m_death_particles.update(dt);
 }
 
 void World::draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    window.draw(m_background);
+    window.draw(m_scrolling_background);
     window.draw(m_trap_manager);
     window.draw(m_map);
     window.draw(m_checkpoint_manager);
     window.draw(m_fruit_manager);
     window.draw(m_player);
-    window.draw(m_death_articles);
+    window.draw(m_death_particles);
 }
 
 void World::setup_checkpoints(const nlohmann::json &checkpoint_pos_layer)

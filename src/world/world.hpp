@@ -8,7 +8,8 @@
 #include <memory>
 #include <SFML/Window/Event.hpp>
 #include <fstream>
-#include "background.hpp"
+#include "../structs/level_details.hpp"
+#include "scrolling_background.hpp"
 #include "player/player.hpp"
 #include "collision.hpp"
 #include "tiled_json_loader.hpp"
@@ -25,10 +26,11 @@
 #include "traps/spiked_ball/circular_spiked_ball.hpp"
 #include "fruits/fruit_manager.hpp"
 
+
 class World
 {
 public:
-    World(GameContext& context);
+    World(GameContext& context, const LevelDetails& level_details);
 
     void handle_events(const sf::Event& event);
     void update(double dt);
@@ -44,13 +46,13 @@ private:
 
 private:
     GameContext& m_context;
-    BackGround m_background;
+    ScrollingBackground m_scrolling_background;
     sf::Sprite m_map;
     Player m_player;
     CheckpointManager m_checkpoint_manager;
     TrapManager m_trap_manager;
     FruitManager m_fruit_manager;
-    DeathParticleSystem m_death_articles;
+    DeathParticleSystem m_death_particles;
     std::vector<sf::Rect<float>> m_solid_tiles;
 };
 

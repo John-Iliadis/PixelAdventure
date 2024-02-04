@@ -31,8 +31,8 @@ add_executable(Platformer
         src/world/world.hpp
         src/world/player/player.cpp
         src/world/player/player.hpp
-        src/world/background.cpp
-        src/world/background.hpp
+        src/world/scrolling_background.cpp
+        src/world/scrolling_background.hpp
         src/vendor/json.hpp
         src/world/collision.cpp
         src/world/collision.hpp
@@ -103,7 +103,8 @@ add_executable(Platformer
         src/world/fruits/fruit.cpp
         src/world/fruits/fruit.hpp
         src/world/fruits/fruit_manager.cpp
-        src/world/fruits/fruit_manager.hpp)
+        src/world/fruits/fruit_manager.hpp
+        src/structs/level_details.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

@@ -7,7 +7,7 @@
 
 GameState::GameState(StateStack &state_stack, GameContext& context, UINT_PTR user_ptr)
     : State(state_stack, context, user_ptr)
-    , world(context)
+    , world(context, *reinterpret_cast<LevelDetails*>(user_ptr))
 {
 }
 

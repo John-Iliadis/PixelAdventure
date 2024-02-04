@@ -30,8 +30,16 @@ Game::Game()
     m_context.sound_buffer_manager = &m_sound_buffer_manager;
     m_context.music_manager = &m_music_manager;
 
+    LevelDetails level_details {
+        "../data/tmx/test_map3.tmj",
+        "test_map3",
+        "gray"
+    };
+
+    UINT_PTR level_details_ptr = reinterpret_cast<UINT_PTR>(&level_details);
+
     m_state_stack = StateStack(m_context);
-    m_state_stack.push(StateID::GAME);
+    m_state_stack.push(StateID::GAME, level_details_ptr);
     m_state_stack.apply_pending_changes();
 }
 
