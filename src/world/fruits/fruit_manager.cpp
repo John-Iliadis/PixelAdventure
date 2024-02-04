@@ -6,12 +6,11 @@
 
 
 /* -- Fruit Manager -- */
-FruitManager::FruitManager(const nlohmann::json &fruit_layer, const TextureManager &textures)
+FruitManager::FruitManager(const nlohmann::json& fruit_layer, const TextureManager& textures)
 {
     m_collected_texture = &textures.get("collected");
 
     m_fruit_textures.push_back(&textures.get("apple"));
-    m_fruit_textures.push_back(&textures.get("banana"));
     m_fruit_textures.push_back(&textures.get("cherry"));
     m_fruit_textures.push_back(&textures.get("kiwi"));
     m_fruit_textures.push_back(&textures.get("melon"));
@@ -65,7 +64,7 @@ void FruitManager::update(Player& player, double dt)
     }
 }
 
-void FruitManager::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void FruitManager::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     for (const auto& fruit : m_fruits)
         target.draw(fruit);
