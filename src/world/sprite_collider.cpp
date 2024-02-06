@@ -223,5 +223,8 @@ void SpriteCollider::set_origin(Origin origin)
 
             break;
         }
+
+        default:
+            assert(false);
     }
 }

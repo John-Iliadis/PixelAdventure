@@ -16,7 +16,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/System/Vector2.hpp>
-#include "enums.hpp"
+#include "../enums/origin.hpp"
 
 
 class SpriteCollider : public sf::Drawable

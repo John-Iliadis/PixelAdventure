@@ -7,7 +7,7 @@
 
 #include <unordered_map>
 #include <vector>
-#include "../enums.hpp"
+#include "../../enums/particle_type.hpp"
 #include "death_particle.hpp"
 #include "../../asset_managers/texture_manager.hpp"
 #include "../../vendor/json.hpp"

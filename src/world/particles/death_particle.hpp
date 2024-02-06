@@ -10,6 +10,7 @@
 #include "../../animation/animation.hpp"
 #include "../../utilities/utils.hpp"
 #include "../movable_object.hpp"
+#include "../../enums/orientation.hpp"
 
 
 class DeathParticle : public MovableObject, public sf::Drawable

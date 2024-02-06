@@ -18,6 +18,7 @@
 #include "../sprite_collider.hpp"
 #include "idle_state.hpp"
 #include "respawning_state.hpp"
+#include "../../enums/orientation.hpp"
 
 
 class Player : public sf::Drawable, sf::NonCopyable
