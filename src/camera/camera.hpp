@@ -30,8 +30,10 @@ public:
     void set_size(const sf::Vector2u& size);
     void set_center(float x, float y);
     void set_center(const sf::Vector2f& center);
+    void set_current_view();
 
     sf::Vector2f get_center() const;
+    sf::Vector2f get_size() const;
 
     Camera& operator=(Camera&& other) noexcept;
 

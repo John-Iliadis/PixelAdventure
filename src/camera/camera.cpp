@@ -33,7 +33,7 @@ void Camera::update(double dt)
         m_current_state = new_state;
     }
 
-    m_window->setView(m_camera);
+    set_current_view();
 }
 
 void Camera::set_target(const sf::Vector2f &target, float delay_time, std::function<void()> callback)
@@ -82,6 +82,16 @@ Camera &Camera::operator=(Camera &&other) noexcept
     }
 
     return *this;
+}
+
+sf::Vector2f Camera::get_size() const
+{
+    return m_camera.getSize();
+}
+
+void Camera::set_current_view()
+{
+    m_window->setView(m_camera);
 }
 
 Camera::TargetTransitionState::TargetTransitionState(Camera &camera, const sf::Vector2f &target_pos, float delay_time, std::function<void()> callback)
