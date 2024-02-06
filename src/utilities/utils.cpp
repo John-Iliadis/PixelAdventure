@@ -30,9 +30,26 @@ namespace utils
                 sprite.setOrigin(static_cast<int>(sprite_rect.width / 2.f), static_cast<int>(sprite_rect.height));
                 break;
 
+            case Origin::CENTER_TOP:
+                sprite.setOrigin(static_cast<int>(sprite_rect.width / 2.f), 0);
+                break;
+
+            case Origin::CENTER_LEFT:
+                sprite.setOrigin(0, static_cast<int>(sprite_rect.height / 2.f));
+                break;
+
+            case Origin::CENTER_RIGHT:
+                sprite.setOrigin(static_cast<int>(sprite_rect.width), static_cast<int>(sprite_rect.height / 2.f));
+                break;
+
             default:
                 assert(false);
         }
+    }
+
+    void center_text(sf::Text& text)
+    {
+        text.setOrigin(text.getGlobalBounds().getSize() / 2.f + text.getLocalBounds().getPosition());
     }
 
     float to_radians(float degrees)

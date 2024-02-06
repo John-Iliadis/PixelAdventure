@@ -10,7 +10,8 @@
 #include <limits>
 #include <random>
 #include <SFML/Graphics/Sprite.hpp>
-#include "../world/enums.hpp"
+#include <SFML/Graphics/Text.hpp>
+#include "../enums/origin.hpp"
 
 
 namespace utils
@@ -18,6 +19,8 @@ namespace utils
     float get_distance(const sf::Vector2f& vec1, const sf::Vector2f& vec2);
 
     void set_origin(sf::Sprite& sprite, Origin origin);
+
+    void center_text(sf::Text& text);
 
     float to_radians(float degrees);
     float to_degrees(float radians);
