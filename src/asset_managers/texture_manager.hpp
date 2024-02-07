@@ -15,8 +15,8 @@ private:
     static std::unique_ptr<sf::Texture> load(const std::string& file_name)
     {
         auto texture = std::make_unique<sf::Texture>();
-        if (!texture->loadFromFile(file_name))
-            throw std::runtime_error("");
+
+        assert(texture->loadFromFile(file_name));
 
         return texture;
     }

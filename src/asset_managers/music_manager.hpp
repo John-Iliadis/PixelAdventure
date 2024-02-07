@@ -16,8 +16,8 @@ private:
     static std::unique_ptr<sf::Music> load(const std::string& file_name)
     {
         auto sound_buffer = std::make_unique<sf::Music>();
-        if (!sound_buffer->openFromFile(file_name))
-            throw std::runtime_error("");
+
+        assert(sound_buffer->openFromFile(file_name));
 
         return sound_buffer;
     }

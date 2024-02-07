@@ -16,8 +16,8 @@ private:
     static std::unique_ptr<sf::SoundBuffer> load(const std::string& file_name)
     {
         auto sound_buffer = std::make_unique<sf::SoundBuffer>();
-        if (!sound_buffer->loadFromFile(file_name))
-            throw std::runtime_error("");
+
+        assert(sound_buffer->loadFromFile(file_name));
 
         return sound_buffer;
     }
