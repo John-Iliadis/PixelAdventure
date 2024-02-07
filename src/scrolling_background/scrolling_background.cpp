@@ -2,29 +2,35 @@
 // Created by Gianni on 13/01/2024.
 //
 
+#include <iostream>
 #include "scrolling_background.hpp"
 
 
 const float ScrollingBackground::m_scroll_speed = 50;
 
-ScrollingBackground::ScrollingBackground(sf::Texture& texture, const sf::Vector2i &size)
+ScrollingBackground::ScrollingBackground(sf::Texture& texture, const sf::Vector2i& size)
 {
     texture.setRepeated(true);
 
-    sf::Vector2i texture_size = static_cast<sf::Vector2i>(texture.getSize());
+    m_scrollable_background.front().setTexture(texture);
+    m_scrollable_background.back().setTexture(texture);
+
+    sf::Vector2i texture_size = static_cast<sf::Vector2i>(m_scrollable_background.front().getTexture()->getSize());
 
     sf::Vector2i bg_size {
-        size.x,
-        size.y + (texture_size.y - size.y % texture_size.y)
+            size.x,
+            size.y + (texture_size.y - size.y % texture_size.y)
     };
 
     sf::Rect<int> sprite_rect {{0, 0}, bg_size};
 
-    m_scrollable_background.front().setTexture(texture);
     m_scrollable_background.front().setTextureRect(sprite_rect);
+    m_scrollable_background.back().setTextureRect(sprite_rect);
 
-    m_scrollable_background.back() = m_scrollable_background.front();
-    m_scrollable_background.back().setPosition(0, m_scrollable_background.front().getGlobalBounds().height);
+    sf::Vector2f pos(0, 0);
+
+    m_scrollable_background.front().setPosition(pos);
+    m_scrollable_background.back().setPosition(pos.x, pos.y + m_scrollable_background.front().getGlobalBounds().height);
 }
 
 void ScrollingBackground::update(double dt)
@@ -36,7 +42,7 @@ void ScrollingBackground::update(double dt)
 
     if (m_scrollable_background.front().getPosition().y > 0)
     {
-        sf::Vector2f new_pos(0, m_scrollable_background.front().getPosition().y - m_scrollable_background.front().getGlobalBounds().height);
+        sf::Vector2f new_pos(m_scrollable_background.front().getPosition().x, m_scrollable_background.front().getPosition().y - m_scrollable_background.front().getGlobalBounds().height);
 
         m_scrollable_background.back().setPosition(new_pos);
 
