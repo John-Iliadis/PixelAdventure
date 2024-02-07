@@ -46,7 +46,7 @@ void StateStack::draw()
         m_context->window->setView(m_context->world_camera->get_view());
         state->on_world_draw();
 
-        m_context->window->setView(*m_context->gui_view);
+        m_context->window->setView(m_context->window->getDefaultView());
         state->on_gui_draw();
     }
 }
