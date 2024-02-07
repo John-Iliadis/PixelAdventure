@@ -6,8 +6,14 @@
 #include "state.hpp"
 
 
+StateStack::StateStack()
+    : m_context(nullptr)
+{
+}
+
 StateStack::StateStack(GameContext& context)
-    : m_state_factory(*this, context)
+    : m_context(&context)
+    , m_state_factory(*this, context)
 {
 }
 
@@ -37,7 +43,10 @@ void StateStack::draw()
 {
     for (auto& state : m_state_stack)
     {
-        state->draw();
+        m_context->window->setView(m_context->world_camera->get_view());
+        state->on_world_draw();
+
+        m_context->window->setView(*m_context->gui_view);
         state->on_gui_draw();
     }
 }

@@ -23,7 +23,7 @@ bool GameState::update(double dt)
     return false;
 }
 
-void GameState::draw()
+void GameState::on_world_draw()
 {
     world.draw();
 }

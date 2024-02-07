@@ -9,17 +9,19 @@
 #include <memory>
 #include <ranges>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "state_identifiers.hpp"
 #include "game_context.hpp"
 #include "state_factory.hpp"
 #include "state.hpp"
+#include "../camera/camera.hpp"
 
 
 class StateStack
 {
 public:
-    StateStack() = default;
+    StateStack();
     explicit StateStack(GameContext& context);
 
     void handle_events(const sf::Event& event);
@@ -53,6 +55,7 @@ private:
     };
 
 private:
+    GameContext* m_context;
     std::vector<std::unique_ptr<State>> m_state_stack;
     std::vector<PendingChange> m_pending_changes;
     StateFactory m_state_factory;

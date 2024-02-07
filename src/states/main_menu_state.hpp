@@ -19,7 +19,7 @@ public:
 
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;
-    void draw() override;
+    void on_world_draw() override;
     void on_gui_draw() override;
 
 private:

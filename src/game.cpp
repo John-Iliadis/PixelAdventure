@@ -16,8 +16,8 @@ Game::Game()
     m_window.create(window_size, "Platformer", sf::Style::Titlebar | sf::Style::Close);
     m_window.setKeyRepeatEnabled(false);
 
-    m_world_camera = Camera(&m_window, world_view_width, world_view_height);
-    m_gui_camera = Camera(&m_window, window_width, window_height);
+    m_world_camera = Camera(world_view_width, world_view_height);
+    m_gui_view = sf::View({0, 0}, {window_width, window_height});
 
     m_texture_manager.load_directory("../assets/textures");
     m_font_manager.load_directory("../assets/fonts");
@@ -26,22 +26,22 @@ Game::Game()
 
     m_context.window = &m_window;
     m_context.world_camera = &m_world_camera;
-    m_context.gui_camera = &m_gui_camera;
+    m_context.gui_view = &m_gui_view;
     m_context.texture_manager = &m_texture_manager;
     m_context.font_manager = &m_font_manager;
     m_context.sound_buffer_manager = &m_sound_buffer_manager;
     m_context.music_manager = &m_music_manager;
 
-//    LevelDetails level_details {
-//        "../data/tmx/test_map3.tmj",
-//        "test_map3",
-//        "yellow"
-//    };
-//
-//    auto level_details_ptr = reinterpret_cast<UINT_PTR>(&level_details);
+    LevelDetails level_details {
+        "../data/tmx/test_map3.tmj",
+        "test_map3",
+        "yellow"
+    };
+
+    auto level_details_ptr = reinterpret_cast<UINT_PTR>(&level_details);
     
     m_state_stack = StateStack(m_context);
-    m_state_stack.push(StateID::MAIN_MENU);
+    m_state_stack.push(StateID::MAIN_MENU, level_details_ptr);
     m_state_stack.apply_pending_changes();
 }
 
@@ -98,7 +98,6 @@ void Game::handle_events()
 void Game::update(double dt)
 {
     m_state_stack.update(dt);
-    m_world_camera.update(dt);
 
     if (m_state_stack.empty())
         m_window.close();

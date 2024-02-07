@@ -33,12 +33,6 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, UINT
 
 bool MainMenuState::handle_events(const sf::Event &event)
 {
-    if (event.type == sf::Event::Resized)
-    {
-        m_scrolling_background.set_size(static_cast<sf::Vector2i>(m_context.world_camera->get_size()));
-        m_scrolling_background.set_position(static_cast<sf::Vector2f>(m_context.window->mapPixelToCoords({0, 0})));
-    }
-
     return false;
 }
 
@@ -70,7 +64,7 @@ bool MainMenuState::update(double dt)
     return false;
 }
 
-void MainMenuState::draw()
+void MainMenuState::on_world_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 

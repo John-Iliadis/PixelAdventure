@@ -9,6 +9,7 @@
 namespace sf
 {
     class RenderWindow;
+    class View;
 }
 
 class Camera;
@@ -22,7 +23,7 @@ struct GameContext
 {
     sf::RenderWindow* window;
     Camera* world_camera;
-    Camera* gui_camera;
+    sf::View* gui_view;
     TextureManager* texture_manager;
     FontManager* font_manager;
     SoundBufferManager* sound_buffer_manager;

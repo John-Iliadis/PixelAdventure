@@ -73,6 +73,7 @@ void World::update(double dt)
     m_trap_manager.update(m_player, dt);
     m_fruit_manager.update(m_player, dt);
     m_death_particles.update(dt);
+    m_context.world_camera->update(dt);
 }
 
 void World::draw()
