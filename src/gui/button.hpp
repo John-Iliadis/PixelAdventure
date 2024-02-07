@@ -2,21 +2,21 @@
 // Created by Gianni on 6/02/2024.
 //
 
-#ifndef PLATFORMER_GUI_BUTTON_BASE_HPP
-#define PLATFORMER_GUI_BUTTON_BASE_HPP
+#ifndef PLATFORMER_BUTTON_HPP
+#define PLATFORMER_BUTTON_HPP
 
 #include <functional>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "../utilities/utils.hpp"
-#include "gui_component.hpp"
+#include "gui_element.hpp"
 
 
-class GUI_Button_Base : public GUI_Component
+class Button : public GUI_Element
 {
 public:
-    GUI_Button_Base();
-    virtual ~GUI_Button_Base() = default;
+    Button();
+    virtual ~Button() = default;
 
     void set_position(const sf::Vector2f& pos);
     void set_position(float x, float y);
@@ -29,12 +29,18 @@ public:
     void set_button_hover_scale(float x_factor, float y_factor);
     void set_button_callback(std::function<void()> callback);
 
-    bool is_selectable() const override;
+    void select() override;
+    void deselect() override;
+
+    void handle_event(const sf::Event &event) override;
 
     void activate() override;
-    void deactivate() override;
 
     sf::Rect<float> get_clickable_area() const override;
+    bool is_selectable() const override;
+
+private:
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 protected:
     sf::Sprite m_button;
@@ -45,4 +51,4 @@ protected:
 };
 
 
-#endif //PLATFORMER_GUI_BUTTON_BASE_HPP
+#endif //PLATFORMER_BUTTON_HPP

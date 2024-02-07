@@ -7,6 +7,7 @@
 TextButton::TextButton()
     : m_character_size()
     , m_character_size_hover()
+    , m_offset()
 {
 }
 
@@ -40,7 +41,7 @@ void TextButton::select()
 {
     if (!selected())
     {
-        GUI_Component::select();
+        GUI_Element::select();
         m_button.setScale(m_button_hover_scale);
         m_text.setCharacterSize(m_character_size_hover);
     }
@@ -50,7 +51,7 @@ void TextButton::deselect()
 {
     if (selected())
     {
-        GUI_Component::deselect();
+        GUI_Element::deselect();
         m_button.setScale(m_button_scale);
         m_text.setCharacterSize(m_character_size);
     }
@@ -63,14 +64,24 @@ void TextButton::draw(sf::RenderTarget &target, sf::RenderStates states) const
     auto button_bounds = m_button.getGlobalBounds();
 
     sf::Vector2i text_pos {
-        static_cast<int>(button_bounds.left +  button_bounds.width / 2.f),
-        static_cast<int>(button_bounds.top + button_bounds.height / 2.f)
+        static_cast<int>(button_bounds.left +  button_bounds.width / 2.f + m_offset.x),
+        static_cast<int>(button_bounds.top + button_bounds.height / 2.f + m_offset.y)
     };
 
     m_text.setPosition(text_pos.x, text_pos.y);
 
     target.draw(m_button, states);
     target.draw(m_text, states);
+}
+
+void TextButton::set_text_offset(const sf::Vector2f &offset)
+{
+    m_offset = offset;
+}
+
+void TextButton::set_text_offset(float x, float y)
+{
+    m_offset = {x, y};
 }
 
 void TextButton::handle_event(const sf::Event &event)

@@ -8,10 +8,10 @@
 #include <functional>
 #include <SFML/Graphics/Text.hpp>
 #include "../utilities/utils.hpp"
-#include "gui_button_base.hpp"
+#include "button.hpp"
 
 
-class TextButton final : public GUI_Button_Base
+class TextButton final : public Button
 {
 public:
     TextButton();
@@ -21,6 +21,8 @@ public:
     void set_text_character_size(uint32_t size);
     void set_text_character_size_hover(uint32_t size);
     void set_text_color(const sf::Color& color);
+    void set_text_offset(const sf::Vector2f& offset);
+    void set_text_offset(float x, float y);
 
     void select() override;
     void deselect() override;
@@ -34,6 +36,7 @@ private:
     mutable sf::Text m_text;
     uint32_t m_character_size;
     uint32_t m_character_size_hover;
+    sf::Vector2f m_offset;
 };
 
 

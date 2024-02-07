@@ -18,50 +18,44 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, UINT
 
     sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
 
-    m_button.set_position(window_size / 2.f);
+    auto m_regular_button = std::make_unique<Button>();
 
-    m_button.set_button_texture(m_context.texture_manager->get("big_green_button"));
-    m_button.set_button_origin(Origin::CENTER);
-    m_button.set_button_scale(2, 2);
-    m_button.set_button_hover_scale(2.2, 2.2);
-    m_button.set_button_callback([] () { puts("clicked"); });
+    m_regular_button->set_position(100, 100);
+    m_regular_button->set_button_texture(m_context.texture_manager->get("arrow_right"));
+    m_regular_button->set_button_scale(2, 2);
+    m_regular_button->set_button_hover_scale(2.5, 2.5);
+    m_regular_button->set_button_origin(Origin::CENTER);
+    m_regular_button->set_button_callback([] () { puts("regular_button"); });
 
-    m_button.set_text_font(m_context.font_manager->get("pixel_type"));
-    m_button.set_text_character_size(50);
-    m_button.set_text_character_size_hover(55);
-    m_button.set_text_color(sf::Color::Black);
-    m_button.set_text_string("Button");
+    auto m_text_button = std::make_unique<TextButton>();
+    m_text_button->set_position(window_size / 2.f);
+    m_text_button->set_button_texture(m_context.texture_manager->get("big_green_button"));
+    m_text_button->set_button_origin(Origin::CENTER);
+    m_text_button->set_button_scale(2, 2);
+    m_text_button->set_button_hover_scale(2.2, 2.2);
+    m_text_button->set_button_callback([] () { puts("clicked"); });
+
+    m_text_button->set_text_font(m_context.font_manager->get("pixel_type"));
+    m_text_button->set_text_character_size(50);
+    m_text_button->set_text_character_size_hover(55);
+    m_text_button->set_text_color(sf::Color::Black);
+    m_text_button->set_text_string("Button");
+    m_text_button->set_text_offset(0, -2);
+
+    m_gui_container.push_back(std::move(m_text_button));
+    m_gui_container.push_back(std::move(m_regular_button));
 }
 
 bool MainMenuState::handle_events(const sf::Event &event)
 {
+    m_gui_container.handle_events(event);
+
     return false;
 }
 
 bool MainMenuState::update(double dt)
 {
     m_scrolling_background.update(dt);
-
-    sf::Vector2i pixel_pos = sf::Mouse::getPosition(*m_context.window);
-    sf::Vector2f world_pos = m_context.window->mapPixelToCoords(pixel_pos);
-
-    if (m_button.get_clickable_area().contains(world_pos))
-    {
-        m_button.select();
-    }
-    else
-    {
-        m_button.deselect();
-    }
-
-    if (m_button.selected() && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        m_button.activate();
-    }
-    else
-    {
-        m_button.deactivate();
-    }
 
     return false;
 }
@@ -77,5 +71,5 @@ void MainMenuState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    window.draw(m_button);
+    window.draw(m_gui_container);
 }

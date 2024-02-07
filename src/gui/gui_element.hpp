@@ -2,39 +2,36 @@
 // Created by Gianni on 6/02/2024.
 //
 
-#ifndef PLATFORMER_GUI_COMPONENT_HPP
-#define PLATFORMER_GUI_COMPONENT_HPP
+#ifndef PLATFORMER_GUI_ELEMENT_HPP
+#define PLATFORMER_GUI_ELEMENT_HPP
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Window/Event.hpp>
 
 
-class GUI_Component : public sf::Drawable
+class GUI_Element : public sf::Drawable
 {
 public:
-    GUI_Component();
-    virtual ~GUI_Component() = default;
+    GUI_Element();
+    virtual ~GUI_Element() = default;
 
     virtual bool is_selectable() const = 0;
 
     virtual void select();
     virtual void deselect();
 
-    virtual void activate();
-    virtual void deactivate();
+    virtual void activate() = 0;
 
     virtual void handle_event(const sf::Event& event) = 0;
 
     virtual sf::Rect<float> get_clickable_area() const = 0;
 
     bool selected() const;
-    bool active() const;
 
 private:
     bool m_selected;
-    bool m_active;
 };
 
 
-#endif //PLATFORMER_GUI_COMPONENT_HPP
+#endif //PLATFORMER_GUI_ELEMENT_HPP

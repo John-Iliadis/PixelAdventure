@@ -10,6 +10,7 @@
 #include "../camera/camera.hpp"
 #include "../gui/text_button.hpp"
 #include "../asset_managers/font_manager.hpp"
+#include "../gui/gui_container.hpp"
 
 
 class MainMenuState : public State
@@ -24,7 +25,7 @@ public:
 
 private:
     ScrollingBackground m_scrolling_background;
-    TextButton m_button;
+    GUI_Container m_gui_container;
 };
 
 

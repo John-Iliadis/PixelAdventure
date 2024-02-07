@@ -104,15 +104,17 @@ add_executable(Platformer
         src/world/fruits/fruit_manager.cpp
         src/world/fruits/fruit_manager.hpp
         src/structs/level_details.hpp
-        src/gui/gui_component.cpp
-        src/gui/gui_component.hpp
+        src/gui/gui_element.cpp
+        src/gui/gui_element.hpp
         src/gui/text_button.cpp
         src/gui/text_button.hpp
-        src/gui/gui_button_base.cpp
-        src/gui/gui_button_base.hpp
+        src/gui/button.cpp
+        src/gui/button.hpp
         src/enums/origin.hpp
         src/enums/orientation.hpp
-        src/enums/particle_type.hpp)
+        src/enums/particle_type.hpp
+        src/gui/gui_container.cpp
+        src/gui/gui_container.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
