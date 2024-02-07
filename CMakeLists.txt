@@ -53,7 +53,6 @@ add_executable(Platformer
         src/world/player/double_jumping_state.hpp
         src/world/sprite_collider.cpp
         src/world/sprite_collider.hpp
-        src/world/enums.hpp
         src/animation/animation_manager.cpp
         src/animation/animation_manager.hpp
         src/structs/player_data.hpp
@@ -104,7 +103,16 @@ add_executable(Platformer
         src/world/fruits/fruit.hpp
         src/world/fruits/fruit_manager.cpp
         src/world/fruits/fruit_manager.hpp
-        src/structs/level_details.hpp)
+        src/structs/level_details.hpp
+        src/gui/gui_component.cpp
+        src/gui/gui_component.hpp
+        src/gui/text_button.cpp
+        src/gui/text_button.hpp
+        src/gui/gui_button_base.cpp
+        src/gui/gui_button_base.hpp
+        src/enums/origin.hpp
+        src/enums/orientation.hpp
+        src/enums/particle_type.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

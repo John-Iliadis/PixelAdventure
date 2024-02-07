@@ -53,7 +53,7 @@ namespace utils
 
         sf::Vector2i origin {
             static_cast<int>(local_bounds.left + local_bounds.width / 2.f),
-            static_cast<int>(local_bounds.top + local_bounds.height / 2)
+            static_cast<int>(local_bounds.top + local_bounds.height / 2.f)
         };
 
         text.setOrigin(origin.x, origin.y);

@@ -16,19 +16,21 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, UINT
 
     m_scrolling_background = ScrollingBackground(bg_texture, bg_size);
 
-    m_button.set_position(m_context.world_camera->get_center());
+    sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
 
-    m_button.set_button_texture(m_context.texture_manager->get("long_button"));
+    m_button.set_position(window_size / 2.f);
+
+    m_button.set_button_texture(m_context.texture_manager->get("big_green_button"));
     m_button.set_button_origin(Origin::CENTER);
-    m_button.set_button_scale(1.5, 1.5);
+    m_button.set_button_scale(2, 2);
+    m_button.set_button_hover_scale(2.2, 2.2);
     m_button.set_button_callback([] () { puts("clicked"); });
 
     m_button.set_text_font(m_context.font_manager->get("pixel_type"));
-    m_button.set_text_character_size(90);
+    m_button.set_text_character_size(50);
+    m_button.set_text_character_size_hover(55);
     m_button.set_text_color(sf::Color::Black);
     m_button.set_text_string("Button");
-    m_button.set_text_scale(0.2, 0.2);
-    m_button.set_text_scale_hover(0.22, 0.22);
 }
 
 bool MainMenuState::handle_events(const sf::Event &event)
@@ -69,10 +71,11 @@ void MainMenuState::on_world_draw()
     sf::RenderWindow& window = *m_context.window;
 
     window.draw(m_scrolling_background);
-    window.draw(m_button);
 }
 
 void MainMenuState::on_gui_draw()
 {
+    sf::RenderWindow& window = *m_context.window;
 
+    window.draw(m_button);
 }
