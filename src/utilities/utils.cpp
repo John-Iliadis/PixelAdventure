@@ -49,7 +49,14 @@ namespace utils
 
     void center_text(sf::Text& text)
     {
-        text.setOrigin(text.getGlobalBounds().getSize() / 2.f + text.getLocalBounds().getPosition());
+        auto local_bounds = text.getLocalBounds();
+
+        sf::Vector2i origin {
+            static_cast<int>(local_bounds.left + local_bounds.width / 2.f),
+            static_cast<int>(local_bounds.top + local_bounds.height / 2)
+        };
+
+        text.setOrigin(origin.x, origin.y);
     }
 
     float to_radians(float degrees)
