@@ -8,18 +8,18 @@
 #include <cstdint>
 #include <functional>
 #include <cmath>
+#include <memory>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 #include "../utilities/utils.hpp"
 
 
-class Camera : sf::NonCopyable
+class Camera
 {
 public:
     Camera() = default;
-    Camera(sf::RenderWindow* window, uint32_t width, uint32_t height);
-    ~Camera();
+    Camera(uint32_t width, uint32_t height);
 
     void update(double dt);
 
@@ -29,27 +29,24 @@ public:
     void set_size(const sf::Vector2u& size);
     void set_center(float x, float y);
     void set_center(const sf::Vector2f& center);
-    void set_current_view();
 
+    const sf::View& get_view() const;
     sf::Vector2f get_center() const;
     sf::Vector2f get_size() const;
-
-    Camera(Camera&&) noexcept = delete;
-    Camera& operator=(Camera&& other) noexcept;
 
 private:
     class State
     {
     public:
         virtual ~State() = default;
-        virtual State* update(Camera& camera, double dt) { return nullptr; };
+        virtual std::unique_ptr<State> update(Camera& camera, double dt) { return nullptr; };
     };
 
     class TargetTransitionState : public State
     {
     public:
         TargetTransitionState(Camera& camera, const sf::Vector2f& target_pos, float delay_time = 0, std::function<void()> callback = nullptr);
-        State* update(Camera &camera, double dt) override;
+        std::unique_ptr<State> update(Camera &camera, double dt) override;
 
     private:
         std::function<void()> m_callback;
@@ -65,10 +62,9 @@ private:
     };
 
 private:
-    sf::RenderWindow* m_window;
-    sf::View m_camera;
+    sf::View m_view;
     sf::Vector2u m_size;
-    State* m_current_state;
+    std::unique_ptr<State> m_current_state;
 };
 
 

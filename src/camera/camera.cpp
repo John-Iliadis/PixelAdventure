@@ -5,37 +5,26 @@
 #include "camera.hpp"
 
 
-Camera::Camera(sf::RenderWindow* window, uint32_t width, uint32_t height)
-    : m_window(window)
-    , m_camera({0, 0, static_cast<float>(width), static_cast<float>(height)})
+Camera::Camera(uint32_t width, uint32_t height)
+    : m_view({0, 0, static_cast<float>(width), static_cast<float>(height)})
     , m_size(width, height)
     , m_current_state(new Camera::IdleState())
 {
 }
 
-Camera::~Camera()
-{
-    delete m_current_state;
-}
-
 void Camera::update(double dt)
 {
-    State* new_state = m_current_state->update(*this, dt);
+    std::unique_ptr<Camera::State> new_state = m_current_state->update(*this, dt);
 
     if (new_state)
     {
-        delete m_current_state;
-        m_current_state = new_state;
+        m_current_state = std::move(new_state);
     }
-
-    set_current_view();
 }
 
 void Camera::set_target(const sf::Vector2f &target, float delay_time, std::function<void()> callback)
 {
-    delete m_current_state;
-
-    m_current_state = new Camera::TargetTransitionState(*this, target, delay_time, callback);
+    m_current_state = std::make_unique<Camera::TargetTransitionState>(*this, target, delay_time, callback);
 }
 
 void Camera::set_size(uint32_t width, uint32_t height)
@@ -50,43 +39,27 @@ void Camera::set_size(const sf::Vector2u& size)
 
 void Camera::set_center(float x, float y)
 {
-    m_camera.setCenter(x, y);
+    m_view.setCenter(x, y);
 }
 
 void Camera::set_center(const sf::Vector2f& center)
 {
-    m_camera.setCenter(center);
+    m_view.setCenter(center);
 }
 
 sf::Vector2f Camera::get_center() const
 {
-    return m_camera.getCenter();
-}
-
-Camera &Camera::operator=(Camera &&other) noexcept
-{
-    if (this != &other)
-    {
-        m_window = other.m_window;
-        m_camera = other.m_camera;
-        m_size = other.m_size;
-        m_current_state = other.m_current_state;
-
-        other.m_window = nullptr;
-        other.m_current_state = nullptr;
-    }
-
-    return *this;
+    return m_view.getCenter();
 }
 
 sf::Vector2f Camera::get_size() const
 {
-    return m_camera.getSize();
+    return m_view.getSize();
 }
 
-void Camera::set_current_view()
+const sf::View &Camera::get_view() const
 {
-    m_window->setView(m_camera);
+    return m_view;
 }
 
 Camera::TargetTransitionState::TargetTransitionState(Camera &camera, const sf::Vector2f &target_pos, float delay_time, std::function<void()> callback)
@@ -100,7 +73,7 @@ Camera::TargetTransitionState::TargetTransitionState(Camera &camera, const sf::V
     m_duration = std::clamp(m_duration, 0.5f, 2.f);
 }
 
-Camera::State* Camera::TargetTransitionState::update(Camera &camera, double dt)
+std::unique_ptr<Camera::State>  Camera::TargetTransitionState::update(Camera &camera, double dt)
 {
     if (m_delay_time > 0)
     {
@@ -123,7 +96,7 @@ Camera::State* Camera::TargetTransitionState::update(Camera &camera, double dt)
     if (new_pos == m_target_pos)
     {
         m_callback? m_callback() : (void)0;
-        return new Camera::IdleState();
+        return std::make_unique<Camera::IdleState>();
     }
 
     return nullptr;
