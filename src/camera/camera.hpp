@@ -21,7 +21,6 @@ public:
     Camera(sf::RenderWindow* window, uint32_t width, uint32_t height);
     ~Camera();
 
-    void resize(float aspect_ratio);
     void update(double dt);
 
     void set_target(const sf::Vector2f& target, float delay_time = 0, std::function<void()> callback = nullptr);
@@ -35,6 +34,7 @@ public:
     sf::Vector2f get_center() const;
     sf::Vector2f get_size() const;
 
+    Camera(Camera&&) noexcept = delete;
     Camera& operator=(Camera&& other) noexcept;
 
 private:

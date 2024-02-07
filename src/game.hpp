@@ -17,7 +17,7 @@
 #include "asset_managers/font_manager.hpp"
 #include "asset_managers/sound_buffer_manager.hpp"
 #include "asset_managers/music_manager.hpp"
-#include "world/camera.hpp"
+#include "camera/camera.hpp"
 #include "structs/level_details.hpp"
 
 
@@ -36,7 +36,8 @@ private:
 
 private:
     sf::RenderWindow m_window;
-    Camera m_camera;
+    Camera m_world_camera;
+    Camera m_gui_camera;
     StateStack m_state_stack;
     GameContext m_context;
     TextureManager m_texture_manager;

@@ -5,18 +5,19 @@
 #include "game.hpp"
 
 
-#define INITIAL_WINDOW_WIDTH 1280
-#define INITIAL_WINDOW_HEIGHT 720
-#define INITIAL_VIEWPORT_WIDTH INITIAL_WINDOW_WIDTH / 2
-#define INITIAL_VIEWPORT_HEIGHT INITIAL_WINDOW_HEIGHT / 2
+static constexpr uint32_t window_width = 1920;
+static constexpr uint32_t window_height = 1080;
+static constexpr uint32_t world_view_width = window_width / 2;
+static constexpr uint32_t world_view_height = window_height / 2;
 
 Game::Game()
 {
-    sf::VideoMode window_size {INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT};
-    m_window.create(window_size, "Platformer");
+    sf::VideoMode window_size {window_width, window_height};
+    m_window.create(window_size, "Platformer", sf::Style::Titlebar | sf::Style::Close);
     m_window.setKeyRepeatEnabled(false);
 
-    m_camera = Camera(&m_window, INITIAL_VIEWPORT_WIDTH, INITIAL_VIEWPORT_HEIGHT);
+    m_world_camera = Camera(&m_window, world_view_width, world_view_height);
+    m_gui_camera = Camera(&m_window, window_width, window_height);
 
     m_texture_manager.load_directory("../assets/textures");
     m_font_manager.load_directory("../assets/fonts");
@@ -24,22 +25,23 @@ Game::Game()
     m_music_manager.load_directory("../assets/music");
 
     m_context.window = &m_window;
-    m_context.camera = &m_camera;
+    m_context.world_camera = &m_world_camera;
+    m_context.gui_camera = &m_gui_camera;
     m_context.texture_manager = &m_texture_manager;
     m_context.font_manager = &m_font_manager;
     m_context.sound_buffer_manager = &m_sound_buffer_manager;
     m_context.music_manager = &m_music_manager;
 
-    LevelDetails level_details {
-        "../data/tmx/test_map3.tmj",
-        "test_map3",
-        "gray"
-    };
-
-    UINT_PTR level_details_ptr = reinterpret_cast<UINT_PTR>(&level_details);
-
+//    LevelDetails level_details {
+//        "../data/tmx/test_map3.tmj",
+//        "test_map3",
+//        "yellow"
+//    };
+//
+//    auto level_details_ptr = reinterpret_cast<UINT_PTR>(&level_details);
+    
     m_state_stack = StateStack(m_context);
-    m_state_stack.push(StateID::GAME, level_details_ptr);
+    m_state_stack.push(StateID::MAIN_MENU);
     m_state_stack.apply_pending_changes();
 }
 
@@ -54,9 +56,10 @@ void Game::run()
         sf::Time elapsed_time = clock.restart();
         ellapsed += elapsed_time.asSeconds();
 
+        handle_events();
+
         while (ellapsed >= time_per_frame)
         {
-            handle_events();
             update(time_per_frame);
             ellapsed -= time_per_frame;
         }
@@ -86,13 +89,6 @@ void Game::handle_events()
                     m_window.close();
                 break;
             }
-
-            case sf::Event::Resized:
-            {
-                float aspect_ratio = static_cast<float>(event.size.width) / static_cast<float>(event.size.height);
-                m_camera.resize(aspect_ratio);
-                break;
-            }
         }
 
         m_state_stack.handle_events(event);
@@ -102,7 +98,7 @@ void Game::handle_events()
 void Game::update(double dt)
 {
     m_state_stack.update(dt);
-    m_camera.update(dt);
+    m_world_camera.update(dt);
 
     if (m_state_stack.empty())
         m_window.close();

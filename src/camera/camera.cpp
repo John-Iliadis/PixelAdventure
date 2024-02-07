@@ -18,11 +18,6 @@ Camera::~Camera()
     delete m_current_state;
 }
 
-void Camera::resize(float aspect_ratio)
-{
-    m_camera.setSize(static_cast<int>(m_size.y * aspect_ratio), int(m_size.y));
-}
-
 void Camera::update(double dt)
 {
     State* new_state = m_current_state->update(*this, dt);
