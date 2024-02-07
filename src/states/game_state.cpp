@@ -27,3 +27,8 @@ void GameState::draw()
 {
     world.draw();
 }
+
+void GameState::on_gui_draw()
+{
+
+}

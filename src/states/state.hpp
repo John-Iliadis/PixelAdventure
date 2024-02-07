@@ -25,6 +25,7 @@ public:
 
     virtual bool handle_events(const sf::Event& event) = 0;
     virtual bool update(double dt) = 0;
+    virtual void on_gui_draw() = 0;
     virtual void draw() = 0;
 
 protected:

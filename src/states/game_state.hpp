@@ -17,6 +17,7 @@ public:
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;
     void draw() override;
+    void on_gui_draw() override;
 
 private:
     World world;

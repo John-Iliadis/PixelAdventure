@@ -7,6 +7,9 @@
 
 #include "../scrolling_background/scrolling_background.hpp"
 #include "state.hpp"
+#include "../camera/camera.hpp"
+#include "../gui/text_button.hpp"
+#include "../asset_managers/font_manager.hpp"
 
 
 class MainMenuState : public State
@@ -17,9 +20,11 @@ public:
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;
     void draw() override;
+    void on_gui_draw() override;
 
 private:
     ScrollingBackground m_scrolling_background;
+    TextButton m_button;
 };
 
 

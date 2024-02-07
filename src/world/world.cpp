@@ -43,11 +43,11 @@ World::World(GameContext& context, const LevelDetails& level_details)
     m_player.set_camera_transition_callback([this] () {
         sf::Vector2f player_respawn_pos = m_player.get_respawn_pos();
         sf::Vector2f camera_target(player_respawn_pos.x, player_respawn_pos.y - m_player.get_sprite_size().height / 2.f);
-        m_context.camera->set_target(camera_target, 1.2, [this] () {m_player.respawn();});
+        m_context.world_camera->set_target(camera_target, 1.2, [this] () {m_player.respawn();});
     });
 
     m_player.set_move_camera_callback([this] () {
-        if (m_player.is_alive()) m_context.camera->set_center(m_player.get_center());
+        if (m_player.is_alive()) m_context.world_camera->set_center(m_player.get_center());
     });
 
     m_fruit_manager = FruitManager(TiledJsonLoader::get_list_object(map_data["layers"], "fruit_layer"), *m_context.texture_manager);

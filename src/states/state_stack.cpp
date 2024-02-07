@@ -36,7 +36,10 @@ void StateStack::update(double dt)
 void StateStack::draw()
 {
     for (auto& state : m_state_stack)
+    {
         state->draw();
+        state->on_gui_draw();
+    }
 }
 
 void StateStack::push(StateID id, UINT_PTR user_ptr)
