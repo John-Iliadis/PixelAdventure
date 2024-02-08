@@ -11,6 +11,8 @@
 #include "../gui/text_button.hpp"
 #include "../asset_managers/font_manager.hpp"
 #include "../gui/gui_container.hpp"
+#include "../gui/paper_label.hpp"
+#include "../gui/slider.hpp"
 
 
 class MainMenuState : public State
@@ -26,6 +28,7 @@ public:
 private:
     ScrollingBackground m_scrolling_background;
     GUI_Container m_gui_container;
+    float value;
 };
 
 

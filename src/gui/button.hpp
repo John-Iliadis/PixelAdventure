@@ -20,7 +20,6 @@ public:
 
     void set_position(const sf::Vector2f& pos);
     void set_position(float x, float y);
-
     void set_button_texture(const sf::Texture& texture);
     void set_button_origin(Origin origin);
     void set_button_scale(const sf::Vector2f& scale);
@@ -46,6 +45,7 @@ protected:
     sf::Sprite m_button;
     sf::Vector2f m_button_scale;
     sf::Vector2f m_button_hover_scale;
+    mutable sf::Transform m_transform;
 
     std::function<void()> m_callback;
 };

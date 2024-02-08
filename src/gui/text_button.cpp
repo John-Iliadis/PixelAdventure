@@ -61,6 +61,8 @@ void TextButton::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     utils::center_text(m_text);
 
+    m_transform = states.transform;
+
     auto button_bounds = m_button.getGlobalBounds();
 
     sf::Vector2i text_pos {
