@@ -33,7 +33,6 @@ private:
 private:
     ScrollingBackground m_scrolling_background;
     std::unique_ptr<GUI_Container> m_gui_container;
-    float ptr;
 };
 
 
