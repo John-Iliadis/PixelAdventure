@@ -1,5 +1,5 @@
 //
-// Created by Gianni on 6/02/2024.
+// Created by Gianni on 9/02/2024.
 //
 
 #ifndef PLATFORMER_BUTTON_HPP
@@ -31,6 +31,7 @@ public:
     void select() override;
     void deselect() override;
 
+    void update() override;
     void handle_event(const sf::Event &event) override;
 
     void activate() override;
@@ -45,7 +46,6 @@ protected:
     sf::Sprite m_button;
     sf::Vector2f m_button_scale;
     sf::Vector2f m_button_hover_scale;
-    mutable sf::Transform m_transform;
 
     std::function<void()> m_callback;
 };

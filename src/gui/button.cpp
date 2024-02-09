@@ -1,8 +1,7 @@
 //
-// Created by Gianni on 6/02/2024.
+// Created by Gianni on 9/02/2024.
 //
 
-#include <iostream>
 #include "button.hpp"
 
 Button::Button()
@@ -54,12 +53,12 @@ bool Button::is_selectable() const
 
 sf::Rect<float> Button::get_clickable_area() const
 {
-    return m_transform.transformRect(m_button.getGlobalBounds());
+    return m_button.getGlobalBounds();
 }
 
 void Button::activate()
 {
-        m_callback? m_callback() : (void)0;
+    m_callback? m_callback() : (void)0;
 }
 
 void Button::set_button_hover_scale(const sf::Vector2f &scale)
@@ -96,6 +95,9 @@ void Button::handle_event(const sf::Event &event)
 
 void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    m_transform = states.transform;
-    target.draw(m_button, states);
+    target.draw(m_button);
+}
+
+void Button::update()
+{
 }

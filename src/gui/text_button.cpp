@@ -1,8 +1,9 @@
 //
-// Created by Gianni on 6/02/2024.
+// Created by Gianni on 9/02/2024.
 //
 
 #include "text_button.hpp"
+
 
 TextButton::TextButton()
     : m_character_size()
@@ -57,23 +58,24 @@ void TextButton::deselect()
     }
 }
 
-void TextButton::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void TextButton::update()
 {
     utils::center_text(m_text);
-
-    m_transform = states.transform;
 
     auto button_bounds = m_button.getGlobalBounds();
 
     sf::Vector2i text_pos {
-        static_cast<int>(button_bounds.left +  button_bounds.width / 2.f + m_offset.x),
-        static_cast<int>(button_bounds.top + button_bounds.height / 2.f + m_offset.y)
+            static_cast<int>(button_bounds.left +  button_bounds.width / 2.f + m_offset.x),
+            static_cast<int>(button_bounds.top + button_bounds.height / 2.f + m_offset.y)
     };
 
     m_text.setPosition(text_pos.x, text_pos.y);
+}
 
-    target.draw(m_button, states);
-    target.draw(m_text, states);
+void TextButton::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(m_button);
+    target.draw(m_text);
 }
 
 void TextButton::set_text_offset(const sf::Vector2f &offset)

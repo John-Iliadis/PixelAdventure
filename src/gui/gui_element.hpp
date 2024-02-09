@@ -1,16 +1,15 @@
 //
-// Created by Gianni on 6/02/2024.
+// Created by Gianni on 9/02/2024.
 //
 
 #ifndef PLATFORMER_GUI_ELEMENT_HPP
 #define PLATFORMER_GUI_ELEMENT_HPP
 
 #include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Window/Event.hpp>
 
 
-class GUI_Element : public sf::Drawable
+class GUI_Element : virtual public sf::Drawable
 {
 public:
     GUI_Element();
@@ -23,6 +22,7 @@ public:
 
     virtual void activate() = 0;
 
+    virtual void update() = 0;
     virtual void handle_event(const sf::Event& event) = 0;
 
     virtual sf::Rect<float> get_clickable_area() const = 0;

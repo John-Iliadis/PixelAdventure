@@ -1,5 +1,5 @@
 //
-// Created by Gianni on 7/02/2024.
+// Created by Gianni on 9/02/2024.
 //
 
 #include "gui_container.hpp"
@@ -8,6 +8,10 @@
 void GUI_Container::push_back(std::unique_ptr<GUI_Element> &&gui_component)
 {
     m_gui_components.push_back(std::move(gui_component));
+}
+
+void GUI_Container::update()
+{
 }
 
 void GUI_Container::handle_event(const sf::Event &event)
@@ -50,13 +54,9 @@ void GUI_Container::draw(sf::RenderTarget &target, sf::RenderStates states) cons
 {
     target.draw(m_container);
 
-    auto container_bounds = m_container.getGlobalBounds();
-
-    states.transform.translate(container_bounds.left, container_bounds.top);
-
     for (const auto& gui_component : m_gui_components)
     {
-        target.draw(*gui_component, states);
+        target.draw(*gui_component);
     }
 }
 

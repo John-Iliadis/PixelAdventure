@@ -11,8 +11,8 @@
 #include "../gui/text_button.hpp"
 #include "../asset_managers/font_manager.hpp"
 #include "../gui/gui_container.hpp"
-#include "../gui/paper_label.hpp"
-#include "../gui/slider.hpp"
+#include "../gui/sprite_element.hpp"
+#include "../gui/text_element.hpp"
 
 
 class MainMenuState : public State
@@ -26,9 +26,11 @@ public:
     void on_gui_draw() override;
 
 private:
+    void setup_gui();
+
+private:
     ScrollingBackground m_scrolling_background;
     GUI_Container m_gui_container;
-    float value;
 };
 
 

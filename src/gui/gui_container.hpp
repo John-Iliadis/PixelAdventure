@@ -1,9 +1,10 @@
 //
-// Created by Gianni on 7/02/2024.
+// Created by Gianni on 9/02/2024.
 //
 
 #ifndef PLATFORMER_GUI_CONTAINER_HPP
 #define PLATFORMER_GUI_CONTAINER_HPP
+
 
 #include <functional>
 #include <vector>
@@ -31,6 +32,7 @@ public:
 
     void activate() override;
 
+    void update() override;
     void handle_event(const sf::Event &event) override;
 
     sf::Rect<float> get_clickable_area() const override;

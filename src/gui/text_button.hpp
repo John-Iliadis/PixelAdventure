@@ -1,5 +1,5 @@
 //
-// Created by Gianni on 6/02/2024.
+// Created by Gianni on 9/02/2024.
 //
 
 #ifndef PLATFORMER_TEXT_BUTTON_HPP
@@ -27,13 +27,14 @@ public:
     void select() override;
     void deselect() override;
 
+    void update() override;
     void handle_event(const sf::Event& event) override;
 
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 private:
-    mutable sf::Text m_text;
+    sf::Text m_text;
     uint32_t m_character_size;
     uint32_t m_character_size_hover;
     sf::Vector2f m_offset;
