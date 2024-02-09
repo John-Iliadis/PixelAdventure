@@ -18,14 +18,15 @@ public:
     Button();
     virtual ~Button() = default;
 
+    void set_button_texture(const sf::Texture& texture);
     void set_position(const sf::Vector2f& pos);
     void set_position(float x, float y);
-    void set_button_texture(const sf::Texture& texture);
     void set_button_origin(Origin origin);
     void set_button_scale(const sf::Vector2f& scale);
     void set_button_scale(float factor_x, float factor_y);
     void set_button_hover_scale(const sf::Vector2f& scale);
     void set_button_hover_scale(float x_factor, float y_factor);
+    void set_button_color(const sf::Color& color);
     void set_button_callback(std::function<void()> callback);
 
     void select() override;

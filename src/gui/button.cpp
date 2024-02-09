@@ -101,3 +101,8 @@ void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void Button::update(const sf::Vector2i& mouse_pos)
 {
 }
+
+void Button::set_button_color(const sf::Color &color)
+{
+    m_button.setColor(color);
+}
