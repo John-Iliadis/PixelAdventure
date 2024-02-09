@@ -68,16 +68,16 @@ void Slider::update(const sf::Vector2i& mouse_pos)
 
 void Slider::set_value(float new_value)
 {
-    new_value = std::clamp(new_value, 0.f, 1.f);
+    float normalized_value = std::clamp(new_value, 0.f, 1.f);
 
     auto slider_bounds = m_slider.getGlobalBounds();
 
     float x = slider_bounds.left;
     float y = slider_bounds.top + slider_bounds.height / 2.f;
 
-    m_slider_pointer.setPosition(x + new_value * slider_bounds.width, y);
+    m_slider_pointer.setPosition(x + normalized_value * slider_bounds.width, y);
 
-    *m_value = m_min + (new_value * (m_max - m_min));
+    *m_value = m_min + (normalized_value * (m_max - m_min));
 }
 
 sf::Rect<float> Slider::get_clickable_area() const
@@ -102,7 +102,6 @@ void Slider::set_slider_position(float x, float y)
 {
     m_slider.setPosition(x, y);
     set_value(*m_value);
-
 }
 
 void Slider::set_slider_scale(const sf::Vector2f &scale)
@@ -121,4 +120,3 @@ void Slider::set_slider_origin(Origin origin)
 {
     utils::set_origin(m_slider, origin);
 }
-

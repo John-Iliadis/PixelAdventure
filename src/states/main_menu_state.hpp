@@ -12,6 +12,7 @@
 #include "../gui/gui_container.hpp"
 #include "../gui/sprite_element.hpp"
 #include "../gui/text_element.hpp"
+#include "../gui/gui_builder.hpp"
 #include "../gui/slider.hpp"
 #include "state.hpp"
 
@@ -31,7 +32,7 @@ private:
 
 private:
     ScrollingBackground m_scrolling_background;
-    GUI_Container m_gui_container;
+    std::unique_ptr<GUI_Container> m_gui_container;
     float ptr;
 };
 

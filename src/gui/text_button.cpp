@@ -60,7 +60,7 @@ void TextButton::deselect()
 
 void TextButton::update(const sf::Vector2i& mouse_pos)
 {
-    utils::center_text(m_text);
+    utils::set_origin(m_text, Origin::CENTER);
 
     auto button_bounds = m_button.getGlobalBounds();
 
