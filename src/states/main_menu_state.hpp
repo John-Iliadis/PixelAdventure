@@ -6,13 +6,14 @@
 #define PLATFORMER_MAIN_MENU_STATE_HPP
 
 #include "../scrolling_background/scrolling_background.hpp"
-#include "state.hpp"
 #include "../camera/camera.hpp"
 #include "../gui/text_button.hpp"
 #include "../asset_managers/font_manager.hpp"
 #include "../gui/gui_container.hpp"
 #include "../gui/sprite_element.hpp"
 #include "../gui/text_element.hpp"
+#include "../gui/slider.hpp"
+#include "state.hpp"
 
 
 class MainMenuState : public State
@@ -31,6 +32,7 @@ private:
 private:
     ScrollingBackground m_scrolling_background;
     GUI_Container m_gui_container;
+    float ptr;
 };
 
 

@@ -118,7 +118,9 @@ add_executable(Platformer
         src/gui/sprite_element.cpp
         src/gui/sprite_element.hpp
         src/gui/text_element.cpp
-        src/gui/text_element.hpp)
+        src/gui/text_element.hpp
+        src/gui/slider.cpp
+        src/gui/slider.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

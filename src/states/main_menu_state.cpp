@@ -17,11 +17,13 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, UINT
     m_scrolling_background = ScrollingBackground(bg_texture, bg_size);
 
     setup_gui();
+
+    ptr = 10;
 }
 
 bool MainMenuState::handle_events(const sf::Event &event)
 {
-
+    m_gui_container.handle_event(event);
 
     return false;
 }
@@ -29,6 +31,7 @@ bool MainMenuState::handle_events(const sf::Event &event)
 bool MainMenuState::update(double dt)
 {
     m_scrolling_background.update(dt);
+    m_gui_container.update(sf::Mouse::getPosition(*m_context.window));
 
     return false;
 }
@@ -75,6 +78,12 @@ void MainMenuState::setup_gui()
     auto title_banner_el = std::make_unique<SpriteElement>(title_banner_sprite);
     auto title_banner_text_el = std::make_unique<TextElement>(title_banner_text);
 
+    auto slider = std::make_unique<Slider>(textures, &ptr, 0, 100);
+    slider->set_slider_origin(Origin::CENTER);
+    slider->set_slider_position(window_size / 2.f);
+    slider->set_slider_scale(3, 3);
+
     m_gui_container.push_back(std::move(title_banner_el));
     m_gui_container.push_back(std::move(title_banner_text_el));
+    m_gui_container.push_back(std::move(slider));
 }

@@ -58,7 +58,7 @@ void TextButton::deselect()
     }
 }
 
-void TextButton::update()
+void TextButton::update(const sf::Vector2i& mouse_pos)
 {
     utils::center_text(m_text);
 

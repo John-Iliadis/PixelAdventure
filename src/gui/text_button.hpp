@@ -27,7 +27,7 @@ public:
     void select() override;
     void deselect() override;
 
-    void update() override;
+    void update(const sf::Vector2i& mouse_pos) override;
     void handle_event(const sf::Event& event) override;
 
 private:

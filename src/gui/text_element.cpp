@@ -19,7 +19,7 @@ void TextElement::activate()
 {
 }
 
-void TextElement::update()
+void TextElement::update(const sf::Vector2i& mouse_pos)
 {
 }
 

@@ -22,7 +22,7 @@ public:
 
     virtual void activate() = 0;
 
-    virtual void update() = 0;
+    virtual void update(const sf::Vector2i& mouse_pos) = 0;
     virtual void handle_event(const sf::Event& event) = 0;
 
     virtual sf::Rect<float> get_clickable_area() const = 0;

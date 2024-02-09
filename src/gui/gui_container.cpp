@@ -10,8 +10,12 @@ void GUI_Container::push_back(std::unique_ptr<GUI_Element> &&gui_component)
     m_gui_components.push_back(std::move(gui_component));
 }
 
-void GUI_Container::update()
+void GUI_Container::update(const sf::Vector2i& mouse_pos)
 {
+    for (auto& element : m_gui_components)
+    {
+        element->update(mouse_pos);
+    }
 }
 
 void GUI_Container::handle_event(const sf::Event &event)

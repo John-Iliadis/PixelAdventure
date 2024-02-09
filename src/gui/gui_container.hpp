@@ -32,7 +32,7 @@ public:
 
     void activate() override;
 
-    void update() override;
+    void update(const sf::Vector2i& mouse_pos) override;
     void handle_event(const sf::Event &event) override;
 
     sf::Rect<float> get_clickable_area() const override;
