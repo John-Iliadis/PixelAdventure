@@ -4,9 +4,6 @@
 
 #include "main_menu_state.hpp"
 
-#include <iostream>
-#include <SFML/Graphics/CircleShape.hpp>
-
 
 MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, UINT_PTR user_ptr)
     : State(state_stack, context)
@@ -23,7 +20,7 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, UINT
 
 bool MainMenuState::handle_events(const sf::Event &event)
 {
-    m_gui_container.handle_event(event);
+    m_gui_container->handle_event(event);
 
     return false;
 }
@@ -31,7 +28,7 @@ bool MainMenuState::handle_events(const sf::Event &event)
 bool MainMenuState::update(double dt)
 {
     m_scrolling_background.update(dt);
-    m_gui_container.update(sf::Mouse::getPosition(*m_context.window));
+    m_gui_container->update(sf::Mouse::getPosition(*m_context.window));
 
     return false;
 }
@@ -47,43 +44,26 @@ void MainMenuState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    window.draw(m_gui_container);
+    window.draw(*m_gui_container);
 }
 
 void MainMenuState::setup_gui()
 {
+    static GUI_Builder gui_builder(m_context.texture_manager, m_context.font_manager);
+
     sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
 
     float window_width = window_size.x;
     float window_height = window_size.y;
 
-    auto& textures = *m_context.texture_manager;
-    auto& fonts = *m_context.font_manager;
+    m_gui_container = gui_builder.set_texture("menu_board")
+                                 .set_position(window_width / 2, window_height / 2 + 80)
+                                 .set_origin(Origin::CENTER)
+                                 .set_scale(3, 3)
+                                 .make_container();
 
-    m_gui_container.set_container_texture(textures.get("settings_board"));
-    m_gui_container.set_container_origin(Origin::CENTER);
-    m_gui_container.set_container_position(window_width / 2, window_height / 2 + 80);
-    m_gui_container.set_container_scale(3, 3);
-
-    sf::Sprite title_banner_sprite(textures.get("title_board"));
-    title_banner_sprite.setScale(3, 3);
-    title_banner_sprite.setPosition(window_width / 2, 150);
-    utils::set_origin(title_banner_sprite, Origin::CENTER);
-
-    sf::Text title_banner_text("Settings", fonts.get("pixel_type"), 50);
-    title_banner_text.setPosition(title_banner_sprite.getPosition());
-    title_banner_text.setFillColor(sf::Color::Black);
-    utils::center_text(title_banner_text);
-
-    auto title_banner_el = std::make_unique<SpriteElement>(title_banner_sprite);
-    auto title_banner_text_el = std::make_unique<TextElement>(title_banner_text);
-
-    auto slider = std::make_unique<Slider>(textures, &ptr, 0, 100);
-    slider->set_slider_origin(Origin::CENTER);
-    slider->set_slider_position(window_size / 2.f);
-    slider->set_slider_scale(3, 3);
-
-    m_gui_container.push_back(std::move(title_banner_el));
-    m_gui_container.push_back(std::move(title_banner_text_el));
-    m_gui_container.push_back(std::move(slider));
+    std::unique_ptr<SpriteElement> title_board = gui_builder.set_texture("title_board")
+                                                            .set_position(window_width / 2.f, 100)
+                                                            .set_scale(3, 3)
+                                                            .make_sprite_element();
 }
