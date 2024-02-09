@@ -47,16 +47,71 @@ namespace utils
         }
     }
 
-    void center_text(sf::Text& text)
+    void set_origin(sf::Text& text, Origin origin)
     {
         auto local_bounds = text.getLocalBounds();
 
-        sf::Vector2i origin {
-            static_cast<int>(local_bounds.left + local_bounds.width / 2.f),
-            static_cast<int>(local_bounds.top + local_bounds.height / 2.f)
-        };
+        switch (origin)
+        {
+            case Origin::TOP_LEFT:
+            {
+                text.setOrigin(0, 0);
+                break;
+            }
 
-        text.setOrigin(origin.x, origin.y);
+            case Origin::CENTER:
+            {
+                sf::Vector2i text_origin {
+                        static_cast<int>(local_bounds.left + local_bounds.width / 2.f),
+                        static_cast<int>(local_bounds.top + local_bounds.height / 2.f)
+                };
+
+                text.setOrigin(text_origin.x, text_origin.y);
+                break;
+            }
+
+
+            case Origin::CENTER_BOTTOM:
+            {
+                sf::Vector2i text_origin {
+                        static_cast<int>(local_bounds.left + local_bounds.width / 2.f),
+                        static_cast<int>(local_bounds.top + local_bounds.height)
+                };
+
+                text.setOrigin(text_origin.x, text_origin.y);
+                break;
+            }
+
+            case Origin::CENTER_TOP:
+            {
+                sf::Vector2i text_origin {static_cast<int>(local_bounds.left + local_bounds.width / 2.f), 0};
+
+                text.setOrigin(text_origin.x, text_origin.y);
+                break;
+            }
+
+            case Origin::CENTER_LEFT:
+            {
+                sf::Vector2i text_origin {0,static_cast<int>(local_bounds.top + local_bounds.height / 2.f)};
+
+                text.setOrigin(text_origin.x, text_origin.y);
+                break;
+            }
+
+            case Origin::CENTER_RIGHT:
+            {
+                sf::Vector2i text_origin {
+                        static_cast<int>(local_bounds.left + local_bounds.width),
+                        static_cast<int>(local_bounds.top + local_bounds.height / 2.f)
+                };
+
+                text.setOrigin(text_origin.x, text_origin.y);
+                break;
+            }
+
+            default:
+                assert(false);
+        }
     }
 
     float to_radians(float degrees)
