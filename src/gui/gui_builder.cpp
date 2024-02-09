@@ -227,9 +227,13 @@ std::unique_ptr<Slider> GUI_Builder::make_slider()
 
 std::unique_ptr<TextElement> GUI_Builder::make_text_element()
 {
+    assert(!m_text_string.empty());
+    assert(m_character_size);
+
     sf::Text text;
 
     text.setFont(m_fonts->get(m_font_id));
+    text.setString(m_text_string);
     text.setCharacterSize(m_character_size);
     text.setFillColor(m_text_color);
     text.setPosition(m_position);
