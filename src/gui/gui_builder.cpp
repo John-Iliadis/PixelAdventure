@@ -195,8 +195,6 @@ std::unique_ptr<TextButton> GUI_Builder::make_text_button()
 
 std::unique_ptr<GUI_Container> GUI_Builder::make_container()
 {
-    assert(!m_texture_id.empty());
-
     auto container = std::make_unique<GUI_Container>();
 
     container->set_container_texture(m_textures->get(m_texture_id));

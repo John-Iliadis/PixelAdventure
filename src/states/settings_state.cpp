@@ -47,8 +47,6 @@ void SettingsState::setup_gui()
 
     sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
 
-    sf::Rect<float> gui_container_bounds = m_gui_container->get_clickable_area();
-
     /* title */
     std::unique_ptr<SpriteElement> title_board = gui_builder.set_texture("title_board")
                                                             .set_position(window_size.x / 2, 150)

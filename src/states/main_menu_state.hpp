@@ -7,13 +7,9 @@
 
 #include "../scrolling_background/scrolling_background.hpp"
 #include "../camera/camera.hpp"
-#include "../gui/text_button.hpp"
 #include "../asset_managers/font_manager.hpp"
-#include "../gui/gui_container.hpp"
-#include "../gui/sprite_element.hpp"
-#include "../gui/text_element.hpp"
-#include "../gui/gui_builder.hpp"
-#include "../gui/slider.hpp"
+#include "../asset_managers/texture_manager.hpp"
+#include "../gui/gui_includes.hpp"
 #include "state.hpp"
 
 
