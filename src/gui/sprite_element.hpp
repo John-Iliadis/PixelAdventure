@@ -23,6 +23,7 @@ public:
     void handle_event(const sf::Event &event) override;
 
     sf::Rect<float> get_clickable_area() const override;
+    sf::Vector2f get_position() const;
 
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

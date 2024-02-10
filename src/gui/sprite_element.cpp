@@ -29,10 +29,15 @@ void SpriteElement::handle_event(const sf::Event &event)
 
 sf::Rect<float> SpriteElement::get_clickable_area() const
 {
-    return sf::Rect<float>();
+    return m_sprite.getGlobalBounds();
 }
 
 void SpriteElement::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite);
+}
+
+sf::Vector2f SpriteElement::get_position() const
+{
+    return m_sprite.getPosition();
 }
