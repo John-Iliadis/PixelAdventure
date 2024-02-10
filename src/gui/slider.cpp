@@ -4,7 +4,6 @@
 
 #include "slider.hpp"
 
-#include <iostream>
 
 Slider::Slider()
     : m_value(nullptr)
@@ -19,13 +18,16 @@ Slider::Slider(const TextureManager &textures, float *value, float min, float ma
     , m_min(min)
     , m_max(max)
     , m_dragging(false)
+    , m_needs_update(false)
 {
     assert(m_value);
     assert(min < max);
 
-    set_value(*m_value);
+    *m_value = std::clamp(*m_value, m_min, m_max);
 
     utils::set_origin(m_slider_pointer, Origin::CENTER);
+
+    set_slider_pointer();
 }
 
 bool Slider::is_selectable() const
@@ -50,39 +52,34 @@ void Slider::handle_event(const sf::Event &event)
     {
         m_dragging = false;
     }
+    else if (event.type == sf::Event::MouseMoved && m_dragging)
+    {
+        sf::Rect<float> slider_bounds = m_slider.getGlobalBounds();
+        sf::Vector2f mouse_pos(event.mouseMove.x, event.mouseMove.y);
+
+        float slider_begin = slider_bounds.left;
+        float slider_end = slider_bounds.left + slider_bounds.width;
+
+        float new_pos = std::clamp(mouse_pos.x, slider_begin, slider_end);
+
+        m_slider_pointer.setPosition(new_pos, slider_bounds.top + slider_bounds.height / 2.f);
+
+        *m_value = (new_pos - slider_begin) * (m_min + m_max) / (slider_end - slider_begin);
+    }
 }
 
 void Slider::update(const sf::Vector2i& mouse_pos)
 {
-    if (m_dragging)
+    if (m_needs_update)
     {
-        auto slider_bounds = m_slider.getGlobalBounds();
-
-        float x = slider_bounds.left;
-
-        float new_value = (mouse_pos.x - x) / slider_bounds.width;
-
-        set_value(new_value);
+        set_slider_pointer();
+        m_needs_update = false;
     }
-}
-
-void Slider::set_value(float new_value)
-{
-    float normalized_value = std::clamp(new_value, 0.f, 1.f);
-
-    auto slider_bounds = m_slider.getGlobalBounds();
-
-    float x = slider_bounds.left;
-    float y = slider_bounds.top + slider_bounds.height / 2.f;
-
-    m_slider_pointer.setPosition(x + normalized_value * slider_bounds.width, y);
-
-    *m_value = m_min + (normalized_value * (m_max - m_min));
 }
 
 sf::Rect<float> Slider::get_clickable_area() const
 {
-    return sf::Rect<float>();
+    return m_slider_pointer.getGlobalBounds();
 }
 
 void Slider::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -94,29 +91,43 @@ void Slider::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void Slider::set_slider_position(const sf::Vector2f &pos)
 {
     m_slider.setPosition(pos);
-    set_value(*m_value);
-
+    m_needs_update = true;
 }
 
 void Slider::set_slider_position(float x, float y)
 {
     m_slider.setPosition(x, y);
-    set_value(*m_value);
+    m_needs_update = true;
 }
 
 void Slider::set_slider_scale(const sf::Vector2f &scale)
 {
     m_slider.setScale(scale);
     m_slider_pointer.setScale(scale);
+    m_needs_update = true;
 }
 
 void Slider::set_slider_scale(float x_factor, float y_factor)
 {
     m_slider.setScale(x_factor, y_factor);
     m_slider_pointer.setScale(x_factor, y_factor);
+    m_needs_update = true;
 }
 
 void Slider::set_slider_origin(Origin origin)
 {
     utils::set_origin(m_slider, origin);
+    m_needs_update = true;
+}
+
+void Slider::set_slider_pointer()
+{
+    auto slider_bounds = m_slider.getGlobalBounds();
+
+    float slider_start = slider_bounds.left;
+    float slider_end = slider_bounds.left + slider_bounds.width;
+
+    float position = (*m_value * (slider_end - slider_start) / (m_max + m_min)) + slider_start;
+
+    m_slider_pointer.setPosition(position, slider_bounds.top + slider_bounds.height / 2.f);
 }

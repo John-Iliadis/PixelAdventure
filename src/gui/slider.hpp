@@ -31,7 +31,6 @@ public:
     void activate() override;
 
     void update(const sf::Vector2i& mouse_pos) override;
-
     void handle_event(const sf::Event &event) override;
 
     sf::Rect<float> get_clickable_area() const override;
@@ -39,7 +38,7 @@ public:
 protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-    void set_value(float new_value);
+    void set_slider_pointer();
 
 private:
     sf::Sprite m_slider;
@@ -48,6 +47,7 @@ private:
     float m_min;
     float m_max;
     bool m_dragging;
+    bool m_needs_update;
 };
 
 
