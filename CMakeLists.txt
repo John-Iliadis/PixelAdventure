@@ -133,7 +133,8 @@ add_executable(Platformer
         src/states/game_over_state.hpp
         src/states/key_binding_state.cpp
         src/states/key_binding_state.hpp
-        src/gui/gui_includes.hpp)
+        src/gui/gui_includes.hpp
+        src/structs/colors.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

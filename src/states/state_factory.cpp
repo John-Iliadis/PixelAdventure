@@ -5,15 +5,26 @@
 #include "state_factory.hpp"
 #include "main_menu_state.hpp"
 #include "game_state.hpp"
+#include "settings_state.hpp"
+#include "levels_state.hpp"
+#include "pause_state.hpp"
+#include "game_over_state.hpp"
+#include "key_binding_state.hpp"
 
 
-#define FACTORY_FUNCTION(T) [&] (UINT_PTR user_ptr = 0) \
-    { return std::make_unique<T>(state_stack, context, user_ptr); }
+#define FACTORY_FUNCTION(STATE_TYPE) [&] (UINT_PTR user_ptr = 0)                                                       \
+    {                                                                                                                  \
+        if constexpr (!std::is_base_of<State, STATE_TYPE>::value)                                                      \
+        {throw std::runtime_error("StateFactory::StateFactory: Given STATE_TYPE not derived from State class\n");}     \
+        return std::make_unique<STATE_TYPE>(state_stack, context, user_ptr);                                           \
+    }
 
 StateFactory::StateFactory(StateStack& state_stack, GameContext& context)
 {
     m_factory[StateID::MAIN_MENU] = FACTORY_FUNCTION(MainMenuState);
     m_factory[StateID::GAME] = FACTORY_FUNCTION(GameState);
+    m_factory[StateID::SETTINGS] = FACTORY_FUNCTION(SettingsState);
+    m_factory[StateID::PAUSE] = FACTORY_FUNCTION(PauseState);
 }
 
 std::unique_ptr<State> StateFactory::create_state(StateID id, UINT_PTR user_ptr)

@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "state.hpp"
 #include "../gui/gui_includes.hpp"
+#include "../structs/colors.hpp"
 
 
 class PauseState : public State

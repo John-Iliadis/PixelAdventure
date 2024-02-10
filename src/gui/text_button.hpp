@@ -24,9 +24,6 @@ public:
     void set_text_offset(const sf::Vector2f& offset);
     void set_text_offset(float x, float y);
 
-    void select() override;
-    void deselect() override;
-
     void update(const sf::Vector2i& mouse_pos) override;
     void handle_event(const sf::Event& event) override;
 
@@ -35,8 +32,7 @@ private:
 
 private:
     sf::Text m_text;
-    uint32_t m_character_size;
-    uint32_t m_character_size_hover;
+    sf::Text m_selected_text;
     sf::Vector2f m_offset;
 };
 

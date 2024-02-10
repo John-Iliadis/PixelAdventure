@@ -6,61 +6,42 @@
 
 
 TextButton::TextButton()
-    : m_character_size()
-    , m_character_size_hover()
-    , m_offset()
+    : m_offset()
 {
 }
 
 void TextButton::set_text_font(const sf::Font &font)
 {
     m_text.setFont(font);
+    m_selected_text.setFont(font);
 }
 
 void TextButton::set_text_string(const std::string &string)
 {
     m_text.setString(string);
+    m_selected_text.setString(string);
 }
 
 void TextButton::set_text_character_size(uint32_t size)
 {
-    m_character_size = size;
     m_text.setCharacterSize(size);
 }
 
 void TextButton::set_text_character_size_hover(uint32_t size)
 {
-    m_character_size_hover = size;
+    m_selected_text.setCharacterSize(size);
 }
 
 void TextButton::set_text_color(const sf::Color &color)
 {
     m_text.setFillColor(color);
-}
-
-void TextButton::select()
-{
-    if (!selected())
-    {
-        GUI_Element::select();
-        m_button.setScale(m_button_hover_scale);
-        m_text.setCharacterSize(m_character_size_hover);
-    }
-}
-
-void TextButton::deselect()
-{
-    if (selected())
-    {
-        GUI_Element::deselect();
-        m_button.setScale(m_button_scale);
-        m_text.setCharacterSize(m_character_size);
-    }
+    m_selected_text.setFillColor(color);
 }
 
 void TextButton::update(const sf::Vector2i& mouse_pos)
 {
     utils::set_origin(m_text, Origin::CENTER);
+    utils::set_origin(m_selected_text, Origin::CENTER);
 
     auto button_bounds = m_button.getGlobalBounds();
 
@@ -70,12 +51,14 @@ void TextButton::update(const sf::Vector2i& mouse_pos)
     };
 
     m_text.setPosition(text_pos.x, text_pos.y);
+    m_selected_text.setPosition(text_pos.x, text_pos.y);
 }
 
 void TextButton::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_button);
-    target.draw(m_text);
+
+    target.draw(selected()? m_selected_text : m_text);
 }
 
 void TextButton::set_text_offset(const sf::Vector2f &offset)

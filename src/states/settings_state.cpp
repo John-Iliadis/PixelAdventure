@@ -11,10 +11,10 @@ SettingsState::SettingsState(StateStack &state_stack, GameContext &context, UINT
     : State(state_stack, context)
     , m_gui_container(std::make_unique<GUI_Container>())
 {
-    setup_gui();
-
-    place_holder_1 = 10;
+    place_holder_1 = 50;
     place_holder_2 = 10;
+
+    setup_gui();
 }
 
 bool SettingsState::handle_events(const sf::Event &event)
@@ -64,7 +64,7 @@ void SettingsState::setup_gui()
                                                                .set_character_size(30)
                                                                .set_position(window_size.x / 2, 150)
                                                                .set_origin(Origin::CENTER)
-                                                               .set_text_color(sf::Color::Black)
+                                                               .set_text_color(Colors::brown)
                                                                .set_text_string("Settings")
                                                                .make_text_element();
     /* audio board */
@@ -86,7 +86,7 @@ void SettingsState::setup_gui()
             .set_character_size(30)
             .set_position(audio_board_title_paper->get_position())
             .set_origin(Origin::CENTER)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_string("Audio")
             .make_text_element();
 
@@ -102,7 +102,7 @@ void SettingsState::setup_gui()
             .set_character_size(30)
             .set_position(audio_paper_bounds.left + 90, audio_paper_bounds.top + 140)
             .set_origin(Origin::CENTER_LEFT)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_string("Music:")
             .make_text_element();
 
@@ -118,7 +118,7 @@ void SettingsState::setup_gui()
             .set_character_size(30)
             .set_position(audio_paper_bounds.left + 90, audio_paper_bounds.top + audio_paper_bounds.height - 140)
             .set_origin(Origin::CENTER_LEFT)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_string("Sound:")
             .make_text_element();
 
@@ -149,7 +149,7 @@ void SettingsState::setup_gui()
                                                                            .set_character_size(30)
                                                                            .set_position(key_binding_board_title_paper->get_position())
                                                                            .set_origin(Origin::CENTER)
-                                                                           .set_text_color(sf::Color::Black)
+                                                                           .set_text_color(Colors::brown)
                                                                            .set_text_string("Keys")
                                                                            .make_text_element();
 
@@ -165,7 +165,7 @@ void SettingsState::setup_gui()
             .set_character_size(30)
             .set_position(key_binding_paper_bounds.left + 90, key_binding_paper_bounds.top + 120)
             .set_origin(Origin::CENTER_LEFT)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_string("Left:")
             .make_text_element();
 
@@ -173,7 +173,7 @@ void SettingsState::setup_gui()
             .set_character_size(30)
             .set_position(key_binding_paper_bounds.left + 90, key_binding_board_background_paper->get_position().y)
             .set_origin(Origin::CENTER_LEFT)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_string("Right:")
             .make_text_element();
 
@@ -181,7 +181,7 @@ void SettingsState::setup_gui()
             .set_character_size(30)
             .set_position(key_binding_paper_bounds.left + 90, key_binding_paper_bounds.top + key_binding_paper_bounds.height - 120)
             .set_origin(Origin::CENTER_LEFT)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_string("Jump:")
             .make_text_element();
 
@@ -194,7 +194,7 @@ void SettingsState::setup_gui()
             .set_text_string("Left")
             .set_character_size(20)
             .set_character_size_hover(22)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_offset(0, -3)
             .set_callback([] () { puts("Left button clicked"); })
             .make_text_button();
@@ -208,7 +208,7 @@ void SettingsState::setup_gui()
             .set_text_string("Right")
             .set_character_size(20)
             .set_character_size_hover(22)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_offset(0, -3)
             .set_callback([] () { puts("Right button clicked"); })
             .make_text_button();
@@ -222,7 +222,7 @@ void SettingsState::setup_gui()
             .set_text_string("Jump")
             .set_character_size(20)
             .set_character_size_hover(22)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_offset(0, -3)
             .set_callback([] () { puts("Jump button clicked"); })
             .make_text_button();
@@ -236,7 +236,7 @@ void SettingsState::setup_gui()
             .set_text_string("Back")
             .set_character_size(30)
             .set_character_size_hover(32)
-            .set_text_color(sf::Color::Black)
+            .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
             .set_callback([] () { puts("Back button clicked"); })
             .make_text_button();
