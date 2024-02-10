@@ -122,7 +122,18 @@ add_executable(Platformer
         src/gui/slider.cpp
         src/gui/slider.hpp
         src/gui/gui_builder.cpp
-        src/gui/gui_builder.hpp)
+        src/gui/gui_builder.hpp
+        src/states/settings_state.cpp
+        src/states/settings_state.hpp
+        src/states/levels_state.cpp
+        src/states/levels_state.hpp
+        src/states/pause_state.cpp
+        src/states/pause_state.hpp
+        src/states/game_over_state.cpp
+        src/states/game_over_state.hpp
+        src/states/key_binding_state.cpp
+        src/states/key_binding_state.hpp
+        src/gui/gui_includes.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
