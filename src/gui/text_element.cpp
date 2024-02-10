@@ -29,7 +29,7 @@ void TextElement::handle_event(const sf::Event &event)
 
 sf::Rect<float> TextElement::get_clickable_area() const
 {
-    return sf::Rect<float>();
+    return m_text.getGlobalBounds();
 }
 
 void TextElement::draw(sf::RenderTarget &target, sf::RenderStates states) const
