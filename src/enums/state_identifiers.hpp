@@ -11,7 +11,6 @@ enum class StateID
     NONE,
     MAIN_MENU,
     SETTINGS,
-    LEVEL_PICKER,
     PAUSE,
     GAME,
     GAME_OVER,
