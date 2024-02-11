@@ -11,7 +11,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "state_identifiers.hpp"
+#include "../enums/state_identifiers.hpp"
 #include "game_context.hpp"
 #include "state_factory.hpp"
 #include "state.hpp"
@@ -22,7 +22,7 @@ class StateStack
 {
 public:
     StateStack();
-    explicit StateStack(GameContext& context);
+    StateStack(GameContext& context);
 
     void handle_events(const sf::Event& event);
     void update(double dt);
@@ -34,6 +34,9 @@ public:
     void apply_pending_changes();
 
     bool empty() const;
+
+    StateStack(StateStack&&) = delete;
+    StateStack& operator=(StateStack&& other) noexcept;
 
 private:
     enum class Action

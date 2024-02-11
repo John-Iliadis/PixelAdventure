@@ -9,7 +9,7 @@
 #include <basetsd.h>
 #include <SFML/Window/Event.hpp>
 #include "game_context.hpp"
-#include "state_identifiers.hpp"
+#include "../enums/state_identifiers.hpp"
 
 
 class StateStack;

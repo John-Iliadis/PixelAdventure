@@ -2,6 +2,7 @@
 // Created by Gianni on 12/01/2024.
 //
 
+#include <iostream>
 #include "state_stack.hpp"
 #include "state.hpp"
 
@@ -106,4 +107,19 @@ void StateStack::apply_pending_changes()
 bool StateStack::empty() const
 {
     return m_state_stack.empty();
+}
+
+StateStack &StateStack::operator=(StateStack &&other) noexcept
+{
+    if (this != &other)
+    {
+        m_context = other.m_context;
+        m_state_stack = std::move(other.m_state_stack);
+        m_pending_changes = std::move(other.m_pending_changes);
+        m_state_factory = StateFactory(*this, *m_context);
+
+        other.m_context = nullptr;
+    }
+
+    return *this;
 }

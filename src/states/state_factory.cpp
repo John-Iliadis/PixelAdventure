@@ -6,7 +6,6 @@
 #include "main_menu_state.hpp"
 #include "game_state.hpp"
 #include "settings_state.hpp"
-#include "levels_state.hpp"
 #include "pause_state.hpp"
 #include "game_over_state.hpp"
 #include "key_binding_state.hpp"
@@ -14,8 +13,7 @@
 
 #define FACTORY_FUNCTION(STATE_TYPE) [&] (UINT_PTR user_ptr = 0)                                                       \
     {                                                                                                                  \
-        if constexpr (!std::is_base_of<State, STATE_TYPE>::value)                                                      \
-        {throw std::runtime_error("StateFactory::StateFactory: Given STATE_TYPE not derived from State class\n");}     \
+        if constexpr (!std::is_base_of<State, STATE_TYPE>::value) __debugbreak();                                      \
         return std::make_unique<STATE_TYPE>(state_stack, context, user_ptr);                                           \
     }
 

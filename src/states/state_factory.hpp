@@ -9,7 +9,7 @@
 #include <functional>
 #include <memory>
 #include <basetsd.h>
-#include "state_identifiers.hpp"
+#include "../enums/state_identifiers.hpp"
 #include "game_context.hpp"
 #include "../utilities/utils.hpp"
 
