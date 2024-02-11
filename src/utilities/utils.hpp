@@ -9,8 +9,10 @@
 #include <cassert>
 #include <limits>
 #include <random>
+#include <unordered_map>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include "../enums/origin.hpp"
 
 
@@ -25,6 +27,9 @@ namespace utils
     float to_degrees(float radians);
 
     int random(int min = std::numeric_limits<int>::min(), int max = std::numeric_limits<int>::max());
+
+    std::string key_to_string(sf::Keyboard::Key key);
+    sf::Keyboard::Key string_to_key(const std::string& str);
 }
 
 
