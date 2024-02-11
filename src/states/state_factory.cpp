@@ -26,6 +26,7 @@ StateFactory::StateFactory(StateStack& state_stack, GameContext& context)
     m_factory[StateID::SETTINGS] = FACTORY_FUNCTION(SettingsState);
     m_factory[StateID::PAUSE] = FACTORY_FUNCTION(PauseState);
     m_factory[StateID::GAME_OVER] = FACTORY_FUNCTION(GameOverState);
+    m_factory[StateID::KEY_BINDING] = FACTORY_FUNCTION(KeyBindingState);
 }
 
 std::unique_ptr<State> StateFactory::create_state(StateID id, UINT_PTR user_ptr)
