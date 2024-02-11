@@ -24,7 +24,7 @@ public:
     void set_text_offset(const sf::Vector2f& offset);
     void set_text_offset(float x, float y);
 
-    void update(const sf::Vector2i& mouse_pos) override;
+    void update() override;
     void handle_event(const sf::Event& event) override;
 
 private:

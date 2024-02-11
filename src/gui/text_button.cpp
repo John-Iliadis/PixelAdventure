@@ -38,7 +38,7 @@ void TextButton::set_text_color(const sf::Color &color)
     m_selected_text.setFillColor(color);
 }
 
-void TextButton::update(const sf::Vector2i& mouse_pos)
+void TextButton::update()
 {
     utils::set_origin(m_text, Origin::CENTER);
     utils::set_origin(m_selected_text, Origin::CENTER);

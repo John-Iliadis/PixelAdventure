@@ -19,7 +19,7 @@ void SpriteElement::activate()
 {
 }
 
-void SpriteElement::update(const sf::Vector2i& mouse_pos)
+void SpriteElement::update()
 {
 }
 

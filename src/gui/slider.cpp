@@ -68,7 +68,7 @@ void Slider::handle_event(const sf::Event &event)
     }
 }
 
-void Slider::update(const sf::Vector2i& mouse_pos)
+void Slider::update()
 {
     if (m_needs_update)
     {

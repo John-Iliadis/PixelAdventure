@@ -98,7 +98,7 @@ void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_button);
 }
 
-void Button::update(const sf::Vector2i& mouse_pos)
+void Button::update()
 {
 }
 

@@ -10,11 +10,11 @@ void GUI_Container::push_back(std::unique_ptr<GUI_Element> &&gui_component)
     m_gui_components.push_back(std::move(gui_component));
 }
 
-void GUI_Container::update(const sf::Vector2i& mouse_pos)
+void GUI_Container::update()
 {
     for (auto& element : m_gui_components)
     {
-        element->update(mouse_pos);
+        element->update();
     }
 }
 
@@ -36,8 +36,7 @@ void GUI_Container::handle_event(const sf::Event &event)
             }
         }
     }
-
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+    else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
     {
         for (auto& element : m_gui_components)
         {
