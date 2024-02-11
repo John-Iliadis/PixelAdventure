@@ -13,7 +13,9 @@
 
 #define FACTORY_FUNCTION(STATE_TYPE) [&] (UINT_PTR user_ptr = 0)                                                       \
     {                                                                                                                  \
-        if constexpr (!std::is_base_of<State, STATE_TYPE>::value) __debugbreak();                                      \
+        if constexpr (!std::is_base_of<State, STATE_TYPE>::value)                                                      \
+            __debugbreak();                                                                                            \
+                                                                                                                       \
         return std::make_unique<STATE_TYPE>(state_stack, context, user_ptr);                                           \
     }
 
@@ -23,6 +25,7 @@ StateFactory::StateFactory(StateStack& state_stack, GameContext& context)
     m_factory[StateID::GAME] = FACTORY_FUNCTION(GameState);
     m_factory[StateID::SETTINGS] = FACTORY_FUNCTION(SettingsState);
     m_factory[StateID::PAUSE] = FACTORY_FUNCTION(PauseState);
+    m_factory[StateID::GAME_OVER] = FACTORY_FUNCTION(GameOverState);
 }
 
 std::unique_ptr<State> StateFactory::create_state(StateID id, UINT_PTR user_ptr)

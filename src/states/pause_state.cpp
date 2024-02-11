@@ -21,7 +21,7 @@ bool PauseState::handle_events(const sf::Event &event)
 
 bool PauseState::update(double dt)
 {
-    m_gui_container->update(sf::Mouse::getPosition(*m_context.window));
+    m_gui_container->update();
 
     return false;
 }

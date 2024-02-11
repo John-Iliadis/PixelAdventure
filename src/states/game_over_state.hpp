@@ -5,12 +5,27 @@
 #ifndef PLATFORMER_GAME_OVER_STATE_HPP
 #define PLATFORMER_GAME_OVER_STATE_HPP
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include "../gui/gui_includes.hpp"
+#include "../structs/colors.hpp"
 #include "state.hpp"
 
 
 class GameOverState : public State
 {
+public:
+    GameOverState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
 
+    bool handle_events(const sf::Event &event) override;
+    bool update(double dt) override;
+    void on_world_draw() override;
+    void on_gui_draw() override;
+
+private:
+    void setup_gui();
+
+private:
+    std::unique_ptr<GUI_Container> m_gui_container;
 };
 
 

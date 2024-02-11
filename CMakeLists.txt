@@ -15,7 +15,7 @@ add_executable(Platformer
         src/asset_managers/font_manager.hpp
         src/asset_managers/sound_buffer_manager.hpp
         src/asset_managers/music_manager.hpp
-        src/states/state_identifiers.hpp
+        src/enums/state_identifiers.hpp
         src/states/state.cpp
         src/states/state.hpp
         src/states/game_context.hpp
@@ -125,8 +125,6 @@ add_executable(Platformer
         src/gui/gui_builder.hpp
         src/states/settings_state.cpp
         src/states/settings_state.hpp
-        src/states/levels_state.cpp
-        src/states/levels_state.hpp
         src/states/pause_state.cpp
         src/states/pause_state.hpp
         src/states/game_over_state.cpp
