@@ -82,7 +82,7 @@ void StateStack::apply_pending_changes()
 
             case Action::POP:
             {
-                m_state_stack.back()->on_exit(); // todo: might remove this. we'll see
+                m_state_stack.back()->on_exit();
                 m_state_stack.pop_back();
                 if (!m_state_stack.empty()) m_state_stack.back()->on_return();
                 break;

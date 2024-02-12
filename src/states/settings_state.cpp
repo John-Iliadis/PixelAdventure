@@ -11,8 +11,14 @@ SettingsState::SettingsState(StateStack &state_stack, GameContext &context, UINT
     : State(state_stack, context)
     , m_gui_container(std::make_unique<GUI_Container>())
 {
-    place_holder_1 = 50;
-    place_holder_2 = 10;
+    setup_gui();
+}
+
+void SettingsState::on_return()
+{
+    State::on_return();
+
+    m_gui_container = std::make_unique<GUI_Container>();
 
     setup_gui();
 }
@@ -27,7 +33,8 @@ bool SettingsState::handle_events(const sf::Event &event)
 bool SettingsState::update(double dt)
 {
     m_gui_container->update();
-    return false;
+
+    return true;
 }
 
 void SettingsState::on_world_draw()
@@ -38,7 +45,10 @@ void SettingsState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    window.draw(*m_gui_container);
+    if (m_status == Status::CURRENT)
+    {
+        window.draw(*m_gui_container);
+    }
 }
 
 void SettingsState::setup_gui()
@@ -109,7 +119,7 @@ void SettingsState::setup_gui()
     std::unique_ptr<Slider> music_slider = gui_builder.set_position(audio_paper_bounds.left + 420, audio_paper_bounds.top + 140)
             .set_scale(4, 4)
             .set_origin(Origin::CENTER)
-            .set_slider_value(&place_holder_1)
+            .set_slider_value(&m_context.settings->music_volume)
             .set_slider_min(0)
             .set_slider_max(100)
             .make_slider();
@@ -125,7 +135,7 @@ void SettingsState::setup_gui()
     std::unique_ptr<Slider> sound_slider = gui_builder.set_position(audio_paper_bounds.left + 420, audio_paper_bounds.top + audio_paper_bounds.height - 140)
             .set_scale(4, 4)
             .set_origin(Origin::CENTER)
-            .set_slider_value(&place_holder_2)
+            .set_slider_value(&m_context.settings->sound_volume)
             .set_slider_min(0)
             .set_slider_max(100)
             .make_slider();
@@ -191,13 +201,18 @@ void SettingsState::setup_gui()
             .set_origin(Origin::CENTER)
             .set_scale(4, 4)
             .set_scale_hover(4.2, 4.2)
-            .set_text_string("Left")
+            .set_text_string(m_context.settings->action_map["move_left_action"])
             .set_character_size(20)
             .set_character_size_hover(22)
             .set_text_color(Colors::brown)
             .set_text_offset(0, -3)
-            .set_callback([] () { puts("Left button clicked"); })
-            .make_text_button();
+            .set_callback([this] () {
+                std::string* action = new std::string("move_left_action");
+
+                auto action_ptr = reinterpret_cast<UINT_PTR>(action);
+
+                request_stack_push(StateID::KEY_BINDING, action_ptr);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> right_button = gui_builder.set_texture("small_button")
             .set_font("bulky_pixel")
@@ -205,13 +220,18 @@ void SettingsState::setup_gui()
             .set_origin(Origin::CENTER)
             .set_scale(4, 4)
             .set_scale_hover(4.2, 4.2)
-            .set_text_string("Right")
+            .set_text_string(m_context.settings->action_map["move_right_action"])
             .set_character_size(20)
             .set_character_size_hover(22)
             .set_text_color(Colors::brown)
             .set_text_offset(0, -3)
-            .set_callback([] () { puts("Right button clicked"); })
-            .make_text_button();
+            .set_callback([this] () {
+                std::string* action = new std::string("move_right_action");
+
+                auto action_ptr = reinterpret_cast<UINT_PTR>(action);
+
+                request_stack_push(StateID::KEY_BINDING, action_ptr);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> jump_button = gui_builder.set_texture("small_button")
             .set_font("bulky_pixel")
@@ -219,13 +239,18 @@ void SettingsState::setup_gui()
             .set_origin(Origin::CENTER)
             .set_scale(4, 4)
             .set_scale_hover(4.2, 4.2)
-            .set_text_string("Jump")
+            .set_text_string(m_context.settings->action_map["jump_action"])
             .set_character_size(20)
             .set_character_size_hover(22)
             .set_text_color(Colors::brown)
             .set_text_offset(0, -3)
-            .set_callback([] () { puts("Jump button clicked"); })
-            .make_text_button();
+            .set_callback([this] () {
+                std::string* action = new std::string("jump_action");
+
+                auto action_ptr = reinterpret_cast<UINT_PTR>(action);
+
+                request_stack_push(StateID::KEY_BINDING, action_ptr);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> back_button = gui_builder.set_texture("large_button")
             .set_font("bulky_pixel")
@@ -238,7 +263,7 @@ void SettingsState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([] () { puts("Back button clicked"); })
+            .set_callback([this] () { request_stack_pop(); })
             .make_text_button();
 
     m_gui_container->push_back(std::move(title_board));
@@ -264,3 +289,5 @@ void SettingsState::setup_gui()
     m_gui_container->push_back(std::move(jump_button));
     m_gui_container->push_back(std::move(back_button));
 }
+
+

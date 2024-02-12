@@ -19,6 +19,7 @@
 #include "asset_managers/music_manager.hpp"
 #include "camera/camera.hpp"
 #include "structs/level_details.hpp"
+#include "structs/settings.hpp"
 
 
 class Game
@@ -43,6 +44,7 @@ private:
     FontManager m_font_manager;
     SoundBufferManager m_sound_buffer_manager;
     MusicManager m_music_manager;
+    Settings m_settings;
 
     sf::Time fps_update_time{};
     uint32_t fps_num_frames{};

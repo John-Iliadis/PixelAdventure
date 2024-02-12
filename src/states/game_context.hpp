@@ -12,11 +12,12 @@ namespace sf
 }
 
 class Camera;
-class Settings;
 class TextureManager;
 class FontManager;
 class SoundBufferManager;
 class MusicManager;
+struct Settings;
+
 
 struct GameContext
 {

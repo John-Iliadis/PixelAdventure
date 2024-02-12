@@ -43,7 +43,10 @@ void MainMenuState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    window.draw(*m_gui_container);
+    if (m_status == Status::CURRENT)
+    {
+        window.draw(*m_gui_container);
+    }
 }
 
 void MainMenuState::setup_gui()
@@ -91,8 +94,18 @@ void MainMenuState::setup_gui()
                                                          .set_character_size_hover(32)
                                                          .set_text_color(Colors::brown)
                                                          .set_text_offset(0, 0)
-                                                         .set_callback([] () { puts("Play clicked"); })
-                                                         .make_text_button();
+                                                         .set_callback([this] () {
+                                                             LevelDetails* level_details = new LevelDetails {
+                                                                     "../data/tmx/test_map3.tmj",
+                                                                     "test_map3",
+                                                                     "yellow"
+                                                             };
+
+                                                             auto level_details_ptr = reinterpret_cast<UINT_PTR>(level_details);
+
+                                                             request_stack_pop();
+                                                             request_stack_push(StateID::GAME, level_details_ptr);
+                                                         }).make_text_button();
 
     std::unique_ptr<TextButton> settings_button = gui_builder.set_texture("large_button")
                                                              .set_font("bulky_pixel")
@@ -106,7 +119,6 @@ void MainMenuState::setup_gui()
                                                              .set_text_color(Colors::brown)
                                                              .set_text_offset(0, 0)
                                                              .set_callback([this] () {
-                                                                 request_stack_pop();
                                                                  request_stack_push(StateID::SETTINGS);
                                                              }).make_text_button();
 
@@ -121,8 +133,9 @@ void MainMenuState::setup_gui()
                                                          .set_character_size_hover(32)
                                                          .set_text_color(Colors::brown)
                                                          .set_text_offset(0, 0)
-                                                         .set_callback([] () { puts("Exit clicked"); })
-                                                         .make_text_button();
+                                                         .set_callback([this] () {
+                                                             request_stack_pop();
+                                                         }).make_text_button();
 
     m_gui_container->push_back(std::move(title_board));
     m_gui_container->push_back(std::move(title_board_paper));

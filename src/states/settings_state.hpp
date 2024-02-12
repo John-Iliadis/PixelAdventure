@@ -9,12 +9,15 @@
 #include "state.hpp"
 #include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
+#include "../structs/settings.hpp"
 
 
 class SettingsState : public State
 {
 public:
     SettingsState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
+
+    void on_return() override;
 
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;
@@ -26,8 +29,6 @@ private:
 
 private:
     std::unique_ptr<GUI_Container> m_gui_container;
-    float place_holder_1;
-    float place_holder_2;
 };
 
 

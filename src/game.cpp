@@ -22,6 +22,7 @@ Game::Game()
     m_font_manager.load_directory("../assets/fonts");
     m_sound_buffer_manager.load_directory("../assets/sounds");
     m_music_manager.load_directory("../assets/music");
+    m_settings.load_from_file("../data/settings/settings.json");
 
     m_context.window = &m_window;
     m_context.world_camera = &m_world_camera;
@@ -29,17 +30,10 @@ Game::Game()
     m_context.font_manager = &m_font_manager;
     m_context.sound_buffer_manager = &m_sound_buffer_manager;
     m_context.music_manager = &m_music_manager;
+    m_context.settings = &m_settings;
 
-    LevelDetails level_details {
-        "../data/tmx/test_map3.tmj",
-        "test_map3",
-        "yellow"
-    };
-
-    auto level_details_ptr = reinterpret_cast<UINT_PTR>(&level_details);
-    
     m_state_stack = StateStack(m_context);
-    m_state_stack.push(StateID::KEY_BINDING, level_details_ptr);
+    m_state_stack.push(StateID::MAIN_MENU);
     m_state_stack.apply_pending_changes();
 }
 
@@ -65,6 +59,8 @@ void Game::run()
         update_fps_stats(elapsed_time);
         draw();
     }
+
+    m_settings.save_to_file("../data/settings/settings.json");
 }
 
 void Game::handle_events()
@@ -78,13 +74,6 @@ void Game::handle_events()
             case sf::Event::Closed:
             {
                 m_window.close();
-                break;
-            }
-
-            case sf::Event::KeyPressed:
-            {
-                if (event.key.code == sf::Keyboard::Escape)
-                    m_window.close();
                 break;
             }
         }
@@ -103,7 +92,9 @@ void Game::update(double dt)
 
 void Game::draw()
 {
-    m_window.clear(sf::Color(33, 31, 48, 255));
+    static const sf::Color clear_color(33, 31, 48, 255);
+
+    m_window.clear(clear_color);
     m_state_stack.draw();
     m_window.display();
 }

@@ -247,10 +247,10 @@ namespace utils
             KEYTOSTRING_CASE(F15)
             KEYTOSTRING_CASE(Pause)
             case sf::Keyboard::KeyCount:
-                break;
+                assert(false);
+            default:
+                assert(false);
         }
-
-        assert(false);
     }
 
     sf::Keyboard::Key string_to_key(const std::string& str)
@@ -296,9 +296,7 @@ namespace utils
         {
             return itr->second;
         }
-        else
-        {
-            return sf::Keyboard::Unknown;
-        }
+
+        assert(false);
     }
 }
