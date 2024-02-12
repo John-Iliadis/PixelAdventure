@@ -15,7 +15,7 @@
 class SettingsState : public State
 {
 public:
-    SettingsState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
+    SettingsState(StateStack& state_stack, GameContext& context, void* user_ptr = nullptr);
 
     void on_return() override;
 

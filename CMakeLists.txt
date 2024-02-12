@@ -133,7 +133,9 @@ add_executable(Platformer
         src/states/key_binding_state.hpp
         src/gui/gui_includes.hpp
         src/structs/colors.hpp
-        src/structs/settings.hpp)
+        src/structs/settings.hpp
+        src/states/loading_state.cpp
+        src/states/loading_state.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

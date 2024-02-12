@@ -5,11 +5,36 @@
 #include "pause_state.hpp"
 
 
-PauseState::PauseState(StateStack &state_stack, GameContext &context, UINT_PTR user_ptr)
+PauseState::PauseState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
     , m_gui_container(std::make_unique<GUI_Container>())
 {
     setup_gui();
+
+    m_dark_overlay.setSize(static_cast<sf::Vector2f>(m_context.window->getSize()));
+    m_dark_overlay.setFillColor(sf::Color(0, 0, 0, 128));
+}
+
+void PauseState::on_exit()
+{
+    State::on_exit();
+
+    for (auto& element : *m_gui_container)
+        element->deselect();
+}
+
+void PauseState::on_return()
+{
+    State::on_return();
+
+    for (auto& element : *m_gui_container)
+    {
+        if (element->get_clickable_area().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*m_context.window))))
+        {
+            element->select();
+            break;
+        }
+    }
 }
 
 bool PauseState::handle_events(const sf::Event &event)
@@ -32,9 +57,14 @@ void PauseState::on_world_draw()
 
 void PauseState::on_gui_draw()
 {
-    sf::RenderWindow& window = *m_context.window;
+    sf::RenderWindow &window = *m_context.window;
 
-    window.draw(*m_gui_container);
+    window.draw(m_dark_overlay);
+
+    if (m_status == Status::CURRENT)
+    {
+        window.draw(*m_gui_container);
+    }
 }
 
 void PauseState::setup_gui()
@@ -84,7 +114,7 @@ void PauseState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([] () { puts("Play button clicked"); })
+            .set_callback([this] () { request_stack_pop(); })
             .make_text_button();
 
     std::unique_ptr<TextButton> restart_button = gui_builder.set_texture("large_button")
@@ -112,7 +142,7 @@ void PauseState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([] () { puts("Settings button clicked"); })
+            .set_callback([this] () { request_stack_push(StateID::SETTINGS); })
             .make_text_button();
 
     /* bottom board */
@@ -135,8 +165,10 @@ void PauseState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([] () { puts("Main menu button clicked"); })
-            .make_text_button();
+            .set_callback([this] () {
+                request_stack_clear();
+                request_stack_push(StateID::MAIN_MENU);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> desktop_button = gui_builder.set_texture("large_button")
             .set_font("bulky_pixel")
@@ -149,7 +181,7 @@ void PauseState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([] () { puts("Desktop button clicked"); })
+            .set_callback([this] () { m_context.window->close(); })
             .make_text_button();
 
     m_gui_container->push_back(std::move(title_board));

@@ -11,7 +11,7 @@
 #include "key_binding_state.hpp"
 
 
-#define FACTORY_FUNCTION(STATE_TYPE) [&] (UINT_PTR user_ptr = 0)                                                       \
+#define FACTORY_FUNCTION(STATE_TYPE) [&] (void* user_ptr = nullptr)                                                    \
     {                                                                                                                  \
         if constexpr (!std::is_base_of<State, STATE_TYPE>::value)                                                      \
             __debugbreak();                                                                                            \
@@ -29,7 +29,7 @@ StateFactory::StateFactory(StateStack& state_stack, GameContext& context)
     m_factory[StateID::KEY_BINDING] = FACTORY_FUNCTION(KeyBindingState);
 }
 
-std::unique_ptr<State> StateFactory::create_state(StateID id, UINT_PTR user_ptr)
+std::unique_ptr<State> StateFactory::create_state(StateID id, void* user_ptr)
 {
     if (auto result = m_factory.find(id);
         result != m_factory.end())

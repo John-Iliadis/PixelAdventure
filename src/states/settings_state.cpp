@@ -7,7 +7,7 @@
 
 
 
-SettingsState::SettingsState(StateStack &state_stack, GameContext &context, UINT_PTR user_ptr)
+SettingsState::SettingsState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
     , m_gui_container(std::make_unique<GUI_Container>())
 {
@@ -21,6 +21,15 @@ void SettingsState::on_return()
     m_gui_container = std::make_unique<GUI_Container>();
 
     setup_gui();
+
+    for (auto& element : *m_gui_container)
+    {
+        if (element->get_clickable_area().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*m_context.window))))
+        {
+            element->select();
+            break;
+        }
+    }
 }
 
 bool SettingsState::handle_events(const sf::Event &event)
@@ -209,7 +218,7 @@ void SettingsState::setup_gui()
             .set_callback([this] () {
                 std::string* action = new std::string("move_left_action");
 
-                auto action_ptr = reinterpret_cast<UINT_PTR>(action);
+                auto action_ptr = reinterpret_cast<void*>(action);
 
                 request_stack_push(StateID::KEY_BINDING, action_ptr);
             }).make_text_button();
@@ -228,7 +237,7 @@ void SettingsState::setup_gui()
             .set_callback([this] () {
                 std::string* action = new std::string("move_right_action");
 
-                auto action_ptr = reinterpret_cast<UINT_PTR>(action);
+                auto action_ptr = reinterpret_cast<void*>(action);
 
                 request_stack_push(StateID::KEY_BINDING, action_ptr);
             }).make_text_button();
@@ -247,7 +256,7 @@ void SettingsState::setup_gui()
             .set_callback([this] () {
                 std::string* action = new std::string("jump_action");
 
-                auto action_ptr = reinterpret_cast<UINT_PTR>(action);
+                auto action_ptr = reinterpret_cast<void*>(action);
 
                 request_stack_push(StateID::KEY_BINDING, action_ptr);
             }).make_text_button();
@@ -289,5 +298,3 @@ void SettingsState::setup_gui()
     m_gui_container->push_back(std::move(jump_button));
     m_gui_container->push_back(std::move(back_button));
 }
-
-

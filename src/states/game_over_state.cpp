@@ -4,7 +4,7 @@
 
 #include "game_over_state.hpp"
 
-GameOverState::GameOverState(StateStack &state_stack, GameContext &context, UINT_PTR user_ptr)
+GameOverState::GameOverState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
     , m_gui_container(std::make_unique<GUI_Container>())
 {

@@ -6,6 +6,7 @@
 #define PLATFORMER_PAUSE_STATE_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include "state.hpp"
 #include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
@@ -14,7 +15,10 @@
 class PauseState : public State
 {
 public:
-    PauseState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
+    PauseState(StateStack& state_stack, GameContext& context, void* user_ptr = nullptr);
+
+    void on_exit() override;
+    void on_return() override;
 
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;
@@ -26,6 +30,7 @@ private:
 
 private:
     std::unique_ptr<GUI_Container> m_gui_container;
+    sf::RectangleShape m_dark_overlay;
 };
 
 

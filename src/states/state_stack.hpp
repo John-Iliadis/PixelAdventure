@@ -28,7 +28,7 @@ public:
     void update(double dt);
     void draw();
 
-    void push(StateID id, UINT_PTR user_ptr = 0);
+    void push(StateID id, void* user_ptr = nullptr);
     void pop();
     void clear();
     void apply_pending_changes();
@@ -51,9 +51,9 @@ private:
     {
         Action action;
         StateID id;
-        UINT_PTR user_ptr;
+        void* user_ptr;
 
-        PendingChange(Action action = Action::NONE, StateID id = StateID::NONE, UINT_PTR user_ptr = 0)
+        PendingChange(Action action = Action::NONE, StateID id = StateID::NONE, void* user_ptr = nullptr)
             : action(action), id(id), user_ptr(user_ptr) {}
     };
 

@@ -23,7 +23,7 @@ void State::on_return()
     m_status = Status::CURRENT;
 }
 
-void State::request_stack_push(StateID state_id, UINT_PTR user_ptr)
+void State::request_stack_push(StateID state_id, void* user_ptr)
 {
     m_state_stack.push(state_id, user_ptr);
 }

@@ -29,7 +29,7 @@ public:
     virtual void on_gui_draw() = 0;
 
 protected:
-    void request_stack_push(StateID state_id, UINT_PTR user_ptr = 0);
+    void request_stack_push(StateID state_id, void* user_ptr = nullptr);
     void request_stack_pop();
     void request_stack_clear();
 

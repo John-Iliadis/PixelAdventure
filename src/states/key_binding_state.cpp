@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, UINT_PTR user_ptr)
+KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
     , m_gui_container(std::make_unique<GUI_Container>())
     , m_action(*reinterpret_cast<std::string*>(user_ptr))

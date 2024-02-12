@@ -18,7 +18,7 @@
 class MainMenuState : public State
 {
 public:
-    MainMenuState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
+    MainMenuState(StateStack& state_stack, GameContext& context, void* user_ptr = nullptr);
 
     void on_exit() override;
     void on_return() override;

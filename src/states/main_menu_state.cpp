@@ -5,7 +5,7 @@
 #include "main_menu_state.hpp"
 #include "state_stack.hpp"
 
-MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, UINT_PTR user_ptr)
+MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void* user_ptr)
     : State(state_stack, context)
     , m_gui_container(std::make_unique<GUI_Container>())
 {
@@ -17,6 +17,28 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, UINT
     m_context.world_camera->set_center(m_context.world_camera->get_size() / 2.f);
 
     setup_gui();
+}
+
+void MainMenuState::on_exit()
+{
+    State::on_exit();
+
+    for (auto& element : *m_gui_container)
+        element->deselect();
+}
+
+void MainMenuState::on_return()
+{
+    State::on_return();
+
+    for (auto& element : *m_gui_container)
+    {
+        if (element->get_clickable_area().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*m_context.window))))
+        {
+            element->select();
+            break;
+        }
+    }
 }
 
 bool MainMenuState::handle_events(const sf::Event &event)
@@ -103,7 +125,7 @@ void MainMenuState::setup_gui()
                                                                      "yellow"
                                                              };
 
-                                                             auto level_details_ptr = reinterpret_cast<UINT_PTR>(level_details);
+                                                             auto level_details_ptr = reinterpret_cast<void*>(level_details);
 
                                                              request_stack_pop();
                                                              request_stack_push(StateID::GAME, level_details_ptr);
@@ -148,24 +170,3 @@ void MainMenuState::setup_gui()
     m_gui_container->push_back(std::move(exit_button));
 }
 
-void MainMenuState::on_exit()
-{
-    State::on_exit();
-
-    for (auto& element : *m_gui_container)
-        element->deselect();
-}
-
-void MainMenuState::on_return()
-{
-    State::on_return();
-
-    for (auto& element : *m_gui_container)
-    {
-        if (element->get_clickable_area().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*m_context.window))))
-        {
-            element->select();
-            break;
-        }
-    }
-}

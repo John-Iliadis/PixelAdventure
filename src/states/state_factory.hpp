@@ -23,10 +23,10 @@ public:
     StateFactory() = default;
     StateFactory(StateStack& state_stack, GameContext& context);
 
-    std::unique_ptr<State> create_state(StateID id, UINT_PTR user_ptr = 0);
+    std::unique_ptr<State> create_state(StateID id, void* user_ptr = nullptr);
 
 private:
-    std::unordered_map<StateID, std::function<std::unique_ptr<State>(UINT_PTR)>> m_factory;
+    std::unordered_map<StateID, std::function<std::unique_ptr<State>(void*)>> m_factory;
 };
 
 

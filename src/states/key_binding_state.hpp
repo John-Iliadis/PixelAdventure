@@ -17,7 +17,7 @@
 class KeyBindingState : public State
 {
 public:
-    KeyBindingState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
+    KeyBindingState(StateStack& state_stack, GameContext& context, void* user_ptr = nullptr);
 
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;

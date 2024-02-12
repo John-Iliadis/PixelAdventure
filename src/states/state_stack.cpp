@@ -52,7 +52,7 @@ void StateStack::draw()
     }
 }
 
-void StateStack::push(StateID id, UINT_PTR user_ptr)
+void StateStack::push(StateID id, void* user_ptr)
 {
     m_pending_changes.emplace_back(Action::PUSH, id, user_ptr);
 }
