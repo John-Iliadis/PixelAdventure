@@ -19,21 +19,20 @@
 class GUI_Container : public GUI_Element
 {
 public:
+    using iterator = std::vector<std::unique_ptr<GUI_Element>>::iterator;
+
+public:
     GUI_Container() = default;
 
     void push_back(std::unique_ptr<GUI_Element>&& gui_component);
-
-    void set_container_texture(const sf::Texture& texture);
-    void set_container_position(const sf::Vector2f& pos);
-    void set_container_position(float x, float y);
-    void set_container_scale(const sf::Vector2f& scale);
-    void set_container_scale(float x, float y);
-    void set_container_origin(Origin origin);
 
     void activate() override;
 
     void update() override;
     void handle_event(const sf::Event &event) override;
+
+    iterator begin();
+    iterator end();
 
     sf::Rect<float> get_clickable_area() const override;
     bool is_selectable() const override;
@@ -42,7 +41,6 @@ protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 private:
-    sf::Sprite m_container;
     std::vector<std::unique_ptr<GUI_Element>> m_gui_components;
 };
 

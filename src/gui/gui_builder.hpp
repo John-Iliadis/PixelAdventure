@@ -47,7 +47,6 @@ public:
 
     std::unique_ptr<Button> make_button();
     std::unique_ptr<TextButton> make_text_button();
-    std::unique_ptr<GUI_Container> make_container();
     std::unique_ptr<Slider> make_slider();
     std::unique_ptr<TextElement> make_text_element();
     std::unique_ptr<SpriteElement> make_sprite_element();

@@ -193,20 +193,6 @@ std::unique_ptr<TextButton> GUI_Builder::make_text_button()
     return text_button;
 }
 
-std::unique_ptr<GUI_Container> GUI_Builder::make_container()
-{
-    auto container = std::make_unique<GUI_Container>();
-
-    container->set_container_texture(m_textures->get(m_texture_id));
-    container->set_container_position(m_position);
-    container->set_container_scale(m_scale);
-    container->set_container_origin(m_origin);
-
-    reset();
-
-    return container;
-}
-
 std::unique_ptr<Slider> GUI_Builder::make_slider()
 {
     assert(m_textures);
