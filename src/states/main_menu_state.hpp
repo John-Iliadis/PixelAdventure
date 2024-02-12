@@ -20,6 +20,9 @@ class MainMenuState : public State
 public:
     MainMenuState(StateStack& state_stack, GameContext& context, UINT_PTR user_ptr = 0);
 
+    void on_exit() override;
+    void on_return() override;
+
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;
     void on_world_draw() override;
