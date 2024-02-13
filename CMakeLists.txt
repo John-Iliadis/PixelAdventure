@@ -135,7 +135,9 @@ add_executable(Platformer
         src/structs/colors.hpp
         src/structs/settings.hpp
         src/states/pre_game_loading_state.cpp
-        src/states/pre_game_loading_state.hpp)
+        src/states/pre_game_loading_state.hpp
+        src/utilities/gui_utils.cpp
+        src/utilities/gui_utils.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
