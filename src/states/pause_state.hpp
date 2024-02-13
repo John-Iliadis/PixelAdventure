@@ -11,6 +11,7 @@
 #include "../gui/gui_includes.hpp"
 #include "../utilities/gui_utils.hpp"
 #include "../structs/colors.hpp"
+#include "../structs/level_details.hpp"
 
 
 class PauseState : public State

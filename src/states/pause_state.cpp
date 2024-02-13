@@ -127,8 +127,18 @@ void PauseState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([] () { puts("Restart button clicked"); })
-            .make_text_button();
+            .set_callback([this] () {
+                LevelDetails* level_details = new LevelDetails {
+                        "../data/tmx/test_map3.tmj",
+                        "test_map3",
+                        "yellow"
+                };
+
+                auto level_details_ptr = reinterpret_cast<void*>(level_details);
+
+                request_stack_clear();
+                request_stack_push(StateID::PRE_GAME_LOADING_STATE, level_details_ptr);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> settings_button = gui_builder.set_texture("large_button")
             .set_font("bulky_pixel")
