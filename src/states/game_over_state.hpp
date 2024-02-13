@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
+#include "../structs/level_details.hpp"
 #include "../utilities/gui_utils.hpp"
 #include "state.hpp"
 

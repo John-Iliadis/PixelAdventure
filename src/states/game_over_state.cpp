@@ -83,8 +83,18 @@ void GameOverState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([] () { puts("Play clicked"); })
-            .make_text_button();
+            .set_callback([this] () {
+                LevelDetails* level_details = new LevelDetails {
+                        "../data/tmx/test_map3.tmj",
+                        "test_map3",
+                        "yellow"
+                };
+
+                auto level_details_ptr = reinterpret_cast<void*>(level_details);
+
+                request_stack_clear();
+                request_stack_push(StateID::PRE_GAME_LOADING_STATE, level_details_ptr);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> main_menu_button = gui_builder.set_texture("large_button")
             .set_font("bulky_pixel")
@@ -97,7 +107,10 @@ void GameOverState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([this] () {}).make_text_button();
+            .set_callback([this] () {
+                request_stack_clear();
+                request_stack_push(StateID::MAIN_MENU);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> exit_button = gui_builder.set_texture("large_button")
             .set_font("bulky_pixel")
@@ -110,7 +123,7 @@ void GameOverState::setup_gui()
             .set_character_size_hover(32)
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
-            .set_callback([] () { puts("Exit clicked"); })
+            .set_callback([this] () { request_stack_clear(); })
             .make_text_button();
 
     m_gui_container.push_back(std::move(title_board));
