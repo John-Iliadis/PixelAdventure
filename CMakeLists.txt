@@ -137,7 +137,11 @@ add_executable(Platformer
         src/states/pre_game_loading_state.cpp
         src/states/pre_game_loading_state.hpp
         src/utilities/gui_utils.cpp
-        src/utilities/gui_utils.hpp)
+        src/utilities/gui_utils.hpp
+        src/audio/music_player.cpp
+        src/audio/music_player.hpp
+        src/audio/sound_player.cpp
+        src/audio/sound_player.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
