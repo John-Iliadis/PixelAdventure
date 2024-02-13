@@ -30,7 +30,7 @@ private:
 
 private:
     std::unique_ptr<GUI_Container> m_gui_container;
-    std::string m_action;
+    std::unique_ptr<std::string> m_action;
     sf::Text m_invalid_key_text;
     float m_invalid_key_timer;
 };

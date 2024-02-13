@@ -4,16 +4,13 @@
 
 #include "key_binding_state.hpp"
 
-#include <iostream>
 
 KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
     , m_gui_container(std::make_unique<GUI_Container>())
-    , m_action(*reinterpret_cast<std::string*>(user_ptr))
+    , m_action(reinterpret_cast<std::string*>(user_ptr))
     , m_invalid_key_timer(-1)
 {
-    delete reinterpret_cast<std::string*>(user_ptr);
-
     sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
 
     m_invalid_key_text.setFont(m_context.font_manager->get("bulky_pixel"));
@@ -34,7 +31,7 @@ bool KeyBindingState::handle_events(const sf::Event &event)
 
         if (check_valid_key(selected_key))
         {
-            m_context.settings->action_map[m_action] = utils::key_to_string(selected_key);
+            m_context.settings->action_map[*m_action] = utils::key_to_string(selected_key);
             request_stack_pop();
         }
         else
@@ -123,7 +120,7 @@ bool KeyBindingState::check_valid_key(sf::Keyboard::Key key)
 {
     for (const auto& [action, binding] : m_context.settings->action_map)
     {
-        if (m_action == action) continue;
+        if (*m_action == action) continue;
 
         if (key == utils::string_to_key(binding))
             return false;
