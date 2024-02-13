@@ -10,6 +10,7 @@
 #include "../asset_managers/font_manager.hpp"
 #include "../asset_managers/texture_manager.hpp"
 #include "../gui/gui_includes.hpp"
+#include "../utilities/gui_utils.hpp"
 #include "../structs/colors.hpp"
 #include "../structs/level_details.hpp"
 #include "state.hpp"
@@ -33,7 +34,7 @@ private:
 
 private:
     ScrollingBackground m_scrolling_background;
-    std::unique_ptr<GUI_Container> m_gui_container;
+    GUI_Container m_gui_container;
 };
 
 

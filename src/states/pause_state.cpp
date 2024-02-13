@@ -7,48 +7,45 @@
 
 PauseState::PauseState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
-    , m_gui_container(std::make_unique<GUI_Container>())
 {
     setup_gui();
 
     m_dark_overlay.setSize(static_cast<sf::Vector2f>(m_context.window->getSize()));
     m_dark_overlay.setFillColor(sf::Color(0, 0, 0, 128));
 
-    //todo: check clickable area on create
+    utils::gui::select_element(m_gui_container, m_context.window);
 }
 
 void PauseState::on_exit()
 {
     State::on_exit();
 
-    for (auto& element : *m_gui_container)
-        element->deselect();
+    utils::gui::deselect_all_elements(m_gui_container);
 }
 
 void PauseState::on_return()
 {
     State::on_return();
 
-    for (auto& element : *m_gui_container)
-    {
-        if (element->get_clickable_area().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*m_context.window))))
-        {
-            element->select();
-            break;
-        }
-    }
+    utils::gui::select_element(m_gui_container, m_context.window);
 }
 
 bool PauseState::handle_events(const sf::Event &event)
 {
-    m_gui_container->handle_event(event);
+    if (event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::Escape)
+            request_stack_pop();
+    }
+
+    m_gui_container.handle_event(event);
 
     return false;
 }
 
 bool PauseState::update(double dt)
 {
-    m_gui_container->update();
+    m_gui_container.update();
 
     return false;
 }
@@ -65,7 +62,7 @@ void PauseState::on_gui_draw()
 
     if (m_status == Status::CURRENT)
     {
-        window.draw(*m_gui_container);
+        window.draw(m_gui_container);
     }
 }
 
@@ -186,14 +183,14 @@ void PauseState::setup_gui()
             .set_callback([this] () { m_context.window->close(); })
             .make_text_button();
 
-    m_gui_container->push_back(std::move(title_board));
-    m_gui_container->push_back(std::move(title_board_paper));
-    m_gui_container->push_back(std::move(title_board_text));
-    m_gui_container->push_back(std::move(top_board));
-    m_gui_container->push_back(std::move(bottom_board));
-    m_gui_container->push_back(std::move(play_button));
-    m_gui_container->push_back(std::move(restart_button));
-    m_gui_container->push_back(std::move(settings_button));
-    m_gui_container->push_back(std::move(main_menu_button));
-    m_gui_container->push_back(std::move(desktop_button));
+    m_gui_container.push_back(std::move(title_board));
+    m_gui_container.push_back(std::move(title_board_paper));
+    m_gui_container.push_back(std::move(title_board_text));
+    m_gui_container.push_back(std::move(top_board));
+    m_gui_container.push_back(std::move(bottom_board));
+    m_gui_container.push_back(std::move(play_button));
+    m_gui_container.push_back(std::move(restart_button));
+    m_gui_container.push_back(std::move(settings_button));
+    m_gui_container.push_back(std::move(main_menu_button));
+    m_gui_container.push_back(std::move(desktop_button));
 }

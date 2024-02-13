@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "state.hpp"
 #include "../gui/gui_includes.hpp"
+#include "../utilities/gui_utils.hpp"
 #include "../structs/colors.hpp"
 
 
@@ -29,7 +30,7 @@ private:
     void setup_gui();
 
 private:
-    std::unique_ptr<GUI_Container> m_gui_container;
+    GUI_Container m_gui_container;
     sf::RectangleShape m_dark_overlay;
 };
 

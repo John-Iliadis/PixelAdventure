@@ -10,6 +10,7 @@
 #include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
 #include "../utilities/utils.hpp"
+#include "../utilities/gui_utils.hpp"
 #include "../structs/settings.hpp"
 #include "state.hpp"
 
@@ -29,7 +30,7 @@ private:
     bool check_valid_key(sf::Keyboard::Key key);
 
 private:
-    std::unique_ptr<GUI_Container> m_gui_container;
+    GUI_Container m_gui_container;
     std::unique_ptr<std::string> m_action;
     sf::Text m_invalid_key_text;
     float m_invalid_key_timer;

@@ -7,7 +7,6 @@
 
 KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
-    , m_gui_container(std::make_unique<GUI_Container>())
     , m_action(reinterpret_cast<std::string*>(user_ptr))
     , m_invalid_key_timer(-1)
 {
@@ -21,6 +20,8 @@ KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, 
     utils::set_origin(m_invalid_key_text, Origin::CENTER);
 
     setup_gui();
+
+    utils::gui::select_element(m_gui_container, m_context.window);
 }
 
 bool KeyBindingState::handle_events(const sf::Event &event)
@@ -41,14 +42,14 @@ bool KeyBindingState::handle_events(const sf::Event &event)
         }
     }
 
-    m_gui_container->handle_event(event);
+    m_gui_container.handle_event(event);
 
     return false;
 }
 
 bool KeyBindingState::update(double dt)
 {
-    m_gui_container->update();
+    m_gui_container.update();
 
     m_invalid_key_text.setFillColor(m_invalid_key_timer > 0? sf::Color::Red : sf::Color::Transparent);
 
@@ -66,7 +67,7 @@ void KeyBindingState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    window.draw(*m_gui_container);
+    window.draw(m_gui_container);
     window.draw(m_invalid_key_text);
 }
 
@@ -110,10 +111,10 @@ void KeyBindingState::setup_gui()
             .set_callback([this] () { request_stack_pop(); })
             .make_text_button();
 
-    m_gui_container->push_back(std::move(message_board));
-    m_gui_container->push_back(std::move(message_board_paper));
-    m_gui_container->push_back(std::move(message_board_text));
-    m_gui_container->push_back(std::move(back_button));
+    m_gui_container.push_back(std::move(message_board));
+    m_gui_container.push_back(std::move(message_board_paper));
+    m_gui_container.push_back(std::move(message_board_text));
+    m_gui_container.push_back(std::move(back_button));
 }
 
 bool KeyBindingState::check_valid_key(sf::Keyboard::Key key)

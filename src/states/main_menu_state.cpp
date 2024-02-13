@@ -7,7 +7,6 @@
 
 MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void* user_ptr)
     : State(state_stack, context)
-    , m_gui_container(std::make_unique<GUI_Container>())
 {
     sf::Texture& bg_texture = m_context.texture_manager->get("blue");
     sf::Vector2i bg_size = static_cast<sf::Vector2i>(m_context.world_camera->get_size());
@@ -17,33 +16,27 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
     m_context.world_camera->set_center(m_context.world_camera->get_size() / 2.f);
 
     setup_gui();
+
+    utils::gui::select_element(m_gui_container, m_context.window);
 }
 
 void MainMenuState::on_exit()
 {
     State::on_exit();
 
-    for (auto& element : *m_gui_container)
-        element->deselect();
+    utils::gui::deselect_all_elements(m_gui_container);
 }
 
 void MainMenuState::on_return()
 {
     State::on_return();
 
-    for (auto& element : *m_gui_container)
-    {
-        if (element->get_clickable_area().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*m_context.window))))
-        {
-            element->select();
-            break;
-        }
-    }
+    utils::gui::select_element(m_gui_container, m_context.window);
 }
 
 bool MainMenuState::handle_events(const sf::Event &event)
 {
-    m_gui_container->handle_event(event);
+    m_gui_container.handle_event(event);
 
     return false;
 }
@@ -51,7 +44,7 @@ bool MainMenuState::handle_events(const sf::Event &event)
 bool MainMenuState::update(double dt)
 {
     m_scrolling_background.update(dt);
-    m_gui_container->update();
+    m_gui_container.update();
 
     return false;
 }
@@ -69,7 +62,7 @@ void MainMenuState::on_gui_draw()
 
     if (m_status == Status::CURRENT)
     {
-        window.draw(*m_gui_container);
+        window.draw(m_gui_container);
     }
 }
 
@@ -161,12 +154,11 @@ void MainMenuState::setup_gui()
                                                              request_stack_pop();
                                                          }).make_text_button();
 
-    m_gui_container->push_back(std::move(title_board));
-    m_gui_container->push_back(std::move(title_board_paper));
-    m_gui_container->push_back(std::move(title_board_text));
-    m_gui_container->push_back(std::move(menu_board));
-    m_gui_container->push_back(std::move(play_button));
-    m_gui_container->push_back(std::move(settings_button));
-    m_gui_container->push_back(std::move(exit_button));
+    m_gui_container.push_back(std::move(title_board));
+    m_gui_container.push_back(std::move(title_board_paper));
+    m_gui_container.push_back(std::move(title_board_text));
+    m_gui_container.push_back(std::move(menu_board));
+    m_gui_container.push_back(std::move(play_button));
+    m_gui_container.push_back(std::move(settings_button));
+    m_gui_container.push_back(std::move(exit_button));
 }
-

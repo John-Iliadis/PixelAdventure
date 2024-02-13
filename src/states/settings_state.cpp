@@ -9,39 +9,33 @@
 
 SettingsState::SettingsState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
-    , m_gui_container(std::make_unique<GUI_Container>())
 {
     setup_gui();
+
+    utils::gui::select_element(m_gui_container, m_context.window);
 }
 
 void SettingsState::on_return()
 {
     State::on_return();
 
-    m_gui_container = std::make_unique<GUI_Container>();
+    m_gui_container = GUI_Container();
 
     setup_gui();
 
-    for (auto& element : *m_gui_container)
-    {
-        if (element->get_clickable_area().contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(*m_context.window))))
-        {
-            element->select();
-            break;
-        }
-    }
+    utils::gui::select_element(m_gui_container, m_context.window);
 }
 
 bool SettingsState::handle_events(const sf::Event &event)
 {
-    m_gui_container->handle_event(event);
+    m_gui_container.handle_event(event);
 
     return false;
 }
 
 bool SettingsState::update(double dt)
 {
-    m_gui_container->update();
+    m_gui_container.update();
 
     return true;
 }
@@ -56,7 +50,7 @@ void SettingsState::on_gui_draw()
 
     if (m_status == Status::CURRENT)
     {
-        window.draw(*m_gui_container);
+        window.draw(m_gui_container);
     }
 }
 
@@ -275,26 +269,26 @@ void SettingsState::setup_gui()
             .set_callback([this] () { request_stack_pop(); })
             .make_text_button();
 
-    m_gui_container->push_back(std::move(title_board));
-    m_gui_container->push_back(std::move(title_board_paper));
-    m_gui_container->push_back(std::move(title_board_text));
-    m_gui_container->push_back(std::move(audio_board));
-    m_gui_container->push_back(std::move(key_binding_board));
-    m_gui_container->push_back(std::move(audio_board_title_paper));
-    m_gui_container->push_back(std::move(key_binding_board_title_paper));
-    m_gui_container->push_back(std::move(audio_board_title_text));
-    m_gui_container->push_back(std::move(key_binding_board_title_text));
-    m_gui_container->push_back(std::move(audio_board_background_paper));
-    m_gui_container->push_back(std::move(key_binding_board_background_paper));
-    m_gui_container->push_back(std::move(music_text));
-    m_gui_container->push_back(std::move(music_slider));
-    m_gui_container->push_back(std::move(sound_text));
-    m_gui_container->push_back(std::move(sound_slider));
-    m_gui_container->push_back(std::move(left_text));
-    m_gui_container->push_back(std::move(right_text));
-    m_gui_container->push_back(std::move(jump_text));
-    m_gui_container->push_back(std::move(left_button));
-    m_gui_container->push_back(std::move(right_button));
-    m_gui_container->push_back(std::move(jump_button));
-    m_gui_container->push_back(std::move(back_button));
+    m_gui_container.push_back(std::move(title_board));
+    m_gui_container.push_back(std::move(title_board_paper));
+    m_gui_container.push_back(std::move(title_board_text));
+    m_gui_container.push_back(std::move(audio_board));
+    m_gui_container.push_back(std::move(key_binding_board));
+    m_gui_container.push_back(std::move(audio_board_title_paper));
+    m_gui_container.push_back(std::move(key_binding_board_title_paper));
+    m_gui_container.push_back(std::move(audio_board_title_text));
+    m_gui_container.push_back(std::move(key_binding_board_title_text));
+    m_gui_container.push_back(std::move(audio_board_background_paper));
+    m_gui_container.push_back(std::move(key_binding_board_background_paper));
+    m_gui_container.push_back(std::move(music_text));
+    m_gui_container.push_back(std::move(music_slider));
+    m_gui_container.push_back(std::move(sound_text));
+    m_gui_container.push_back(std::move(sound_slider));
+    m_gui_container.push_back(std::move(left_text));
+    m_gui_container.push_back(std::move(right_text));
+    m_gui_container.push_back(std::move(jump_text));
+    m_gui_container.push_back(std::move(left_button));
+    m_gui_container.push_back(std::move(right_button));
+    m_gui_container.push_back(std::move(jump_button));
+    m_gui_container.push_back(std::move(back_button));
 }

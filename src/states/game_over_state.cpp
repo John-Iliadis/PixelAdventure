@@ -6,21 +6,22 @@
 
 GameOverState::GameOverState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
-    , m_gui_container(std::make_unique<GUI_Container>())
 {
     setup_gui();
+
+    utils::gui::select_element(m_gui_container, m_context.window);
 }
 
 bool GameOverState::handle_events(const sf::Event &event)
 {
-    m_gui_container->handle_event(event);
+    m_gui_container.handle_event(event);
 
     return false;
 }
 
 bool GameOverState::update(double dt)
 {
-    m_gui_container->update();
+    m_gui_container.update();
 
     return false;
 }
@@ -34,7 +35,7 @@ void GameOverState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    window.draw(*m_gui_container);
+    window.draw(m_gui_container);
 }
 
 void GameOverState::setup_gui()
@@ -112,11 +113,11 @@ void GameOverState::setup_gui()
             .set_callback([] () { puts("Exit clicked"); })
             .make_text_button();
 
-    m_gui_container->push_back(std::move(title_board));
-    m_gui_container->push_back(std::move(title_board_paper));
-    m_gui_container->push_back(std::move(title_board_text));
-    m_gui_container->push_back(std::move(game_over_board));
-    m_gui_container->push_back(std::move(restart_button));
-    m_gui_container->push_back(std::move(main_menu_button));
-    m_gui_container->push_back(std::move(exit_button));
+    m_gui_container.push_back(std::move(title_board));
+    m_gui_container.push_back(std::move(title_board_paper));
+    m_gui_container.push_back(std::move(title_board_text));
+    m_gui_container.push_back(std::move(game_over_board));
+    m_gui_container.push_back(std::move(restart_button));
+    m_gui_container.push_back(std::move(main_menu_button));
+    m_gui_container.push_back(std::move(exit_button));
 }

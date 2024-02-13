@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "state.hpp"
 #include "../gui/gui_includes.hpp"
+#include "../utilities/gui_utils.hpp"
 #include "../structs/colors.hpp"
 #include "../structs/settings.hpp"
 
@@ -28,7 +29,7 @@ private:
     void setup_gui();
 
 private:
-    std::unique_ptr<GUI_Container> m_gui_container;
+    GUI_Container m_gui_container;
 };
 
 
