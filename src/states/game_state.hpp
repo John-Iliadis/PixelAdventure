@@ -20,7 +20,7 @@ public:
     void on_gui_draw() override;
 
 private:
-    World world;
+    std::unique_ptr<World> m_world;
 };
 
 

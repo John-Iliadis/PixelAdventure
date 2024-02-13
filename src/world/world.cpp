@@ -50,6 +50,8 @@ World::World(GameContext& context, const LevelDetails& level_details)
         if (m_player.is_alive()) m_context.world_camera->set_center(m_player.get_center());
     });
 
+    m_context.world_camera->set_center(m_player.get_center());
+
     m_fruit_manager = FruitManager(TiledJsonLoader::get_list_object(map_data["layers"], "fruit_layer"), *m_context.texture_manager);
 
     setup_checkpoints(TiledJsonLoader::get_list_object(map_data["layers"], "checkpoint_positions"));

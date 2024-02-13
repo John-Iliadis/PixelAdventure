@@ -14,7 +14,8 @@ enum class StateID
     PAUSE,
     GAME,
     GAME_OVER,
-    KEY_BINDING
+    KEY_BINDING,
+    PRE_GAME_LOADING_STATE
 };
 
 

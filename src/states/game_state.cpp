@@ -7,9 +7,8 @@
 
 GameState::GameState(StateStack &state_stack, GameContext& context, void* user_ptr)
     : State(state_stack, context)
-    , world(context, *reinterpret_cast<LevelDetails*>(user_ptr))
+    , m_world(reinterpret_cast<World*>(user_ptr))
 {
-    delete reinterpret_cast<LevelDetails*>(user_ptr);
 }
 
 bool GameState::handle_events(const sf::Event &event)
@@ -22,21 +21,21 @@ bool GameState::handle_events(const sf::Event &event)
         }
     }
 
-    world.handle_events(event);
+    m_world->handle_events(event);
 
     return false;
 }
 
 bool GameState::update(double dt)
 {
-    world.update(dt);
+    m_world->update(dt);
 
     return false;
 }
 
 void GameState::on_world_draw()
 {
-    world.draw();
+    m_world->draw();
 }
 
 void GameState::on_gui_draw()

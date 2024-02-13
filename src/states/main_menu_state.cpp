@@ -128,7 +128,7 @@ void MainMenuState::setup_gui()
                                                              auto level_details_ptr = reinterpret_cast<void*>(level_details);
 
                                                              request_stack_pop();
-                                                             request_stack_push(StateID::GAME, level_details_ptr);
+                                                             request_stack_push(StateID::PRE_GAME_LOADING_STATE, level_details_ptr);
                                                          }).make_text_button();
 
     std::unique_ptr<TextButton> settings_button = gui_builder.set_texture("large_button")

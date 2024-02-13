@@ -13,6 +13,8 @@ PauseState::PauseState(StateStack &state_stack, GameContext &context, void* user
 
     m_dark_overlay.setSize(static_cast<sf::Vector2f>(m_context.window->getSize()));
     m_dark_overlay.setFillColor(sf::Color(0, 0, 0, 128));
+
+    //todo: check clickable area on create
 }
 
 void PauseState::on_exit()
