@@ -16,6 +16,7 @@
 #include "../../states/game_context.hpp"
 #include "../../utilities/utils.hpp"
 #include "../../structs/player_data.hpp"
+#include "../../structs/settings.hpp"
 #include "../sprite_collider.hpp"
 #include "idle_state.hpp"
 #include "respawning_state.hpp"
@@ -87,6 +88,8 @@ private:
     AnimationManager m_animations;
     PlayerState* m_current_state;
     std::unordered_map<std::string, const sf::Texture*> m_textures;
+    const std::unordered_map<std::string, std::string>* m_action_map;
+
     std::function<void(double)> m_resolve_collision_callback;
     std::function<void()> m_camera_transition_callback;
     std::function<void()> m_spawn_death_particle_callback;

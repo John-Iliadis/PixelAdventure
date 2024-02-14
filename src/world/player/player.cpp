@@ -15,6 +15,8 @@ Player::Player(GameContext& context)
     m_animations.load_from_file(animation_filepath);
     m_data.load_from_file(platformer_data_path);
 
+    m_action_map = &context.settings->action_map;
+
     m_orientation = Orientation::FACES_RIGHT;
     m_current_state = new IdleState(*this);
 
@@ -30,7 +32,7 @@ Player::~Player()
 
 void Player::handle_events(const sf::Event &event)
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
+    if (event.type == sf::Event::KeyPressed && event.key.code == utils::string_to_key(m_action_map->at("jump_action")) && m_data.alive)
         m_data.jump_pressed_ellapsed_time = m_data.jump_pressed_remember_time;
 }
 
@@ -50,19 +52,23 @@ void Player::handle_input()
     if (!m_data.alive) return;
 
     using namespace sf;
+
     bool (*key_pressed)(Keyboard::Key) = Keyboard::isKeyPressed;
 
-    if (key_pressed(Keyboard::Left) && key_pressed(Keyboard::Right)
-        || (!key_pressed(Keyboard::Left) && !key_pressed(Keyboard::Right)))
+    Keyboard::Key move_left_key = utils::string_to_key(m_action_map->at("move_left_action"));
+    Keyboard::Key move_right_key = utils::string_to_key(m_action_map->at("move_right_action"));
+
+    if (key_pressed(move_left_key) && key_pressed(move_right_key)
+        || (!key_pressed(move_left_key) && !key_pressed(move_right_key)))
     {
         m_data.velocity.x = 0;
     }
-    else if (key_pressed(Keyboard::Right))
+    else if (key_pressed(move_right_key))
     {
         m_data.velocity.x = m_data.move_speed;
         set_orientation(Orientation::FACES_RIGHT);
     }
-    else if (key_pressed(Keyboard::Left))
+    else if (key_pressed(move_left_key))
     {
         m_data.velocity.x = -m_data.move_speed;
         set_orientation(Orientation::FACES_LEFT);
