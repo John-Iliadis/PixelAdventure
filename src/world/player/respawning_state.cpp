@@ -12,6 +12,7 @@ RespawningState::RespawningState(Player &player)
     player.set_gravity(false);
     player.set_animation("respawning");
     player.set_origin(Origin::CENTER);
+    SoundPlayer::play_sound("respawn");
 }
 
 PlayerState* RespawningState::update(Player &player)

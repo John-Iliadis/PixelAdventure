@@ -13,6 +13,8 @@ JumpingState::JumpingState(Player &player)
     player.set_animation("jumping");
     player.set_previously_jumped(true);
     player.jump();
+
+    SoundPlayer::play_sound("jump");
 }
 
 PlayerState* JumpingState::update(Player &player)

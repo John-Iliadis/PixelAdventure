@@ -12,6 +12,7 @@ DoubleJumpingState::DoubleJumpingState(Player &player)
     player.set_animation("double_jumping");
     player.set_previously_double_jumped(true);
     player.jump();
+    SoundPlayer::play_sound("double_jump");
 }
 
 PlayerState* DoubleJumpingState::update(Player &player)

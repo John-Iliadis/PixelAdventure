@@ -261,6 +261,7 @@ void Player::die()
     m_data.alive = false;
     m_sprite_collider.set_color(sf::Color::Transparent);
     m_sprite_collider.set_collider_size(0, 0);
+    SoundPlayer::play_sound("death");
     m_spawn_death_particle_callback();
     m_camera_transition_callback();
 }

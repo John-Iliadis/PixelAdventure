@@ -5,6 +5,7 @@
 #ifndef PLATFORMER_DOUBLE_JUMPING_STATE_HPP
 #define PLATFORMER_DOUBLE_JUMPING_STATE_HPP
 
+#include "../../audio/sound_player.hpp"
 #include "player_state.hpp"
 
 

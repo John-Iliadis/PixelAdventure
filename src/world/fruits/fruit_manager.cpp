@@ -46,6 +46,7 @@ void FruitManager::update(Player& player, double dt)
         {
             m_collected_animations.emplace_back(*m_collected_texture, fruit->get_position());
             fruit = m_fruits.erase(fruit);
+            SoundPlayer::play_sound("fruit_pickup");
         }
         else
         {

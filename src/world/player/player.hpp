@@ -12,6 +12,7 @@
 #include "../../asset_managers/sound_buffer_manager.hpp"
 #include "../../asset_managers/texture_manager.hpp"
 #include "../../animation/animation_manager.hpp"
+#include "../../audio/sound_player.hpp"
 #include "../../states/game_context.hpp"
 #include "../../utilities/utils.hpp"
 #include "../../structs/player_data.hpp"

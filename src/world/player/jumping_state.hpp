@@ -5,8 +5,9 @@
 #ifndef PLATFORMER_JUMPING_STATE_HPP
 #define PLATFORMER_JUMPING_STATE_HPP
 
-#include "player_state.hpp"
+#include "../../audio/sound_player.hpp"
 #include "../../utilities/utils.hpp"
+#include "player_state.hpp"
 
 
 class JumpingState : public PlayerState

@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include "../../utilities/utils.hpp"
 #include "../../vendor/json.hpp"
+#include "../../audio/sound_player.hpp"
 #include "../player/player.hpp"
 #include "fruit.hpp"
 
