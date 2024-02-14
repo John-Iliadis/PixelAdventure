@@ -21,7 +21,7 @@ void CheckpointManager::update(Player &player, double dt)
     {
         auto& checkpoint = m_checkpoints.at(i);
 
-        if (player.get_collider().intersects(checkpoint.get_collider()) && !checkpoint.is_active())
+        if (!checkpoint.is_active() && player.get_collider().intersects(checkpoint.get_collider()))
         {
             if (m_current_active_index != -1)
             {
@@ -31,6 +31,7 @@ void CheckpointManager::update(Player &player, double dt)
             m_current_active_index = i;
 
             checkpoint.activate();
+            SoundPlayer::play_sound("checkpoint");
 
             player.set_respawn_position(checkpoint.get_position());
         }

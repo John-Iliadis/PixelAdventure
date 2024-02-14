@@ -8,8 +8,9 @@
 #include <vector>
 #include <cassert>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "checkpoint.hpp"
+#include "../../audio/sound_player.hpp"
 #include "../player/player.hpp"
+#include "checkpoint.hpp"
 
 
 class CheckpointManager : public sf::Drawable
