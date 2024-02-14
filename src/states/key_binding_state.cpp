@@ -21,7 +21,7 @@ KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, 
 
     setup_gui();
 
-    utils::gui::select_element(m_gui_container, m_context.window);
+    m_gui_container.find_selected(m_context.window);
 }
 
 bool KeyBindingState::handle_events(const sf::Event &event)
@@ -50,7 +50,7 @@ bool KeyBindingState::handle_events(const sf::Event &event)
 
 bool KeyBindingState::update(double dt)
 {
-    m_gui_container.update();
+    m_gui_container.update(m_context.window);
 
     m_invalid_key_text.setFillColor(m_invalid_key_timer > 0? sf::Color::Red : sf::Color::Transparent);
 

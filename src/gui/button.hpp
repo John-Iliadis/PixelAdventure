@@ -33,7 +33,7 @@ public:
     void select() override;
     void deselect() override;
 
-    void update() override;
+    void update(const sf::RenderWindow *window) override;
     void handle_event(const sf::Event &event) override;
 
     void activate() override;

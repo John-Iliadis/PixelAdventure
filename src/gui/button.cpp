@@ -100,11 +100,12 @@ void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_button);
 }
 
-void Button::update()
-{
-}
-
 void Button::set_button_color(const sf::Color &color)
 {
     m_button.setColor(color);
+}
+
+void Button::update(const sf::RenderWindow *window)
+{
+
 }

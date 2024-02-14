@@ -11,6 +11,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include "../asset_managers/font_manager.hpp"
 #include "../structs/level_details.hpp"
+#include "../utilities/utils.hpp"
 #include "../world/world.hpp"
 #include "state.hpp"
 
@@ -34,6 +35,7 @@ private:
     std::string m_loading_string;
     float m_ellapsed;
     float m_string_timer;
+    float m_min_active_duration;
     bool m_load_complete;
 };
 

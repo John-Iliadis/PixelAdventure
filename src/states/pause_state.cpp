@@ -13,7 +13,7 @@ PauseState::PauseState(StateStack &state_stack, GameContext &context, void* user
     m_dark_overlay.setSize(static_cast<sf::Vector2f>(m_context.window->getSize()));
     m_dark_overlay.setFillColor(sf::Color(0, 0, 0, 128));
 
-    utils::gui::select_element(m_gui_container, m_context.window);
+    m_gui_container.find_selected(m_context.window);
     SoundPlayer::play_sound("window_open");
 }
 
@@ -21,14 +21,14 @@ void PauseState::on_exit()
 {
     State::on_exit();
 
-    utils::gui::deselect_all_elements(m_gui_container);
+    m_gui_container.deselect_all();
 }
 
 void PauseState::on_return()
 {
     State::on_return();
 
-    utils::gui::select_element(m_gui_container, m_context.window);
+    m_gui_container.find_selected(m_context.window);
 }
 
 bool PauseState::handle_events(const sf::Event &event)
@@ -48,7 +48,8 @@ bool PauseState::handle_events(const sf::Event &event)
 
 bool PauseState::update(double dt)
 {
-    m_gui_container.update();
+    if (m_status == Status::CURRENT)
+        m_gui_container.update(m_context.window);
 
     return false;
 }

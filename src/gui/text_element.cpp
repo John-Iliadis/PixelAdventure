@@ -19,8 +19,9 @@ void TextElement::activate()
 {
 }
 
-void TextElement::update()
+void TextElement::update(const sf::RenderWindow *window)
 {
+
 }
 
 void TextElement::handle_event(const sf::Event &event)

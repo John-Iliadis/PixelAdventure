@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "state.hpp"
 #include "../gui/gui_includes.hpp"
-#include "../utilities/gui_utils.hpp"
 #include "../structs/colors.hpp"
 #include "../structs/level_details.hpp"
 #include "../audio/sound_player.hpp"

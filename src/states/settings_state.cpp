@@ -2,9 +2,7 @@
 // Created by Gianni on 10/02/2024.
 //
 
-#include <iostream>
 #include "settings_state.hpp"
-
 
 
 SettingsState::SettingsState(StateStack &state_stack, GameContext &context, void* user_ptr)
@@ -12,7 +10,7 @@ SettingsState::SettingsState(StateStack &state_stack, GameContext &context, void
 {
     setup_gui();
 
-    utils::gui::select_element(m_gui_container, m_context.window);
+    m_gui_container.find_selected(m_context.window);
 }
 
 void SettingsState::on_return()
@@ -23,7 +21,7 @@ void SettingsState::on_return()
 
     setup_gui();
 
-    utils::gui::select_element(m_gui_container, m_context.window);
+    m_gui_container.find_selected(m_context.window);
 }
 
 bool SettingsState::handle_events(const sf::Event &event)
@@ -35,7 +33,8 @@ bool SettingsState::handle_events(const sf::Event &event)
 
 bool SettingsState::update(double dt)
 {
-    m_gui_container.update();
+    if (m_status == Status::CURRENT)
+        m_gui_container.update(m_context.window);
 
     return true;
 }

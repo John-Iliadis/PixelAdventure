@@ -9,7 +9,7 @@ GameOverState::GameOverState(StateStack &state_stack, GameContext &context, void
 {
     setup_gui();
 
-    utils::gui::select_element(m_gui_container, m_context.window);
+    m_gui_container.find_selected(m_context.window);
 }
 
 bool GameOverState::handle_events(const sf::Event &event)
@@ -21,7 +21,7 @@ bool GameOverState::handle_events(const sf::Event &event)
 
 bool GameOverState::update(double dt)
 {
-    m_gui_container.update();
+    m_gui_container.update(m_context.window);
 
     return false;
 }

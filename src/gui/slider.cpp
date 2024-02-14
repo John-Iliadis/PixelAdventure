@@ -68,7 +68,7 @@ void Slider::handle_event(const sf::Event &event)
     }
 }
 
-void Slider::update()
+void Slider::update(const sf::RenderWindow* window)
 {
     if (m_needs_update)
     {

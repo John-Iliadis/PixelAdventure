@@ -11,6 +11,7 @@ PreGameLoadingState::PreGameLoadingState(StateStack &state_stack, GameContext &c
     , m_loading_string("Loading")
     , m_ellapsed()
     , m_string_timer()
+    , m_min_active_duration(utils::random(2, 5))
     , m_load_complete(false)
 {
     m_loading_text.setFont(m_context.font_manager->get("bulky_pixel"));
@@ -36,7 +37,7 @@ bool PreGameLoadingState::update(double dt)
     m_ellapsed += dt;
     m_string_timer += dt;
 
-    if (m_ellapsed > 3 && m_load_complete)
+    if (m_ellapsed > m_min_active_duration && m_load_complete)
     {
         void* user_ptr = reinterpret_cast<void*>(m_world);
 

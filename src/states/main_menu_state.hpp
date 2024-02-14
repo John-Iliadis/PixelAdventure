@@ -10,7 +10,6 @@
 #include "../asset_managers/font_manager.hpp"
 #include "../asset_managers/texture_manager.hpp"
 #include "../gui/gui_includes.hpp"
-#include "../utilities/gui_utils.hpp"
 #include "../structs/colors.hpp"
 #include "../structs/level_details.hpp"
 #include "../audio/music_player.hpp"

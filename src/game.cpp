@@ -16,6 +16,9 @@ Game::Game()
     m_window.create(window_size, "Platformer", sf::Style::Titlebar | sf::Style::Close);
     m_window.setKeyRepeatEnabled(false);
 
+    Cursor::init();
+    Cursor::select_window(&m_window);
+
     m_world_camera = Camera(world_view_width, world_view_height);
 
     m_texture_manager.load_directory("../assets/textures");

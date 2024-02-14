@@ -136,12 +136,12 @@ add_executable(Platformer
         src/structs/settings.hpp
         src/states/pre_game_loading_state.cpp
         src/states/pre_game_loading_state.hpp
-        src/utilities/gui_utils.cpp
-        src/utilities/gui_utils.hpp
         src/audio/music_player.cpp
         src/audio/music_player.hpp
         src/audio/sound_player.cpp
-        src/audio/sound_player.hpp)
+        src/audio/sound_player.hpp
+        src/world/cursor.cpp
+        src/world/cursor.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

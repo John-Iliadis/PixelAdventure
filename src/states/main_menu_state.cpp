@@ -17,7 +17,7 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
 
     setup_gui();
 
-    utils::gui::select_element(m_gui_container, m_context.window);
+    m_gui_container.find_selected(m_context.window);
     MusicPlayer::play("menu_music", true);
 }
 
@@ -25,14 +25,14 @@ void MainMenuState::on_exit()
 {
     State::on_exit();
 
-    utils::gui::deselect_all_elements(m_gui_container);
+    m_gui_container.deselect_all();
 }
 
 void MainMenuState::on_return()
 {
     State::on_return();
 
-    utils::gui::select_element(m_gui_container, m_context.window);
+    m_gui_container.find_selected(m_context.window);
 }
 
 bool MainMenuState::handle_events(const sf::Event &event)
@@ -45,7 +45,9 @@ bool MainMenuState::handle_events(const sf::Event &event)
 bool MainMenuState::update(double dt)
 {
     m_scrolling_background.update(dt);
-    m_gui_container.update();
+
+    if (m_status == Status::CURRENT)
+        m_gui_container.update(m_context.window);
 
     return false;
 }

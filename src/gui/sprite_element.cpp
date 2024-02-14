@@ -19,10 +19,6 @@ void SpriteElement::activate()
 {
 }
 
-void SpriteElement::update()
-{
-}
-
 void SpriteElement::handle_event(const sf::Event &event)
 {
 }
@@ -40,4 +36,9 @@ void SpriteElement::draw(sf::RenderTarget &target, sf::RenderStates states) cons
 sf::Vector2f SpriteElement::get_position() const
 {
     return m_sprite.getPosition();
+}
+
+void SpriteElement::update(const sf::RenderWindow *window)
+{
+
 }
