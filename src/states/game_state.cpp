@@ -9,6 +9,7 @@ GameState::GameState(StateStack &state_stack, GameContext& context, void* user_p
     : State(state_stack, context)
     , m_world(reinterpret_cast<World*>(user_ptr))
 {
+    MusicPlayer::play("world_music_2", true);
 }
 
 bool GameState::handle_events(const sf::Event &event)

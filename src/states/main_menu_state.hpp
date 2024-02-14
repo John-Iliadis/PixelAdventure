@@ -13,6 +13,7 @@
 #include "../utilities/gui_utils.hpp"
 #include "../structs/colors.hpp"
 #include "../structs/level_details.hpp"
+#include "../audio/music_player.hpp"
 #include "state.hpp"
 
 

@@ -21,6 +21,7 @@
 #include "structs/level_details.hpp"
 #include "structs/settings.hpp"
 #include "audio/sound_player.hpp"
+#include "audio/music_player.hpp"
 
 
 class Game

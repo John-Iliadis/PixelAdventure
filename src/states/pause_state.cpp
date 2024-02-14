@@ -15,7 +15,6 @@ PauseState::PauseState(StateStack &state_stack, GameContext &context, void* user
 
     utils::gui::select_element(m_gui_container, m_context.window);
     SoundPlayer::play_sound("window_open");
-
 }
 
 void PauseState::on_exit()
@@ -37,7 +36,9 @@ bool PauseState::handle_events(const sf::Event &event)
     if (event.type == sf::Event::KeyPressed)
     {
         if (event.key.code == sf::Keyboard::Escape)
+        {
             request_stack_pop();
+        }
     }
 
     m_gui_container.handle_event(event);
@@ -130,6 +131,8 @@ void PauseState::setup_gui()
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
             .set_callback([this] () {
+                MusicPlayer::stop();
+
                 LevelDetails* level_details = new LevelDetails {
                         "../data/tmx/test_map3.tmj",
                         "test_map3",

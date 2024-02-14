@@ -3,7 +3,7 @@
 //
 
 #include "main_menu_state.hpp"
-#include "state_stack.hpp"
+
 
 MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void* user_ptr)
     : State(state_stack, context)
@@ -18,6 +18,7 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
     setup_gui();
 
     utils::gui::select_element(m_gui_container, m_context.window);
+    MusicPlayer::play("menu_music", true);
 }
 
 void MainMenuState::on_exit()
@@ -112,6 +113,8 @@ void MainMenuState::setup_gui()
                                                          .set_text_color(Colors::brown)
                                                          .set_text_offset(0, 0)
                                                          .set_callback([this] () {
+                                                             MusicPlayer::stop();
+
                                                              LevelDetails* level_details = new LevelDetails {
                                                                      "../data/tmx/test_map3.tmj",
                                                                      "test_map3",
@@ -162,3 +165,4 @@ void MainMenuState::setup_gui()
     m_gui_container.push_back(std::move(settings_button));
     m_gui_container.push_back(std::move(exit_button));
 }
+

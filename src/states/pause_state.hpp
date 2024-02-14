@@ -13,6 +13,7 @@
 #include "../structs/colors.hpp"
 #include "../structs/level_details.hpp"
 #include "../audio/sound_player.hpp"
+#include "../audio/music_player.hpp"
 
 
 class PauseState : public State

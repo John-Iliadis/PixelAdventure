@@ -88,6 +88,7 @@ void Game::update(double dt)
     m_state_stack.empty()? m_window.close() : void();
 
     SoundPlayer::update(m_sound_buffer_manager, m_settings.sound_volume);
+    MusicPlayer::update(m_music_manager, m_settings.music_volume);
 }
 
 void Game::draw()

@@ -7,6 +7,7 @@
 
 #include "state.hpp"
 #include "../world/world.hpp"
+#include "../audio/music_player.hpp"
 
 
 class GameState : public State

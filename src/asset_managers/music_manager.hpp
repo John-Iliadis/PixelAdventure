@@ -15,11 +15,11 @@ class MusicManager : public AssetManager<MusicManager, sf::Music>
 private:
     static std::unique_ptr<sf::Music> load(const std::string& file_name)
     {
-        auto sound_buffer = std::make_unique<sf::Music>();
+        auto music = std::make_unique<sf::Music>();
 
-        assert(sound_buffer->openFromFile(file_name));
+        assert(music->openFromFile(file_name));
 
-        return sound_buffer;
+        return music;
     }
 };
 
