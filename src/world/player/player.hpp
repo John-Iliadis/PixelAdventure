@@ -78,7 +78,6 @@ private:
     void set_animation_frame();
 
     void setup_textures(const TextureManager& textures);
-    void setup_sound_buffers(const SoundBufferManager& sound_buffers);
 
 private:
     PlayerData m_data;
@@ -87,7 +86,6 @@ private:
     AnimationManager m_animations;
     PlayerState* m_current_state;
     std::unordered_map<std::string, const sf::Texture*> m_textures;
-    std::unordered_map<std::string, const sf::SoundBuffer*> m_sound_buffers;
     std::function<void(double)> m_resolve_collision_callback;
     std::function<void()> m_camera_transition_callback;
     std::function<void()> m_spawn_death_particle_callback;

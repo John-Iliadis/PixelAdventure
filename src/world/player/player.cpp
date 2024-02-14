@@ -11,7 +11,6 @@ static std::string platformer_data_path = "../data/player/platformer_data.json";
 Player::Player(GameContext& context)
 {
     setup_textures(*context.texture_manager);
-    setup_sound_buffers(*context.sound_buffer_manager);
 
     m_animations.load_from_file(animation_filepath);
     m_data.load_from_file(platformer_data_path);
@@ -240,11 +239,6 @@ void Player::setup_textures(const TextureManager &textures)
     m_textures["wall_sliding"] = &textures.get("wall_sliding");
     m_textures["double_jumping"] = &textures.get("double_jumping");
     m_textures["respawning"] = &textures.get("respawning");
-}
-
-void Player::setup_sound_buffers(const SoundBufferManager &sound_buffers)
-{
-
 }
 
 void Player::set_respawn_position(const sf::Vector2f &respawn_pos)
