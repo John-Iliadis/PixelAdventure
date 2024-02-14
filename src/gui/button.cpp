@@ -58,7 +58,8 @@ sf::Rect<float> Button::get_clickable_area() const
 
 void Button::activate()
 {
-    m_callback? m_callback() : (void)0;
+    m_callback();
+    SoundPlayer::play_sound("button_click");
 }
 
 void Button::set_button_hover_scale(const sf::Vector2f &scale)
@@ -76,6 +77,7 @@ void Button::select()
     if (!selected())
     {
         GUI_Element::select();
+        SoundPlayer::play_sound("prevnext");
         m_button.setScale(m_button_hover_scale);
     }
 }

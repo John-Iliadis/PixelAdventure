@@ -5,6 +5,9 @@
 #include "sound_player.hpp"
 
 
+std::forward_list<sf::Sound> SoundPlayer::m_sounds;
+std::vector<std::string> SoundPlayer::m_pending_sounds;
+
 void SoundPlayer::play_sound(const std::string &sound_id)
 {
     if (!std::ranges::contains(m_pending_sounds, sound_id))

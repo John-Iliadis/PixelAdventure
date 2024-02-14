@@ -20,6 +20,7 @@
 #include "camera/camera.hpp"
 #include "structs/level_details.hpp"
 #include "structs/settings.hpp"
+#include "audio/sound_player.hpp"
 
 
 class Game

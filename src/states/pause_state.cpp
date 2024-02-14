@@ -14,6 +14,8 @@ PauseState::PauseState(StateStack &state_stack, GameContext &context, void* user
     m_dark_overlay.setFillColor(sf::Color(0, 0, 0, 128));
 
     utils::gui::select_element(m_gui_container, m_context.window);
+    SoundPlayer::play_sound("window_open");
+
 }
 
 void PauseState::on_exit()

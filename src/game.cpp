@@ -85,9 +85,9 @@ void Game::handle_events()
 void Game::update(double dt)
 {
     m_state_stack.update(dt);
+    m_state_stack.empty()? m_window.close() : void();
 
-    if (m_state_stack.empty())
-        m_window.close();
+    SoundPlayer::update(m_sound_buffer_manager, m_settings.sound_volume);
 }
 
 void Game::draw()

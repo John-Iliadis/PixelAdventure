@@ -18,13 +18,13 @@ class SoundPlayer
 public:
     SoundPlayer() = default;
 
-    void play_sound(const std::string& sound_id);
+    static void play_sound(const std::string& sound_id);
 
-    void update(const SoundBufferManager& sound_buffers, float volume);
+    static void update(const SoundBufferManager& sound_buffers, float volume);
 
 private:
-    std::forward_list<sf::Sound> m_sounds;
-    std::vector<std::string> m_pending_sounds;
+    static std::forward_list<sf::Sound> m_sounds;
+    static std::vector<std::string> m_pending_sounds;
 };
 
 

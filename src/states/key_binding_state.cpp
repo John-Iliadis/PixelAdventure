@@ -34,6 +34,7 @@ bool KeyBindingState::handle_events(const sf::Event &event)
         {
             m_context.settings->action_map[*m_action] = utils::key_to_string(selected_key);
             request_stack_pop();
+            SoundPlayer::play_sound("key_binded");
         }
         else
         {

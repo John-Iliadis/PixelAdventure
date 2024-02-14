@@ -1,0 +1,7 @@
+{
+    "jump_action": "Up",
+    "move_left_action": "Left",
+    "move_right_action": "Right",
+    "music_volume": 100.0,
+    "sound_volume": 100.0
+}

@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "../utilities/utils.hpp"
+#include "../audio/sound_player.hpp"
 #include "gui_element.hpp"
 
 
