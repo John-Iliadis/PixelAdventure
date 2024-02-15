@@ -144,7 +144,8 @@ add_executable(Platformer
         src/world/cursor.hpp
         src/world/finish_cup.cpp
         src/world/finish_cup.hpp
-        src/world/service_locator.hpp)
+        src/utilities/easing_functions.cpp
+        src/utilities/easing_functions.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

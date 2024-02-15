@@ -13,6 +13,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 #include "../utilities/utils.hpp"
+#include "../utilities/easing_functions.hpp"
 
 
 class Camera
@@ -23,7 +24,7 @@ public:
 
     void update(double dt);
 
-    void set_target(const sf::Vector2f& target, float delay_time = 0, std::function<void()> callback = nullptr);
+    void set_target(const sf::Vector2f& target, float (*easing)(float), float delay_time = 0, std::function<void()> callback = nullptr);
 
     void set_size(uint32_t width, uint32_t height);
     void set_size(const sf::Vector2u& size);
@@ -45,11 +46,12 @@ private:
     class TargetTransitionState : public State
     {
     public:
-        TargetTransitionState(Camera& camera, const sf::Vector2f& target_pos, float delay_time = 0, std::function<void()> callback = nullptr);
+        TargetTransitionState(Camera& camera, float (*easing)(float), const sf::Vector2f& target_pos, float delay_time = 0, std::function<void()> callback = nullptr);
         std::unique_ptr<State> update(Camera &camera, double dt) override;
 
     private:
         std::function<void()> m_callback;
+        std::function<float(float)> m_easing;
         sf::Vector2f m_start_pos;
         sf::Vector2f m_target_pos;
         float m_delay_time;

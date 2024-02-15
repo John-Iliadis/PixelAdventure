@@ -27,9 +27,7 @@ void ChainSaw::update(double dt)
 
     assert(!std::isinf(t));
 
-    if (t > 1.f) t = 1.f;
-
-    float easing = t < 0.5 ? 4 * std::pow(t, 3) : 1 - std::pow(-2 * t + 2, 3) / 2;
+    float easing = easing_functions::ease_in_out_cubic(t);
 
     sf::Vector2f new_pos = m_start_pos + (m_target_pos - m_start_pos) * easing;
 

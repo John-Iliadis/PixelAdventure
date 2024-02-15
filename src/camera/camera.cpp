@@ -22,9 +22,9 @@ void Camera::update(double dt)
     }
 }
 
-void Camera::set_target(const sf::Vector2f &target, float delay_time, std::function<void()> callback)
+void Camera::set_target(const sf::Vector2f &target, float (*easing)(float), float delay_time, std::function<void()> callback)
 {
-    m_current_state = std::make_unique<Camera::TargetTransitionState>(*this, target, delay_time, callback);
+    m_current_state = std::make_unique<Camera::TargetTransitionState>(*this, easing, target, delay_time, callback);
 }
 
 void Camera::set_size(uint32_t width, uint32_t height)
@@ -62,8 +62,9 @@ const sf::View &Camera::get_view() const
     return m_view;
 }
 
-Camera::TargetTransitionState::TargetTransitionState(Camera &camera, const sf::Vector2f &target_pos, float delay_time, std::function<void()> callback)
+Camera::TargetTransitionState::TargetTransitionState(Camera &camera, float (*easing)(float), const sf::Vector2f &target_pos, float delay_time, std::function<void()> callback)
     : m_callback(std::move(callback))
+    , m_easing(easing)
     , m_start_pos(camera.get_center())
     , m_target_pos(target_pos)
     , m_delay_time(delay_time)
@@ -85,9 +86,7 @@ std::unique_ptr<Camera::State>  Camera::TargetTransitionState::update(Camera &ca
 
     float t = m_total_ellapsed / m_duration;
 
-    if (t > 1.f) t = 1.f;
-
-    float easing = 1 - std::pow(1 - t, 5);
+    float easing = m_easing(t);
 
     sf::Vector2f new_pos = m_start_pos + (m_target_pos - m_start_pos) * easing;
 

@@ -43,7 +43,7 @@ World::World(GameContext& context, const LevelDetails& level_details)
     m_player.set_camera_transition_callback([this] () {
         sf::Vector2f player_respawn_pos = m_player.get_respawn_pos();
         sf::Vector2f camera_target(player_respawn_pos.x, player_respawn_pos.y - m_player.get_sprite_size().height / 2.f);
-        m_context.world_camera->set_target(camera_target, 1.2, [this] () {m_player.respawn();});
+        m_context.world_camera->set_target(camera_target, easing_functions::ease_out_quint, 1.2, [this] () {m_player.respawn();});
     });
 
     m_player.set_move_camera_callback([this] () {
