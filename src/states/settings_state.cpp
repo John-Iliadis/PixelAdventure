@@ -61,30 +61,30 @@ void SettingsState::setup_gui()
 
     /* title */
     std::unique_ptr<SpriteElement> title_board = gui_builder.set_texture("title_board")
-                                                            .set_position(window_size.x / 2, 150)
-                                                            .set_scale(4, 4)
-                                                            .set_origin(Origin::CENTER)
-                                                            .make_sprite_element();
+            .set_position(window_size.x / 2, 150)
+            .set_scale(4, 4)
+            .set_origin(Origin::CENTER)
+            .make_sprite_element();
 
     std::unique_ptr<SpriteElement> title_board_paper = gui_builder.set_texture("paper_label")
-                                                                  .set_position(window_size.x / 2, 150)
-                                                                  .set_scale(4, 4)
-                                                                  .set_origin(Origin::CENTER)
-                                                                  .make_sprite_element();
+            .set_position(window_size.x / 2, 150)
+            .set_scale(4, 4)
+            .set_origin(Origin::CENTER)
+            .make_sprite_element();
 
     std::unique_ptr<TextElement> title_board_text = gui_builder.set_font("bulky_pixel")
-                                                               .set_character_size(30)
-                                                               .set_position(window_size.x / 2, 150)
-                                                               .set_origin(Origin::CENTER)
-                                                               .set_text_color(Colors::brown)
-                                                               .set_text_string("Settings")
-                                                               .make_text_element();
+            .set_character_size(30)
+            .set_position(window_size.x / 2, 150)
+            .set_origin(Origin::CENTER)
+            .set_text_color(Colors::brown)
+            .set_text_string("Settings")
+            .make_text_element();
     /* audio board */
     std::unique_ptr<SpriteElement> audio_board = gui_builder.set_texture("settings_board")
-                                                            .set_position(int(window_size.x / 3.5), window_size.y / 2 + 80)
-                                                            .set_scale(4, 4)
-                                                            .set_origin(Origin::CENTER)
-                                                            .make_sprite_element();
+            .set_position(int(window_size.x / 3.5), window_size.y / 2 + 80)
+            .set_scale(4, 4)
+            .set_origin(Origin::CENTER)
+            .make_sprite_element();
 
     sf::Rect<float> audio_board_bounds = audio_board->get_clickable_area();
 
@@ -144,32 +144,32 @@ void SettingsState::setup_gui()
 
     /* key binding board */
     std::unique_ptr<SpriteElement> key_binding_board = gui_builder.set_texture("settings_board")
-                                                                  .set_position(int(window_size.x - window_size.x / 3.5), window_size.y / 2 + 80)
-                                                                  .set_scale(4, 4)
-                                                                  .set_origin(Origin::CENTER)
-                                                                  .make_sprite_element();
+            .set_position(int(window_size.x - window_size.x / 3.5), window_size.y / 2 + 80)
+            .set_scale(4, 4)
+            .set_origin(Origin::CENTER)
+            .make_sprite_element();
 
     sf::Rect<float> key_binding_board_bounds = key_binding_board->get_clickable_area();
 
     std::unique_ptr<SpriteElement> key_binding_board_title_paper = gui_builder.set_texture("paper_label")
-                                                                              .set_position(key_binding_board_bounds.left + key_binding_board_bounds.width / 2, key_binding_board_bounds.top + 100)
-                                                                              .set_scale(4, 4)
-                                                                              .set_origin(Origin::CENTER)
-                                                                              .make_sprite_element();
+            .set_position(key_binding_board_bounds.left + key_binding_board_bounds.width / 2, key_binding_board_bounds.top + 100)
+            .set_scale(4, 4)
+            .set_origin(Origin::CENTER)
+            .make_sprite_element();
 
     std::unique_ptr<TextElement> key_binding_board_title_text = gui_builder.set_font("bulky_pixel")
-                                                                           .set_character_size(30)
-                                                                           .set_position(key_binding_board_title_paper->get_position())
-                                                                           .set_origin(Origin::CENTER)
-                                                                           .set_text_color(Colors::brown)
-                                                                           .set_text_string("Keys")
-                                                                           .make_text_element();
+            .set_character_size(30)
+            .set_position(key_binding_board_title_paper->get_position())
+            .set_origin(Origin::CENTER)
+            .set_text_color(Colors::brown)
+            .set_text_string("Keys")
+            .make_text_element();
 
     std::unique_ptr<SpriteElement> key_binding_board_background_paper = gui_builder.set_texture("settings_bg_paper")
-                                                                                   .set_position(key_binding_board->get_position().x, 658)
-                                                                                   .set_scale(4, 4)
-                                                                                   .set_origin(Origin::CENTER)
-                                                                                   .make_sprite_element();
+            .set_position(key_binding_board->get_position().x, 658)
+            .set_scale(4, 4)
+            .set_origin(Origin::CENTER)
+            .make_sprite_element();
 
     sf::Rect<float> key_binding_paper_bounds = key_binding_board_background_paper->get_clickable_area();
 

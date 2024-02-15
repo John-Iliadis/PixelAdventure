@@ -76,24 +76,24 @@ void MainMenuState::setup_gui()
     sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
 
     std::unique_ptr<SpriteElement> title_board = gui_builder.set_texture("title_board")
-                                                            .set_position(window_size.x / 2, 150)
-                                                            .set_scale(4, 4)
-                                                            .set_origin(Origin::CENTER)
-                                                            .make_sprite_element();
+            .set_position(window_size.x / 2, 150)
+            .set_scale(4, 4)
+            .set_origin(Origin::CENTER)
+            .make_sprite_element();
 
     std::unique_ptr<SpriteElement> title_board_paper = gui_builder.set_texture("paper_label")
-                                                                  .set_position(window_size.x / 2, 150)
-                                                                  .set_scale(4, 4)
-                                                                  .set_origin(Origin::CENTER)
-                                                                  .make_sprite_element();
+            .set_position(window_size.x / 2, 150)
+            .set_scale(4, 4)
+            .set_origin(Origin::CENTER)
+            .make_sprite_element();
 
     std::unique_ptr<TextElement> title_board_text = gui_builder.set_font("bulky_pixel")
-                                                               .set_character_size(30)
-                                                               .set_position(window_size.x / 2, 150)
-                                                               .set_origin(Origin::CENTER)
-                                                               .set_text_color(Colors::brown)
-                                                               .set_text_string("Main Menu")
-                                                               .make_text_element();
+            .set_character_size(30)
+            .set_position(window_size.x / 2, 150)
+            .set_origin(Origin::CENTER)
+            .set_text_color(Colors::brown)
+            .set_text_string("Main Menu")
+            .make_text_element();
 
     std::unique_ptr<SpriteElement> menu_board = gui_builder.set_texture("menu_board")
             .set_position(window_size.x / 2, window_size.y / 2 + 80)
@@ -104,60 +104,60 @@ void MainMenuState::setup_gui()
     sf::Rect<float> menu_board_bounds = menu_board->get_clickable_area();
 
     std::unique_ptr<TextButton> play_button = gui_builder.set_texture("large_button")
-                                                         .set_font("bulky_pixel")
-                                                         .set_position(window_size.x / 2, menu_board_bounds.top + 125)
-                                                         .set_origin(Origin::CENTER)
-                                                         .set_scale(4, 4)
-                                                         .set_scale_hover(4.2, 4.2)
-                                                         .set_text_string("Play")
-                                                         .set_character_size(30)
-                                                         .set_character_size_hover(32)
-                                                         .set_text_color(Colors::brown)
-                                                         .set_text_offset(0, 0)
-                                                         .set_callback([this] () {
-                                                             MusicPlayer::stop();
+            .set_font("bulky_pixel")
+            .set_position(window_size.x / 2, menu_board_bounds.top + 125)
+            .set_origin(Origin::CENTER)
+            .set_scale(4, 4)
+            .set_scale_hover(4.2, 4.2)
+            .set_text_string("Play")
+            .set_character_size(30)
+            .set_character_size_hover(32)
+            .set_text_color(Colors::brown)
+            .set_text_offset(0, 0)
+            .set_callback([this] () {
+                MusicPlayer::stop();
 
-                                                             LevelDetails* level_details = new LevelDetails {
-                                                                     "../data/tmx/test_map3.tmj",
-                                                                     "test_map3",
-                                                                     "yellow"
-                                                             };
+                LevelDetails* level_details = new LevelDetails {
+                        "../data/tmx/test_map3.tmj",
+                        "test_map3",
+                        "yellow"
+                };
 
-                                                             auto level_details_ptr = reinterpret_cast<void*>(level_details);
+                auto level_details_ptr = reinterpret_cast<void*>(level_details);
 
-                                                             request_stack_pop();
-                                                             request_stack_push(StateID::PRE_GAME_LOADING_STATE, level_details_ptr);
-                                                         }).make_text_button();
+                request_stack_pop();
+                request_stack_push(StateID::PRE_GAME_LOADING_STATE, level_details_ptr);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> settings_button = gui_builder.set_texture("large_button")
-                                                             .set_font("bulky_pixel")
-                                                             .set_position(window_size.x / 2, menu_board_bounds.top + 255)
-                                                             .set_origin(Origin::CENTER)
-                                                             .set_scale(4, 4)
-                                                             .set_scale_hover(4.2, 4.2)
-                                                             .set_text_string("Settings")
-                                                             .set_character_size(30)
-                                                             .set_character_size_hover(32)
-                                                             .set_text_color(Colors::brown)
-                                                             .set_text_offset(0, 0)
-                                                             .set_callback([this] () {
-                                                                 request_stack_push(StateID::SETTINGS);
-                                                             }).make_text_button();
+            .set_font("bulky_pixel")
+            .set_position(window_size.x / 2, menu_board_bounds.top + 255)
+            .set_origin(Origin::CENTER)
+            .set_scale(4, 4)
+            .set_scale_hover(4.2, 4.2)
+            .set_text_string("Settings")
+            .set_character_size(30)
+            .set_character_size_hover(32)
+            .set_text_color(Colors::brown)
+            .set_text_offset(0, 0)
+            .set_callback([this] () {
+                request_stack_push(StateID::SETTINGS);
+            }).make_text_button();
 
     std::unique_ptr<TextButton> exit_button = gui_builder.set_texture("large_button")
-                                                         .set_font("bulky_pixel")
-                                                         .set_position(window_size.x / 2, menu_board_bounds.top + 385)
-                                                         .set_origin(Origin::CENTER)
-                                                         .set_scale(4, 4)
-                                                         .set_scale_hover(4.2, 4.2)
-                                                         .set_text_string("Exit")
-                                                         .set_character_size(30)
-                                                         .set_character_size_hover(32)
-                                                         .set_text_color(Colors::brown)
-                                                         .set_text_offset(0, 0)
-                                                         .set_callback([this] () {
-                                                             request_stack_pop();
-                                                         }).make_text_button();
+            .set_font("bulky_pixel")
+            .set_position(window_size.x / 2, menu_board_bounds.top + 385)
+            .set_origin(Origin::CENTER)
+            .set_scale(4, 4)
+            .set_scale_hover(4.2, 4.2)
+            .set_text_string("Exit")
+            .set_character_size(30)
+            .set_character_size_hover(32)
+            .set_text_color(Colors::brown)
+            .set_text_offset(0, 0)
+            .set_callback([this] () {
+                request_stack_pop();
+            }).make_text_button();
 
     m_gui_container.push_back(std::move(title_board));
     m_gui_container.push_back(std::move(title_board_paper));
