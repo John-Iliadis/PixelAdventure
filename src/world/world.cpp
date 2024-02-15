@@ -60,6 +60,7 @@ World::World(GameContext& context, const LevelDetails& level_details)
     setup_saw_traps(TiledJsonLoader::get_list_object(map_data["layers"], "saw_layer"));
     setup_spike_head_traps(TiledJsonLoader::get_list_object(map_data["layers"], "spike_head_layer"));
     setup_spiked_balls(TiledJsonLoader::get_list_object(map_data["layers"], "spiked_ball_layer"));
+    setup_finish(TiledJsonLoader::get_list_object(map_data["layers"], "finish"));
 }
 
 void World::handle_events(const sf::Event &event)
@@ -74,6 +75,7 @@ void World::update(double dt)
     m_checkpoint_manager.update(m_player, dt);
     m_trap_manager.update(m_player, dt);
     m_fruit_manager.update(m_player, dt);
+    m_finish.update(m_player, dt);
     m_death_particles.update(dt);
     m_context.world_camera->update(dt);
 }
@@ -87,6 +89,7 @@ void World::draw()
     window.draw(m_map);
     window.draw(m_checkpoint_manager);
     window.draw(m_fruit_manager);
+    window.draw(m_finish);
     window.draw(m_player);
     window.draw(m_death_particles);
 }
@@ -290,4 +293,21 @@ void World::setup_spiked_balls(const nlohmann::json& spiked_ball_layer)
             assert(false);
         }
     }
+}
+
+void World::setup_finish(const nlohmann::json& finish_layer)
+{
+    auto point_object = finish_layer["objects"].front();
+
+    sf::Vector2f position {
+        point_object["x"].get<float>(),
+        point_object["y"].get<float>()
+    };
+
+    m_finish = FinishCup(*m_context.texture_manager, position);
+}
+
+bool World::game_over() const
+{
+    return m_finish.triggered();
 }

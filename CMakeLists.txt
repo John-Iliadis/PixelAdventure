@@ -141,7 +141,10 @@ add_executable(Platformer
         src/audio/sound_player.cpp
         src/audio/sound_player.hpp
         src/world/cursor.cpp
-        src/world/cursor.hpp)
+        src/world/cursor.hpp
+        src/world/finish_cup.cpp
+        src/world/finish_cup.hpp
+        src/world/service_locator.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

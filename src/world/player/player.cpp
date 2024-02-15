@@ -32,7 +32,9 @@ Player::~Player()
 
 void Player::handle_events(const sf::Event &event)
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == utils::string_to_key(m_action_map->at("jump_action")) && m_data.alive)
+    if (!m_data.accepting_input) return;
+
+    if (event.type == sf::Event::KeyPressed &&event.key.code == utils::string_to_key(m_action_map->at("jump_action")))
         m_data.jump_pressed_ellapsed_time = m_data.jump_pressed_remember_time;
 }
 
@@ -49,7 +51,7 @@ void Player::update(double dt)
 
 void Player::handle_input()
 {
-    if (!m_data.alive) return;
+    if (!m_data.accepting_input) return;
 
     using namespace sf;
 
@@ -265,6 +267,7 @@ void Player::respawn()
 void Player::die()
 {
     m_data.alive = false;
+    m_data.accepting_input = false;
     m_sprite_collider.set_color(sf::Color::Transparent);
     m_sprite_collider.set_collider_size(0, 0);
     SoundPlayer::play_sound("death");
@@ -315,4 +318,9 @@ sf::FloatRect Player::get_sprite_size() const
 void Player::set_move_camera_callback(std::function<void()> callback)
 {
     m_move_camera_callback = std::move(callback);
+}
+
+void Player::set_accepting_input(bool accepting_input)
+{
+    m_data.accepting_input = accepting_input;
 }

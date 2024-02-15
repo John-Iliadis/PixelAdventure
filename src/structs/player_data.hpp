@@ -26,6 +26,7 @@ struct PlayerData
     bool previously_double_jumped;
     bool touching_wall;
     bool alive;
+    bool accepting_input;
 
     void load_from_file(const std::string& file_name)
     {
@@ -50,6 +51,7 @@ struct PlayerData
         previously_double_jumped = false;
         touching_wall = false;
         alive = true;
+        accepting_input = true;
     }
 };
 

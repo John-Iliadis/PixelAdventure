@@ -1,0 +1,18 @@
+[
+    {
+        "sprite_width": 64,
+        "sprite_height": 64,
+        "id": "finish_idle",
+        "frame_count": 1,
+        "frame_time_milliseconds": 0,
+        "looped": false
+    },
+    {
+        "sprite_width": 64,
+        "sprite_height": 64,
+        "id": "finish_triggered",
+        "frame_count": 8,
+        "frame_time_milliseconds": 50,
+        "looped": true
+    }
+]

@@ -23,7 +23,7 @@ bool GameOverState::update(double dt)
 {
     m_gui_container.update(m_context.window);
 
-    return false;
+    return true;
 }
 
 void GameOverState::on_world_draw()

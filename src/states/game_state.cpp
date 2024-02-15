@@ -31,6 +31,11 @@ bool GameState::update(double dt)
 {
     m_world->update(dt);
 
+    if (m_world->game_over() && m_status == Status::CURRENT)
+    {
+        request_stack_push(StateID::GAME_OVER);
+    }
+
     return false;
 }
 

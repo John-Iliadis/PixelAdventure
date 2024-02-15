@@ -47,6 +47,7 @@ public:
     void set_previously_jumped(bool prev_jumped);
     void set_previously_double_jumped(bool prev_double_jumped);
     void set_touching_wall(bool touching_wall);
+    void set_accepting_input(bool accepting_input);
     void set_orientation(Orientation orientation);
     void set_collision_callback(std::function<void(double)> callback);
     void set_camera_transition_callback(std::function<void()> callback);

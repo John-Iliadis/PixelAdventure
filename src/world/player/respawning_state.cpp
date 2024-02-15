@@ -21,6 +21,7 @@ PlayerState* RespawningState::update(Player &player)
     {
         player.set_origin(Origin::CENTER_BOTTOM);
         player.set_alive(true);
+        player.set_accepting_input(true);
         player.set_gravity(true);
         player.set_position(player.get_respawn_pos());
         return new IdleState(player);

@@ -25,6 +25,7 @@
 #include "traps/spiked_ball/pendulum_spiked_ball.hpp"
 #include "traps/spiked_ball/circular_spiked_ball.hpp"
 #include "fruits/fruit_manager.hpp"
+#include "finish_cup.hpp"
 
 
 class World
@@ -36,6 +37,8 @@ public:
     void update(double dt);
     void draw();
 
+    bool game_over() const;
+
 private:
     void setup_checkpoints(const nlohmann::json& checkpoint_pos_layer);
     void setup_spikes(const nlohmann::json& spike_pos_layer);
@@ -43,6 +46,7 @@ private:
     void setup_saw_traps(const nlohmann::json& saw_trap_layer);
     void setup_spike_head_traps(const nlohmann::json& spike_head_layer);
     void setup_spiked_balls(const nlohmann::json& spiked_ball_layer);
+    void setup_finish(const nlohmann::json& finish_layer);
 
 private:
     GameContext& m_context;
@@ -53,6 +57,7 @@ private:
     TrapManager m_trap_manager;
     FruitManager m_fruit_manager;
     DeathParticleSystem m_death_particles;
+    FinishCup m_finish;
     std::vector<sf::Rect<float>> m_solid_tiles;
 };
 
