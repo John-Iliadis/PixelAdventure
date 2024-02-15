@@ -23,6 +23,7 @@ public:
     void set_text_color(const sf::Color& color);
     void set_text_offset(const sf::Vector2f& offset);
     void set_text_offset(float x, float y);
+    void position_text();
 
     void update(const sf::RenderWindow *window) override;
     void handle_event(const sf::Event& event) override;

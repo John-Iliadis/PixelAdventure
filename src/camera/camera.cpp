@@ -62,6 +62,11 @@ const sf::View &Camera::get_view() const
     return m_view;
 }
 
+bool Camera::target_reached() const
+{
+    return dynamic_cast<TargetTransitionState*>(m_current_state.get()) == nullptr; // lol
+}
+
 Camera::TargetTransitionState::TargetTransitionState(Camera &camera, float (*easing)(float), const sf::Vector2f &target_pos, float delay_time, std::function<void()> callback)
     : m_callback(std::move(callback))
     , m_easing(easing)

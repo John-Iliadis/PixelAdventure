@@ -21,6 +21,9 @@ Game::Game()
 
     m_world_camera = Camera(world_view_width, world_view_height);
 
+    m_gui_camera = Camera(window_width, window_height);
+    m_gui_camera.set_center(m_window.getDefaultView().getCenter());
+
     m_texture_manager.load_directory("../assets/textures");
     m_font_manager.load_directory("../assets/fonts");
     m_sound_buffer_manager.load_directory("../assets/sounds");
@@ -29,6 +32,7 @@ Game::Game()
 
     m_context.window = &m_window;
     m_context.world_camera = &m_world_camera;
+    m_context.gui_camera = &m_gui_camera;
     m_context.texture_manager = &m_texture_manager;
     m_context.font_manager = &m_font_manager;
     m_context.sound_buffer_manager = &m_sound_buffer_manager;
@@ -89,6 +93,7 @@ void Game::update(double dt)
 {
     m_state_stack.update(dt);
     m_state_stack.empty()? m_window.close() : void();
+    m_gui_camera.update(dt);
 
     SoundPlayer::update(m_sound_buffer_manager, m_settings.sound_volume);
     MusicPlayer::update(m_music_manager, m_settings.music_volume);

@@ -6,6 +6,7 @@
 
 
 static const std::string animations_path = "../data/finish_cup/animations.json";
+static const sf::Vector2f collider_size = {10, 32};
 
 FinishCup::FinishCup(const TextureManager &textures, const sf::Vector2f &position)
     : m_current_state(FinishCup::State::IDLE)
@@ -16,10 +17,11 @@ FinishCup::FinishCup(const TextureManager &textures, const sf::Vector2f &positio
     m_textures["finish_idle"] = &textures.get("finish_idle");
     m_textures["finish_triggered"] = &textures.get("finish_triggered");
 
-    m_sprite.setTexture(*m_textures.at("finish_idle"));
-    m_sprite.setPosition(position);
-    m_sprite.setTextureRect(m_animations.get_current_frame_rect());
-    utils::set_origin(m_sprite, Origin::CENTER_BOTTOM);
+    m_sprite_collider.set_texture(*m_textures.at("finish_idle"));
+    m_sprite_collider.set_position(position);
+    m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
+    m_sprite_collider.set_collider_size(collider_size);
+    m_sprite_collider.set_origin(Origin::CENTER_BOTTOM);
 }
 
 void FinishCup::update(Player &player, double dt)
@@ -28,13 +30,13 @@ void FinishCup::update(Player &player, double dt)
     {
         case FinishCup::State::IDLE:
         {
-            if (player.get_collider().intersects(m_sprite.getGlobalBounds()))
+            if (player.get_collider().intersects(m_sprite_collider.get_collider()))
             {
                 player.set_accepting_input(false);
                 player.set_velocity(0, player.get_velocity().y);
                 m_current_state = FinishCup::State::TRIGGERED;
                 m_animations.set_animation("finish_triggered");
-                m_sprite.setTexture(*m_textures.at("finish_triggered"));
+                m_sprite_collider.set_texture(*m_textures.at("finish_triggered"));
                 SoundPlayer::play_sound("finish");
                 MusicPlayer::stop();
             }
@@ -52,12 +54,12 @@ void FinishCup::update(Player &player, double dt)
     }
 
     m_animations.update(dt);
-    m_sprite.setTextureRect(m_animations.get_current_frame_rect());
+    m_sprite_collider.set_texture_rect(m_animations.get_current_frame_rect());
 }
 
 void FinishCup::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_sprite);
+    target.draw(m_sprite_collider);
 }
 
 bool FinishCup::triggered() const

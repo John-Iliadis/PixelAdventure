@@ -23,6 +23,7 @@ struct GameContext
 {
     sf::RenderWindow* window;
     Camera* world_camera;
+    Camera* gui_camera;
     TextureManager* texture_manager;
     FontManager* font_manager;
     SoundBufferManager* sound_buffer_manager;

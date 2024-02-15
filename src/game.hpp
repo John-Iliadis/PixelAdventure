@@ -41,6 +41,7 @@ private:
 private:
     sf::RenderWindow m_window;
     Camera m_world_camera;
+    Camera m_gui_camera;
     StateStack m_state_stack;
     GameContext m_context;
     TextureManager m_texture_manager;

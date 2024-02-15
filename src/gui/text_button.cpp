@@ -40,18 +40,7 @@ void TextButton::set_text_color(const sf::Color &color)
 
 void TextButton::update(const sf::RenderWindow *window)
 {
-    utils::set_origin(m_text, Origin::CENTER);
-    utils::set_origin(m_selected_text, Origin::CENTER);
 
-    auto button_bounds = m_button.getGlobalBounds();
-
-    sf::Vector2i text_pos {
-            static_cast<int>(button_bounds.left +  button_bounds.width / 2.f + m_offset.x),
-            static_cast<int>(button_bounds.top + button_bounds.height / 2.f + m_offset.y)
-    };
-
-    m_text.setPosition(text_pos.x, text_pos.y);
-    m_selected_text.setPosition(text_pos.x, text_pos.y);
 }
 
 void TextButton::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -73,4 +62,20 @@ void TextButton::set_text_offset(float x, float y)
 
 void TextButton::handle_event(const sf::Event &event)
 {
+}
+
+void TextButton::position_text()
+{
+    utils::set_origin(m_text, Origin::CENTER);
+    utils::set_origin(m_selected_text, Origin::CENTER);
+
+    auto button_bounds = m_button.getGlobalBounds();
+
+    sf::Vector2i text_pos {
+            static_cast<int>(button_bounds.left +  button_bounds.width / 2.f + m_offset.x),
+            static_cast<int>(button_bounds.top + button_bounds.height / 2.f + m_offset.y)
+    };
+
+    m_text.setPosition(text_pos.x, text_pos.y);
+    m_selected_text.setPosition(text_pos.x, text_pos.y);
 }

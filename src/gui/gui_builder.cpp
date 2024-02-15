@@ -188,6 +188,8 @@ std::unique_ptr<TextButton> GUI_Builder::make_text_button()
     text_button->set_text_color(m_text_color);
     text_button->set_text_offset(m_text_offset);
 
+    text_button->position_text();
+
     reset();
 
     return text_button;

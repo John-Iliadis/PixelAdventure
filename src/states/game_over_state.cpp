@@ -4,24 +4,29 @@
 
 #include "game_over_state.hpp"
 
+
 GameOverState::GameOverState(StateStack &state_stack, GameContext &context, void* user_ptr)
     : State(state_stack, context)
 {
     setup_gui();
 
-    m_gui_container.find_selected(m_context.window);
+    sf::Vector2f gui_camera_pos = m_context.gui_camera->get_center();
+    m_context.gui_camera->set_center(gui_camera_pos.x, gui_camera_pos.y + 1000);
+    m_context.gui_camera->set_target(gui_camera_pos, easing_functions::linear);
 }
 
 bool GameOverState::handle_events(const sf::Event &event)
 {
-    m_gui_container.handle_event(event);
+    if (m_context.gui_camera->target_reached())
+        m_gui_container.handle_event(event);
 
     return false;
 }
 
 bool GameOverState::update(double dt)
 {
-    m_gui_container.update(m_context.window);
+    if (m_context.gui_camera->target_reached())
+        m_gui_container.update(m_context.window);
 
     return true;
 }
@@ -84,6 +89,8 @@ void GameOverState::setup_gui()
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
             .set_callback([this] () {
+                m_gui_container.deselect_all();
+
                 LevelDetails* level_details = new LevelDetails {
                         "../data/tmx/test_map3.tmj",
                         "test_map3",
@@ -108,6 +115,7 @@ void GameOverState::setup_gui()
             .set_text_color(Colors::brown)
             .set_text_offset(0, 0)
             .set_callback([this] () {
+                m_gui_container.deselect_all();
                 request_stack_clear();
                 request_stack_push(StateID::MAIN_MENU);
             }).make_text_button();
@@ -134,3 +142,4 @@ void GameOverState::setup_gui()
     m_gui_container.push_back(std::move(main_menu_button));
     m_gui_container.push_back(std::move(exit_button));
 }
+

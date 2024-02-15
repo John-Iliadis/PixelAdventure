@@ -34,6 +34,7 @@ public:
     const sf::View& get_view() const;
     sf::Vector2f get_center() const;
     sf::Vector2f get_size() const;
+    bool target_reached() const;
 
 private:
     class State

@@ -13,6 +13,7 @@
 #include "../audio/sound_player.hpp"
 #include "../audio/music_player.hpp"
 #include "../utilities/utils.hpp"
+#include "sprite_collider.hpp"
 #include "player/player.hpp"
 
 
@@ -36,7 +37,7 @@ private:
         TRIGGERED
     } m_current_state;
 
-    sf::Sprite m_sprite;
+    SpriteCollider m_sprite_collider;
     AnimationManager m_animations;
     std::unordered_map<std::string, const sf::Texture*> m_textures;
 };
