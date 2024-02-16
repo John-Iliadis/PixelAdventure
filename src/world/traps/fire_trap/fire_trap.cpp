@@ -84,7 +84,7 @@ void FireTrap::update(double dt)
 
         case State::FIRE_OFF:
         {
-            if (m_ellapsed >= m_on_time)
+            if (m_ellapsed >= m_off_time)
             {
                 on_fire_off_exit();
                 m_ellapsed = 0;
