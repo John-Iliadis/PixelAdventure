@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "../../../asset_managers/texture_manager.hpp"
 #include "../../../utilities/easing_functions.hpp"
+#include "../../../utilities/utils.hpp"
 #include "../../../structs/line_path.hpp"
 #include "saw.hpp"
 

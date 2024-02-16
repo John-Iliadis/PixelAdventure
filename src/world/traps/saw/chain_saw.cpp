@@ -14,7 +14,7 @@ ChainSaw::ChainSaw(TextureManager &textures)
     chain_texture.setRepeated(true);
 
     m_chain.setTexture(chain_texture);
-    m_chain.setOrigin(0, m_chain.getGlobalBounds().height / 2);
+   // m_chain.setOrigin(0, m_chain.getGlobalBounds().height / 2);
 }
 
 void ChainSaw::update(double dt)
@@ -61,8 +61,20 @@ void ChainSaw::set_path(const LinePath &path)
         static_cast<int>(m_chain.getGlobalBounds().height)
     };
 
+    Origin chain_origin;
+
+    if (path.starting_point.y == path.end_point.y)
+    {
+        chain_origin = path.starting_point.x < path.end_point.x? Origin::CENTER_LEFT : Origin::CENTER_RIGHT;
+    }
+    else
+    {
+        chain_origin = path.starting_point.y < path.end_point.y? Origin::CENTER_LEFT : Origin::CENTER_RIGHT;
+    }
+
     m_chain.setTextureRect(chain_texture_rect);
     m_chain.setPosition(path.starting_point);
+    utils::set_origin(m_chain, chain_origin);
 
     if (std::isinf(path.get_slope()))
         m_chain.rotate(90);
