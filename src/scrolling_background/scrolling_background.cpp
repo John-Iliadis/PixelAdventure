@@ -2,7 +2,6 @@
 // Created by Gianni on 13/01/2024.
 //
 
-#include <iostream>
 #include "scrolling_background.hpp"
 
 
@@ -38,11 +37,20 @@ void ScrollingBackground::update(double dt)
     float move_speed = m_scroll_speed * dt;
 
     m_scrollable_background.front().move(0, move_speed);
-    m_scrollable_background.back().move(0, move_speed);
+
+    sf::Vector2f back_pos {
+            m_scrollable_background.back().getPosition().x,
+            m_scrollable_background.front().getPosition().y + m_scrollable_background.front().getGlobalBounds().height
+    };
+
+    m_scrollable_background.back().setPosition(back_pos);
 
     if (m_scrollable_background.front().getPosition().y > 0)
     {
-        sf::Vector2f new_pos(m_scrollable_background.front().getPosition().x, m_scrollable_background.front().getPosition().y - m_scrollable_background.front().getGlobalBounds().height);
+        sf::Vector2f new_pos {
+            m_scrollable_background.front().getPosition().x,
+            m_scrollable_background.front().getPosition().y - m_scrollable_background.front().getGlobalBounds().height
+        };
 
         m_scrollable_background.back().setPosition(new_pos);
 
