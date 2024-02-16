@@ -13,7 +13,9 @@ static constexpr uint32_t world_view_height = window_height / 2;
 Game::Game()
 {
     sf::VideoMode window_size {window_width, window_height};
-    m_window.create(window_size, "Platformer", sf::Style::Titlebar | sf::Style::Close);
+    uint32_t window_style = sf::Style::Titlebar | sf::Style::Close;
+
+    m_window.create(window_size, "Platformer", window_style);
     m_window.setKeyRepeatEnabled(false);
 
     Cursor::init();
@@ -63,7 +65,6 @@ void Game::run()
             ellapsed -= time_per_frame;
         }
 
-        update_fps_stats(elapsed_time);
         draw();
     }
 
@@ -106,18 +107,4 @@ void Game::draw()
     m_window.clear(clear_color);
     m_state_stack.draw();
     m_window.display();
-}
-
-void Game::update_fps_stats(sf::Time elapsed)
-{
-    fps_update_time += elapsed;
-    fps_num_frames += 1;
-
-    if (fps_update_time >= sf::seconds(1.f))
-    {
-        std::cout << fps_num_frames << '\n';
-
-        fps_update_time -= sf::seconds(1);
-        fps_num_frames = 0;
-    }
 }

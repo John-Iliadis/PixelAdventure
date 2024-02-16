@@ -36,8 +36,6 @@ private:
     void update(double dt);
     void draw();
 
-    void update_fps_stats(sf::Time elapsed);
-
 private:
     sf::RenderWindow m_window;
     Camera m_world_camera;
@@ -49,9 +47,6 @@ private:
     SoundBufferManager m_sound_buffer_manager;
     MusicManager m_music_manager;
     Settings m_settings;
-
-    sf::Time fps_update_time{};
-    uint32_t fps_num_frames{};
 };
 
 
