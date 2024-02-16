@@ -26,7 +26,7 @@ World::World(GameContext& context, const LevelDetails& level_details)
 
     m_solid_tiles = TiledJsonLoader::get_tiles(map_data, "solid_tiles");
 
-    auto player_pos = TiledJsonLoader::get_position(map_data, "spawn_positions", "player_spawn_pos");
+    auto player_pos = TiledJsonLoader::get_position(map_data, "player_spawn", "player_spawn_pos");
 
     m_player.set_position(player_pos);
     m_player.set_respawn_position(player_pos);
@@ -55,11 +55,11 @@ World::World(GameContext& context, const LevelDetails& level_details)
     m_fruit_manager = FruitManager(TiledJsonLoader::get_list_object(map_data["layers"], "fruit_layer"), *m_context.texture_manager);
 
     setup_checkpoints(TiledJsonLoader::get_list_object(map_data["layers"], "checkpoint_positions"));
-    setup_spikes(TiledJsonLoader::get_list_object(map_data["layers"], "spike_positions"));
-    setup_fire_traps(TiledJsonLoader::get_list_object(map_data["layers"], "fire_trap_positions"));
+    setup_fire_traps(TiledJsonLoader::get_list_object(map_data["layers"], "fire_trap_layer"));
     setup_saw_traps(TiledJsonLoader::get_list_object(map_data["layers"], "saw_layer"));
-    setup_spike_head_traps(TiledJsonLoader::get_list_object(map_data["layers"], "spike_head_layer"));
+    setup_spike_head_traps(TiledJsonLoader::get_list_object(map_data["layers"], "spiked_head_layer"));
     setup_spiked_balls(TiledJsonLoader::get_list_object(map_data["layers"], "spiked_ball_layer"));
+    setup_spikes(TiledJsonLoader::get_list_object(map_data["layers"], "spike_layer"));
     setup_finish(TiledJsonLoader::get_list_object(map_data["layers"], "finish"));
 }
 
