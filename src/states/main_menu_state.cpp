@@ -118,9 +118,9 @@ void MainMenuState::setup_gui()
                 MusicPlayer::stop();
 
                 LevelDetails* level_details = new LevelDetails {
-                        "../data/tmx/test_map3.tmj",
-                        "test_map3",
-                        "yellow"
+                        "../data/maps/map_1.json",
+                        "map_1",
+                        "gray"
                 };
 
                 auto level_details_ptr = reinterpret_cast<void*>(level_details);
