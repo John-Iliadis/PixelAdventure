@@ -50,8 +50,8 @@
                 3,
                 52,
                 42,
-                44,
                 46,
+                44,
                 23,
                 34,
                 53,
@@ -74,20 +74,20 @@
                 30,
                 18,
                 54,
-                8,
-                39,
                 27,
+                39,
+                8,
                 29,
                 33,
                 48,
                 31,
                 20
             ],
-            "scale": 3,
-            "selectedLayer": 1,
+            "scale": 2,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 1535.8333333333333,
-                "y": 1151.8333333333333
+                "x": 803.25,
+                "y": 1525.75
             }
         },
         "terrain.tsx": {
@@ -104,15 +104,14 @@
     "map.tileWidth": 16,
     "openFiles": [
         "terrain.tsx",
-        "map_1.tmx",
-        "C:/Users/Giann/CLionProjects/Platformer/data/tmx/test_map3.tmx"
+        "map_1.tmx"
     ],
     "project": "maps.tiled-project",
     "property.type": "int",
     "recentFiles": [
-        "C:/Users/Giann/CLionProjects/Platformer/data/tmx/test_map3.tmx",
         "terrain.tsx",
-        "map_1.tmx"
+        "map_1.tmx",
+        "C:/Users/Giann/CLionProjects/Platformer/data/tmx/test_map3.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
