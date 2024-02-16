@@ -26,34 +26,11 @@ World::World(GameContext& context, const LevelDetails& level_details)
 
     m_solid_tiles = TiledJsonLoader::get_tiles(map_data, "solid_tiles");
 
-    auto player_pos = TiledJsonLoader::get_position(map_data, "player_spawn", "player_spawn_pos");
-
-    m_player.set_position(player_pos);
-    m_player.set_respawn_position(player_pos);
-
-    m_player.set_collision_callback([this] (double dt) {
-        Collision::handle_x_axis_collisions(m_player, m_solid_tiles, dt);
-        Collision::handle_y_axis_collisions(m_player, m_solid_tiles, dt);
-    });
-
-    m_player.set_death_particle_callback([this] () {
-        m_death_particles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
-    });
-
-    m_player.set_camera_transition_callback([this] () {
-        sf::Vector2f player_respawn_pos = m_player.get_respawn_pos();
-        sf::Vector2f camera_target(player_respawn_pos.x, player_respawn_pos.y - m_player.get_sprite_size().height / 2.f);
-        m_context.world_camera->set_target(camera_target, easing_functions::ease_out_quint, 1.2, [this] () {m_player.respawn();});
-    });
-
-    m_player.set_move_camera_callback([this] () {
-        if (m_player.is_alive()) m_context.world_camera->set_center(m_player.get_center());
-    });
-
     m_context.world_camera->set_center(m_player.get_center());
 
     m_fruit_manager = FruitManager(TiledJsonLoader::get_list_object(map_data["layers"], "fruit_layer"), *m_context.texture_manager);
 
+    setup_player(map_data);
     setup_checkpoints(TiledJsonLoader::get_list_object(map_data["layers"], "checkpoint_positions"));
     setup_fire_traps(TiledJsonLoader::get_list_object(map_data["layers"], "fire_trap_layer"));
     setup_saw_traps(TiledJsonLoader::get_list_object(map_data["layers"], "saw_layer"));
@@ -92,6 +69,38 @@ void World::draw()
     window.draw(m_finish);
     window.draw(m_player);
     window.draw(m_death_particles);
+}
+
+bool World::game_over() const
+{
+    return m_finish.triggered();
+}
+
+void World::setup_player(const nlohmann::json &map_data)
+{
+    auto player_pos = TiledJsonLoader::get_position(map_data, "player_spawn", "player_spawn_pos");
+
+    m_player.set_position(player_pos);
+    m_player.set_respawn_position(player_pos);
+
+    m_player.set_collision_callback([this] (double dt) {
+        Collision::handle_x_axis_collisions(m_player, m_solid_tiles, dt);
+        Collision::handle_y_axis_collisions(m_player, m_solid_tiles, dt);
+    });
+
+    m_player.set_death_particle_callback([this] () {
+        m_death_particles.add_particle(ParticleType::PLAYER_DEATH, m_player.get_position(), {m_player.get_velocity().x, -400}, m_player.get_orientation());
+    });
+
+    m_player.set_camera_transition_callback([this] () {
+        sf::Vector2f player_respawn_pos = m_player.get_respawn_pos();
+        sf::Vector2f camera_target(player_respawn_pos.x, player_respawn_pos.y - m_player.get_sprite_size().height / 2.f);
+        m_context.world_camera->set_target(camera_target, easing_functions::ease_out_quint, 1.2, [this] () {m_player.respawn();});
+    });
+
+    m_player.set_move_camera_callback([this] () {
+        if (m_player.is_alive()) m_context.world_camera->set_center(m_player.get_center());
+    });
 }
 
 void World::setup_checkpoints(const nlohmann::json &checkpoint_pos_layer)
@@ -305,9 +314,4 @@ void World::setup_finish(const nlohmann::json& finish_layer)
     };
 
     m_finish = FinishCup(*m_context.texture_manager, position);
-}
-
-bool World::game_over() const
-{
-    return m_finish.triggered();
 }

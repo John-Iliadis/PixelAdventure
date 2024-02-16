@@ -6,15 +6,15 @@
 #define PLATFORMER_WORLD_HPP
 
 #include <memory>
-#include <SFML/Window/Event.hpp>
 #include <fstream>
+#include <SFML/Window/Event.hpp>
 #include "../structs/level_details.hpp"
+#include "../camera/camera.hpp"
 #include "../scrolling_background/scrolling_background.hpp"
 #include "player/player.hpp"
 #include "collision.hpp"
 #include "tiled_json_loader.hpp"
 #include "traps/spikes/spike.hpp"
-#include "../camera/camera.hpp"
 #include "checkpoint/checkpoint_manager.hpp"
 #include "particles/death_particle_system.hpp"
 #include "traps/saw/chain_saw.hpp"
@@ -40,6 +40,7 @@ public:
     bool game_over() const;
 
 private:
+    void setup_player(const nlohmann::json& map_data);
     void setup_checkpoints(const nlohmann::json& checkpoint_pos_layer);
     void setup_spikes(const nlohmann::json& spike_pos_layer);
     void setup_fire_traps(const nlohmann::json& fire_trap_layer);
