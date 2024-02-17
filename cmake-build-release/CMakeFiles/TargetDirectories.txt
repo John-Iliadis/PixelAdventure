@@ -1,0 +1,3 @@
+C:/Users/Giann/CLionProjects/Platformer/cmake-build-release/CMakeFiles/Platformer.dir
+C:/Users/Giann/CLionProjects/Platformer/cmake-build-release/CMakeFiles/edit_cache.dir
+C:/Users/Giann/CLionProjects/Platformer/cmake-build-release/CMakeFiles/rebuild_cache.dir
