@@ -13,7 +13,17 @@ static constexpr uint32_t world_view_height = window_height / 2;
 Game::Game()
 {
     sf::VideoMode window_size {window_width, window_height};
-    uint32_t window_style = sf::Style::Titlebar | sf::Style::Close;
+
+    sf::Vector2u desktop_mode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
+
+    uint32_t window_style;
+
+    if (desktop_mode.x < 1920 || desktop_mode.y < 1080)
+        throw std::runtime_error("Screen resolution not supported\n");
+    else if (desktop_mode.x == 1920 && desktop_mode.y == 1080)
+        window_style = sf::Style::Fullscreen;
+    else
+        window_style = sf::Style::Titlebar | sf::Style::Close;
 
     m_window.create(window_size, "Pixel Adventure", window_style);
     m_window.setKeyRepeatEnabled(false);

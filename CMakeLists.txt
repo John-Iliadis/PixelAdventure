@@ -160,3 +160,4 @@ endif ()
 target_include_directories(Pixel_Adventure PRIVATE ${SFML_INCLUDE_DIR})
 
 target_link_libraries(Pixel_Adventure PRIVATE sfml-audio sfml-window sfml-graphics sfml-system)
+target_link_options(Pixel_Adventure PRIVATE -static "-Wl,--allow-multiple-definition")
