@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.27)
-project(Platformer)
+project(Pixel_Adventure)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(Platformer
+add_executable(Pixel_Adventure
         src/main.cpp
         src/game.cpp
         src/game.hpp
@@ -149,7 +149,7 @@ add_executable(Platformer
 
 set(SFML_STATIC_LIBRARIES true)
 
-target_compile_definitions(Platformer PRIVATE SFML_STATIC)
+target_compile_definitions(Pixel_Adventure PRIVATE SFML_STATIC)
 
 find_package(SFML COMPONENTS audio window graphics system REQUIRED)
 
@@ -157,6 +157,6 @@ if (NOT SFML_FOUND)
     message(FATAL_ERROR "SFML libraries not found")
 endif ()
 
-target_include_directories(Platformer PRIVATE ${SFML_INCLUDE_DIR})
+target_include_directories(Pixel_Adventure PRIVATE ${SFML_INCLUDE_DIR})
 
-target_link_libraries(Platformer PRIVATE sfml-audio sfml-window sfml-graphics sfml-system)
+target_link_libraries(Pixel_Adventure PRIVATE sfml-audio sfml-window sfml-graphics sfml-system)

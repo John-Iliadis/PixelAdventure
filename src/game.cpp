@@ -15,7 +15,7 @@ Game::Game()
     sf::VideoMode window_size {window_width, window_height};
     uint32_t window_style = sf::Style::Titlebar | sf::Style::Close;
 
-    m_window.create(window_size, "Platformer", window_style);
+    m_window.create(window_size, "Pixel Adventure", window_style);
     m_window.setKeyRepeatEnabled(false);
 
     Cursor::init();
