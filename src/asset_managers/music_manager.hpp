@@ -17,7 +17,8 @@ private:
     {
         auto music = std::make_unique<sf::Music>();
 
-        assert(music->openFromFile(file_name));
+        if (!music->openFromFile(file_name))
+            throw std::runtime_error("MusicManager::load: Failed to load " + file_name);
 
         return music;
     }

@@ -17,7 +17,8 @@ private:
     {
         auto font = std::make_unique<sf::Font>();
 
-        assert(font->loadFromFile(file_name));
+        if (!font->loadFromFile(file_name))
+            throw std::runtime_error("FontManager::load: Failed to load " + file_name);
 
         font->setSmooth(false);
 

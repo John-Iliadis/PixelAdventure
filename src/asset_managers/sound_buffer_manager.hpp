@@ -17,7 +17,8 @@ private:
     {
         auto sound_buffer = std::make_unique<sf::SoundBuffer>();
 
-        assert(sound_buffer->loadFromFile(file_name));
+        if (!sound_buffer->loadFromFile(file_name))
+            throw std::runtime_error("SoundBufferManager::load: Failed to load " + file_name);
 
         return sound_buffer;
     }

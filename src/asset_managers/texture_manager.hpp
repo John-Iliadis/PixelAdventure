@@ -16,7 +16,8 @@ private:
     {
         auto texture = std::make_unique<sf::Texture>();
 
-        assert(texture->loadFromFile(file_name));
+        if (!texture->loadFromFile(file_name))
+            throw std::runtime_error("TextureManager::load: Failed to load " + file_name);
 
         return texture;
     }
