@@ -38,7 +38,7 @@ void MusicPlayer::update(MusicManager &music_manager, float volume)
         m_music->setLoop(m_pending_change->looped);
         m_music->play();
 
-        m_pending_change.release();
+        m_pending_change.reset();
     }
 
     if (m_music && m_music->getVolume() != volume)
