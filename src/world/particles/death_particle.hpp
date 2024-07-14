@@ -26,7 +26,7 @@ private:
     void apply_deceleration(float& value, float deceleration, double dt);
     void update_sprite(double dt);
     void update_animation(double dt);
-    void update_life_tile(double dt);
+    void update_life_time(double dt);
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

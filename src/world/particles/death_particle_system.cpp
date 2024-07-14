@@ -20,7 +20,7 @@ DeathParticleSystem::DeathParticleSystem(const TextureManager &texture_manager)
         Animation l_animation {
             animation["sprite_width"].get<int>(),
             animation["sprite_height"].get<int>(),
-            animation["frame_count"].get<uint32_t >(),
+            animation["frame_count"].get<uint32_t>(),
             sf::milliseconds(animation["frame_time_milliseconds"].get<int>()),
             animation["looped"].get<bool>()
         };

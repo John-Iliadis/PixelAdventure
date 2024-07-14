@@ -37,7 +37,7 @@ void DeathParticle::update(double dt)
     apply_deceleration(m_rotation, rotation_deceleration, dt);
     update_sprite(dt);
     update_animation(dt);
-    update_life_tile(dt);
+    update_life_time(dt);
 }
 
 bool DeathParticle::finished() const
@@ -75,7 +75,7 @@ void DeathParticle::update_animation(double dt)
     m_sprite.setTextureRect(m_animation.get_current_frame_rect());
 }
 
-void DeathParticle::update_life_tile(double dt)
+void DeathParticle::update_life_time(double dt)
 {
     m_life_time -= sf::seconds(dt);
 

@@ -33,9 +33,6 @@ public:
         std::string m_frame_tag;
     };
 
-    using iterator = std::vector<Frame>::iterator;
-    using const_iterator = std::vector<Frame>::const_iterator;
-
     SpriteSheet() = default;
     SpriteSheet(int sprite_width, int sprite_height, uint32_t frame_count);
 
@@ -47,15 +44,10 @@ public:
 
     void clear_frames();
 
-    iterator begin();
-    iterator end();
-    const_iterator begin() const;
-    const_iterator end() const;
-
     const Frame& get_frame(size_t index) const;
     const sf::IntRect& get_frame_rect(size_t index) const;
     const std::string& get_frame_tag(size_t index) const;
-    size_t get_frame_count() const;
+    size_t frame_count() const;
 
 private:
     std::vector<Frame> m_frames;

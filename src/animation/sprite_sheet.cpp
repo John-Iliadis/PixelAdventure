@@ -87,27 +87,7 @@ const std::string& SpriteSheet::get_frame_tag(size_t index) const
     return m_frames.at(index).get_frame_tag();
 }
 
-size_t SpriteSheet::get_frame_count() const
+size_t SpriteSheet::frame_count() const
 {
     return m_frames.size();
-}
-
-SpriteSheet::iterator SpriteSheet::begin()
-{
-    return m_frames.begin();
-}
-
-SpriteSheet::iterator SpriteSheet::end()
-{
-    return m_frames.end();
-}
-
-SpriteSheet::const_iterator SpriteSheet::begin() const
-{
-    return m_frames.begin();
-}
-
-SpriteSheet::const_iterator SpriteSheet::end() const
-{
-    return m_frames.end();
 }

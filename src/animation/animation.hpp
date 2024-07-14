@@ -38,7 +38,8 @@ public:
 
 private:
     SpriteSheet m_sprite_sheet;
-    SpriteSheet::iterator m_current_frame;
+    SpriteSheet::Frame m_current_frame;
+    size_t m_frame_index;
     sf::Time m_ellapsed;
     sf::Time m_time_per_frame;
     bool m_playing;
