@@ -10,7 +10,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include "../asset_managers/font_manager.hpp"
-#include "../structs/level_details.hpp"
 #include "../utilities/utils.hpp"
 #include "../world/world.hpp"
 #include "state.hpp"
@@ -29,7 +28,6 @@ public:
 
 private:
     std::thread m_loading_thread;
-    std::unique_ptr<LevelDetails> m_level_details;
     World* m_world;
     sf::Text m_loading_text;
     std::string m_loading_string;

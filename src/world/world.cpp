@@ -5,29 +5,25 @@
 #include "world.hpp"
 
 
-World::World(GameContext& context, const LevelDetails& level_details)
+static const std::string map_texture_name {"map"};
+static const std::string bg_name {"gray"};
+static const std::string map_data_name {"../data/map/map.json"};
+
+World::World(GameContext& context)
     : m_context(context)
     , m_player(context)
     , m_death_particles(*m_context.texture_manager)
 {
-    const sf::Texture& map_texture = m_context.texture_manager->get(level_details.map_texture_id);
-    m_map.setTexture(map_texture);
-
-    sf::Texture& scrolling_bg_texture = m_context.texture_manager->get(level_details.scrolling_background_texture_id);
+    sf::Texture& map_texture = m_context.texture_manager->get(map_texture_name);
+    sf::Texture& scrolling_bg_texture = m_context.texture_manager->get(bg_name);
     sf::Vector2i map_size = static_cast<sf::Vector2i>(map_texture.getSize());
+
+    nlohmann::json map_data = nlohmann::json::parse(std::ifstream(map_data_name));
+
+    m_map.setTexture(map_texture);
     m_scrolling_background = ScrollingBackground(scrolling_bg_texture, map_size);
-
-    std::ifstream file(level_details.json_file_name);
-    assert(file.is_open());
-
-    nlohmann::json map_data = nlohmann::json::parse(file);
-
-    file.close();
-
     m_solid_tiles = TiledJsonLoader::get_tiles(map_data, "solid_tiles");
-
     m_context.world_camera->set_center(m_player.get_center());
-
     m_fruit_manager = FruitManager(TiledJsonLoader::get_list_object(map_data["layers"], "fruit_layer"), *m_context.texture_manager);
 
     setup_player(map_data);

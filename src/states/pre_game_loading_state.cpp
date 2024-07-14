@@ -7,11 +7,10 @@
 
 PreGameLoadingState::PreGameLoadingState(StateStack &state_stack, GameContext &context, void *user_ptr)
     : State(state_stack, context)
-    , m_level_details(reinterpret_cast<LevelDetails*>(user_ptr))
     , m_loading_string("Loading")
     , m_ellapsed()
     , m_string_timer()
-    , m_min_active_duration(utils::random(2, 5))
+    , m_min_active_duration(static_cast<float>(utils::random(2, 5)))
     , m_load_complete(false)
 {
     m_loading_text.setFont(m_context.font_manager->get("bulky_pixel"));
@@ -20,10 +19,10 @@ PreGameLoadingState::PreGameLoadingState(StateStack &state_stack, GameContext &c
     m_loading_text.setPosition(1500, 900);
 
     m_loading_thread = std::thread {
-            [this] () {
-                m_world = new World(m_context, *m_level_details);
-                m_load_complete = true;
-            }
+        [this] () {
+            m_world = new World(m_context);
+            m_load_complete = true;
+        }
     };
 }
 
@@ -34,8 +33,8 @@ bool PreGameLoadingState::handle_events(const sf::Event &event)
 
 bool PreGameLoadingState::update(double dt)
 {
-    m_ellapsed += dt;
-    m_string_timer += dt;
+    m_ellapsed += static_cast<float>(dt);
+    m_string_timer += static_cast<float>(dt);
 
     if (m_ellapsed > m_min_active_duration && m_load_complete)
     {
@@ -48,9 +47,13 @@ bool PreGameLoadingState::update(double dt)
     if (m_string_timer > 0.3)
     {
         if (m_loading_string.length() % std::string("Loading...").length() == 0)
+        {
             m_loading_string = "Loading";
+        }
         else
+        {
             m_loading_string.push_back('.');
+        }
 
         m_loading_text.setString(m_loading_string);
         m_string_timer = 0;

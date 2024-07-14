@@ -10,7 +10,6 @@
 #include "state.hpp"
 #include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
-#include "../structs/level_details.hpp"
 #include "../audio/sound_player.hpp"
 #include "../audio/music_player.hpp"
 

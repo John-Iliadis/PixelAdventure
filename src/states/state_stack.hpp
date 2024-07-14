@@ -11,11 +11,11 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "../enums/state_identifiers.hpp"
 #include "game_context.hpp"
 #include "state_factory.hpp"
 #include "state.hpp"
 #include "../camera/camera.hpp"
+#include "../enums/state_identifiers.hpp"
 
 
 class StateStack

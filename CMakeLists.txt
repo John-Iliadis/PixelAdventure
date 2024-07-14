@@ -103,7 +103,6 @@ add_executable(Pixel_Adventure
         src/world/fruits/fruit.hpp
         src/world/fruits/fruit_manager.cpp
         src/world/fruits/fruit_manager.hpp
-        src/structs/level_details.hpp
         src/enums/origin.hpp
         src/enums/orientation.hpp
         src/enums/particle_type.hpp

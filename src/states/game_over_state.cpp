@@ -91,16 +91,8 @@ void GameOverState::setup_gui()
             .set_callback([this] () {
                 m_gui_container.deselect_all();
 
-                LevelDetails* level_details = new LevelDetails {
-                        "../data/maps/map_1.json",
-                        "map_1",
-                        "gray"
-                };
-
-                auto level_details_ptr = reinterpret_cast<void*>(level_details);
-
                 request_stack_clear();
-                request_stack_push(StateID::PRE_GAME_LOADING_STATE, level_details_ptr);
+                request_stack_push(StateID::PRE_GAME_LOADING_STATE);
             }).make_text_button();
 
     std::unique_ptr<TextButton> main_menu_button = gui_builder.set_texture("large_button")

@@ -8,7 +8,6 @@
 #include <memory>
 #include <fstream>
 #include <SFML/Window/Event.hpp>
-#include "../structs/level_details.hpp"
 #include "../camera/camera.hpp"
 #include "../scrolling_background/scrolling_background.hpp"
 #include "player/player.hpp"
@@ -31,7 +30,7 @@
 class World
 {
 public:
-    World(GameContext& context, const LevelDetails& level_details);
+    World(GameContext& context);
 
     void handle_events(const sf::Event& event);
     void update(double dt);
