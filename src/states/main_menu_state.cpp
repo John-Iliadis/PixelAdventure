@@ -118,7 +118,7 @@ void MainMenuState::setup_gui()
                 MusicPlayer::stop();
 
                 request_stack_pop();
-                request_stack_push(StateID::PRE_GAME_LOADING_STATE);
+                request_stack_push(StateID::LOADING_STATE, new LoadWorld(m_context, StateID::GAME));
             }).make_text_button();
 
     std::unique_ptr<TextButton> settings_button = gui_builder.set_texture("large_button")

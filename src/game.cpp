@@ -5,25 +5,29 @@
 #include "game.hpp"
 
 
-static constexpr uint32_t window_width = 1920;
-static constexpr uint32_t window_height = 1080;
-static constexpr uint32_t world_view_width = window_width / 2;
-static constexpr uint32_t world_view_height = window_height / 2;
+//static constexpr uint32_t window_width = 1920;
+//static constexpr uint32_t window_height = 1080;
+//static constexpr uint32_t world_view_width = window_width / 2;
+//static constexpr uint32_t world_view_height = window_height / 2;
 
 Game::Game()
 {
-    sf::VideoMode window_size {window_width, window_height};
+    sf::VideoMode window_size;
 
     sf::Vector2u desktop_mode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
 
     uint32_t window_style;
 
-    if (desktop_mode.x < 1920 || desktop_mode.y < 1080)
-        throw std::runtime_error("Screen resolution not supported\n");
-    else if (desktop_mode.x == 1920 && desktop_mode.y == 1080)
+    if (desktop_mode.x <= 1920 || desktop_mode.y <= 1080)
+    {
+        window_size = {desktop_mode.x, desktop_mode.y};
         window_style = sf::Style::Fullscreen;
+    }
     else
+    {
+        window_size = {1920, 1080};
         window_style = sf::Style::Titlebar | sf::Style::Close;
+    }
 
     m_window.create(window_size, "Pixel Adventure", window_style);
     m_window.setKeyRepeatEnabled(false);
@@ -31,16 +35,12 @@ Game::Game()
     Cursor::init();
     Cursor::select_window(&m_window);
 
-    m_world_camera = Camera(world_view_width, world_view_height);
+    m_world_camera = Camera(window_size.width / 2, window_size.height / 2);
 
-    m_gui_camera = Camera(window_width, window_height);
+    m_gui_camera = Camera(window_size.width, window_size.height);
     m_gui_camera.set_center(m_window.getDefaultView().getCenter());
 
-    m_texture_manager.load_directory("../assets/textures");
     m_font_manager.load_directory("../assets/fonts");
-    m_sound_buffer_manager.load_directory("../assets/sounds");
-    m_music_manager.load_directory("../assets/music");
-    m_settings.load_from_file("../data/settings/settings.json");
 
     m_context.window = &m_window;
     m_context.world_camera = &m_world_camera;
@@ -52,7 +52,7 @@ Game::Game()
     m_context.settings = &m_settings;
 
     m_state_stack = StateStack(m_context);
-    m_state_stack.push(StateID::MAIN_MENU);
+    m_state_stack.push(StateID::LOADING_STATE, new LoadAssets(m_context, StateID::MAIN_MENU));
     m_state_stack.apply_pending_changes();
 }
 

@@ -133,8 +133,8 @@ add_executable(Pixel_Adventure
         src/gui/gui_includes.hpp
         src/structs/colors.hpp
         src/structs/settings.hpp
-        src/states/pre_game_loading_state.cpp
-        src/states/pre_game_loading_state.hpp
+        src/states/loading_state.cpp
+        src/states/loading_state.hpp
         src/audio/music_player.cpp
         src/audio/music_player.hpp
         src/audio/sound_player.cpp
@@ -144,7 +144,8 @@ add_executable(Pixel_Adventure
         src/world/finish_cup.cpp
         src/world/finish_cup.hpp
         src/utilities/easing_functions.cpp
-        src/utilities/easing_functions.hpp)
+        src/utilities/easing_functions.hpp
+        src/world/parallel_task.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 
@@ -159,4 +160,5 @@ endif ()
 target_include_directories(Pixel_Adventure PRIVATE ${SFML_INCLUDE_DIR})
 
 target_link_libraries(Pixel_Adventure PRIVATE sfml-audio sfml-window sfml-graphics sfml-system)
+
 target_link_options(Pixel_Adventure PRIVATE -static "-Wl,--allow-multiple-definition")

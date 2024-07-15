@@ -15,7 +15,7 @@ enum class StateID
     GAME,
     GAME_OVER,
     KEY_BINDING,
-    PRE_GAME_LOADING_STATE
+    LOADING_STATE
 };
 
 

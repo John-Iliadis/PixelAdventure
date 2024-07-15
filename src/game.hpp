@@ -5,11 +5,10 @@
 #ifndef PLATFORMER_GAME_HPP
 #define PLATFORMER_GAME_HPP
 
+#include <fstream>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
-#include <fstream>
-#include <iostream>
 #include "utilities/utils.hpp"
 #include "vendor/json.hpp"
 #include "states/state_stack.hpp"
@@ -22,6 +21,7 @@
 #include "audio/sound_player.hpp"
 #include "audio/music_player.hpp"
 #include "world/cursor.hpp"
+#include "world/parallel_task.hpp"
 
 
 class Game

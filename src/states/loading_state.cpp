@@ -2,11 +2,12 @@
 // Created by Gianni on 13/02/2024.
 //
 
-#include "pre_game_loading_state.hpp"
+#include "loading_state.hpp"
 
 
-PreGameLoadingState::PreGameLoadingState(StateStack &state_stack, GameContext &context, void *user_ptr)
+LoadingState::LoadingState(StateStack &state_stack, GameContext &context, void *user_ptr)
     : State(state_stack, context)
+    , m_task(reinterpret_cast<ParallelTask*>(user_ptr))
     , m_loading_string("Loading")
     , m_ellapsed()
     , m_string_timer()
@@ -20,28 +21,34 @@ PreGameLoadingState::PreGameLoadingState(StateStack &state_stack, GameContext &c
 
     m_loading_thread = std::thread {
         [this] () {
-            m_world = new World(m_context);
+            m_task->execute();
             m_load_complete = true;
         }
     };
 }
 
-bool PreGameLoadingState::handle_events(const sf::Event &event)
+bool LoadingState::handle_events(const sf::Event &event)
 {
     return false;
 }
 
-bool PreGameLoadingState::update(double dt)
+bool LoadingState::update(double dt)
 {
     m_ellapsed += static_cast<float>(dt);
     m_string_timer += static_cast<float>(dt);
 
     if (m_ellapsed > m_min_active_duration && m_load_complete)
     {
-        void* user_ptr = reinterpret_cast<void*>(m_world);
+        void* user_ptr = nullptr;
+
+        if (m_task->has_output())
+        {
+            user_ptr = m_task->get_output();
+            assert(user_ptr);
+        }
 
         request_stack_clear();
-        request_stack_push(StateID::GAME, user_ptr);
+        request_stack_push(m_task->m_next_state, user_ptr);
     }
 
     if (m_string_timer > 0.3)
@@ -62,18 +69,18 @@ bool PreGameLoadingState::update(double dt)
     return false;
 }
 
-void PreGameLoadingState::on_world_draw()
+void LoadingState::on_world_draw()
 {
 }
 
-void PreGameLoadingState::on_gui_draw()
+void LoadingState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
     window.draw(m_loading_text);
 }
 
-PreGameLoadingState::~PreGameLoadingState()
+LoadingState::~LoadingState()
 {
     if (m_loading_thread.joinable())
     {

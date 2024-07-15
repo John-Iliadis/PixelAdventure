@@ -49,7 +49,7 @@ private:
     void setup_finish(const nlohmann::json& finish_layer);
 
 private:
-    GameContext& m_context;
+    GameContext m_context;
     ScrollingBackground m_scrolling_background;
     sf::Sprite m_map;
     Player m_player;

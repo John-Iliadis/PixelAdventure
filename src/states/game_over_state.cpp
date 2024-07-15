@@ -92,7 +92,7 @@ void GameOverState::setup_gui()
                 m_gui_container.deselect_all();
 
                 request_stack_clear();
-                request_stack_push(StateID::PRE_GAME_LOADING_STATE);
+                request_stack_push(StateID::LOADING_STATE, new LoadWorld(m_context, StateID::GAME));
             }).make_text_button();
 
     std::unique_ptr<TextButton> main_menu_button = gui_builder.set_texture("large_button")
@@ -108,8 +108,9 @@ void GameOverState::setup_gui()
             .set_text_offset(0, 0)
             .set_callback([this] () {
                 m_gui_container.deselect_all();
+
                 request_stack_clear();
-                request_stack_push(StateID::MAIN_MENU);
+                request_stack_push(StateID::LOADING_STATE, new DoNothing(StateID::MAIN_MENU));
             }).make_text_button();
 
     std::unique_ptr<TextButton> exit_button = gui_builder.set_texture("large_button")

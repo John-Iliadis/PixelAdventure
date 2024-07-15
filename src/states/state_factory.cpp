@@ -9,7 +9,7 @@
 #include "pause_state.hpp"
 #include "game_over_state.hpp"
 #include "key_binding_state.hpp"
-#include "pre_game_loading_state.hpp"
+#include "loading_state.hpp"
 
 
 #define FACTORY_FUNCTION(STATE_TYPE) [&] (void* user_ptr = nullptr)                                   \
@@ -28,7 +28,7 @@ StateFactory::StateFactory(StateStack& state_stack, GameContext& context)
     m_factory[StateID::PAUSE] = FACTORY_FUNCTION(PauseState);
     m_factory[StateID::GAME_OVER] = FACTORY_FUNCTION(GameOverState);
     m_factory[StateID::KEY_BINDING] = FACTORY_FUNCTION(KeyBindingState);
-    m_factory[StateID::PRE_GAME_LOADING_STATE] = FACTORY_FUNCTION(PreGameLoadingState);
+    m_factory[StateID::LOADING_STATE] = FACTORY_FUNCTION(LoadingState);
 }
 
 std::unique_ptr<State> StateFactory::create_state(StateID id, void* user_ptr)

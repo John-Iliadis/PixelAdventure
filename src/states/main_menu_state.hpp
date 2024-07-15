@@ -12,6 +12,7 @@
 #include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
 #include "../audio/music_player.hpp"
+#include "../world/parallel_task.hpp"
 #include "state.hpp"
 
 

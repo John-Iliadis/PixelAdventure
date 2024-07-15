@@ -9,6 +9,7 @@
 #include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
 #include "../camera/camera.hpp"
+#include "../world/parallel_task.hpp"
 #include "state.hpp"
 
 

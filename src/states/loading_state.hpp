@@ -7,19 +7,21 @@
 
 #include <memory>
 #include <thread>
+#include <atomic>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include "../asset_managers/font_manager.hpp"
 #include "../utilities/utils.hpp"
 #include "../world/world.hpp"
+#include "../world/parallel_task.hpp"
 #include "state.hpp"
 
 
-class PreGameLoadingState : public State
+class LoadingState : public State
 {
 public:
-    PreGameLoadingState(StateStack& state_stack, GameContext& context, void* user_ptr = nullptr);
-    ~PreGameLoadingState();
+    LoadingState(StateStack& state_stack, GameContext& context, void* user_ptr = nullptr);
+    ~LoadingState();
 
     bool handle_events(const sf::Event &event) override;
     bool update(double dt) override;
@@ -28,13 +30,13 @@ public:
 
 private:
     std::thread m_loading_thread;
-    World* m_world;
+    std::unique_ptr<ParallelTask> m_task;
     sf::Text m_loading_text;
     std::string m_loading_string;
     float m_ellapsed;
     float m_string_timer;
     float m_min_active_duration;
-    bool m_load_complete;
+    std::atomic<bool> m_load_complete;
 };
 
 
