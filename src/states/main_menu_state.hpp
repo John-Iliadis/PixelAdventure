@@ -9,9 +9,8 @@
 #include "../camera/camera.hpp"
 #include "../asset_managers/font_manager.hpp"
 #include "../asset_managers/texture_manager.hpp"
-#include "../gui/gui_includes.hpp"
+#include "../gui/gui_sprite.hpp"
 #include "../structs/colors.hpp"
-#include "../audio/music_player.hpp"
 #include "../world/parallel_task.hpp"
 #include "state.hpp"
 
@@ -30,11 +29,13 @@ public:
     void on_gui_draw() override;
 
 private:
-    void setup_gui();
+    void play_callback();
+    void settings_callback();
+    void exit_callback();
 
 private:
     ScrollingBackground m_scrolling_background;
-    GUI_Container m_gui_container;
+    GUI_Sprite gui_sprite;
 };
 
 

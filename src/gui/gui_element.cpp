@@ -1,12 +1,12 @@
 //
-// Created by Gianni on 9/02/2024.
+// Created by Gianni on 15/07/2024.
 //
 
 #include "gui_element.hpp"
 
 
 GUI_Element::GUI_Element()
-    : m_selected(false)
+    : m_selected()
 {
 }
 

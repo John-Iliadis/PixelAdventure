@@ -8,7 +8,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "state.hpp"
-#include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
 #include "../audio/sound_player.hpp"
 #include "../audio/music_player.hpp"
@@ -29,10 +28,13 @@ public:
     void on_gui_draw() override;
 
 private:
-    void setup_gui();
+    void play_callback();
+    void restart_callback();
+    void settings_callback();
+    void menu_callback();
+    void desktop_callback();
 
 private:
-    GUI_Container m_gui_container;
     sf::RectangleShape m_dark_overlay;
 };
 

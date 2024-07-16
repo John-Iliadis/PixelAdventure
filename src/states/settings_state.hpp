@@ -7,7 +7,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "state.hpp"
-#include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
 #include "../structs/settings.hpp"
 
@@ -25,10 +24,10 @@ public:
     void on_gui_draw() override;
 
 private:
-    void setup_gui();
-
-private:
-    GUI_Container m_gui_container;
+    void left_binding_callback();
+    void right_binding_callback();
+    void up_binding_callback();
+    void back_callback();
 };
 
 

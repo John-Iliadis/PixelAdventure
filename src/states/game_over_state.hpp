@@ -6,7 +6,6 @@
 #define PLATFORMER_GAME_OVER_STATE_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
 #include "../camera/camera.hpp"
 #include "../world/parallel_task.hpp"
@@ -24,10 +23,9 @@ public:
     void on_gui_draw() override;
 
 private:
-    void setup_gui();
-
-private:
-    GUI_Container m_gui_container;
+    void restart_callback();
+    void main_menu_callback();
+    void exit_callback();
 };
 
 

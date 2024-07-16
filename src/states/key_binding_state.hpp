@@ -7,7 +7,6 @@
 
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../gui/gui_includes.hpp"
 #include "../structs/colors.hpp"
 #include "../utilities/utils.hpp"
 #include "../structs/settings.hpp"
@@ -26,11 +25,11 @@ public:
     void on_gui_draw() override;
 
 private:
-    void setup_gui();
     bool check_valid_key(sf::Keyboard::Key key);
 
+    void back_callback();
+
 private:
-    GUI_Container m_gui_container;
     std::unique_ptr<std::string> m_action;
     sf::Text m_invalid_key_text;
     float m_invalid_key_timer;

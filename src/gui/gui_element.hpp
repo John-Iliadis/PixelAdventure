@@ -1,38 +1,39 @@
 //
-// Created by Gianni on 9/02/2024.
+// Created by Gianni on 15/07/2024.
 //
 
-#ifndef PLATFORMER_GUI_ELEMENT_HPP
-#define PLATFORMER_GUI_ELEMENT_HPP
+#ifndef PIXEL_ADVENTURE_GUI_ELEMENT_HPP
+#define PIXEL_ADVENTURE_GUI_ELEMENT_HPP
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Transformable.hpp>
 
 
-class GUI_Element : virtual public sf::Drawable
+class GUI_Element : public sf::Transformable
 {
 public:
     GUI_Element();
     virtual ~GUI_Element() = default;
 
-    virtual bool is_selectable() const = 0;
-
     virtual void select();
     virtual void deselect();
 
+    bool selected() const;
+
+    virtual void handle_event(const sf::Event& event) = 0;
+    virtual void draw(sf::RenderWindow& window) = 0;
+
+    virtual bool selectable() = 0;
+
     virtual void activate() = 0;
 
-    virtual void update(const sf::RenderWindow* window) = 0;
-    virtual void handle_event(const sf::Event& event) = 0;
-
-    virtual sf::Rect<float> get_clickable_area() const = 0;
-
-    bool selected() const;
+    virtual sf::FloatRect bounding_box() = 0;
+    virtual sf::Transform transform() = 0; // todo: delete
 
 private:
     bool m_selected;
 };
 
 
-#endif //PLATFORMER_GUI_ELEMENT_HPP
+#endif //PIXEL_ADVENTURE_GUI_ELEMENT_HPP

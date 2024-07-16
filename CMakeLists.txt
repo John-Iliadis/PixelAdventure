@@ -106,22 +106,6 @@ add_executable(Pixel_Adventure
         src/enums/origin.hpp
         src/enums/orientation.hpp
         src/enums/particle_type.hpp
-        src/gui/gui_element.cpp
-        src/gui/gui_element.hpp
-        src/gui/button.cpp
-        src/gui/button.hpp
-        src/gui/gui_container.cpp
-        src/gui/gui_container.hpp
-        src/gui/text_button.cpp
-        src/gui/text_button.hpp
-        src/gui/sprite_element.cpp
-        src/gui/sprite_element.hpp
-        src/gui/text_element.cpp
-        src/gui/text_element.hpp
-        src/gui/slider.cpp
-        src/gui/slider.hpp
-        src/gui/gui_builder.cpp
-        src/gui/gui_builder.hpp
         src/states/settings_state.cpp
         src/states/settings_state.hpp
         src/states/pause_state.cpp
@@ -130,7 +114,6 @@ add_executable(Pixel_Adventure
         src/states/game_over_state.hpp
         src/states/key_binding_state.cpp
         src/states/key_binding_state.hpp
-        src/gui/gui_includes.hpp
         src/structs/colors.hpp
         src/structs/settings.hpp
         src/states/loading_state.cpp
@@ -145,7 +128,11 @@ add_executable(Pixel_Adventure
         src/world/finish_cup.hpp
         src/utilities/easing_functions.cpp
         src/utilities/easing_functions.hpp
-        src/world/parallel_task.hpp)
+        src/world/parallel_task.hpp
+        src/gui/gui_element.cpp
+        src/gui/gui_element.hpp
+        src/gui/gui_sprite.cpp
+        src/gui/gui_sprite.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

@@ -3,6 +3,7 @@
 //
 
 #include "key_binding_state.hpp"
+#include "../asset_managers/font_manager.hpp"
 
 
 KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, void* user_ptr)
@@ -18,10 +19,6 @@ KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, 
     m_invalid_key_text.setPosition(window_size.x / 2, 700);
     m_invalid_key_text.setFillColor(sf::Color::Transparent);
     utils::set_origin(m_invalid_key_text, Origin::CENTER);
-
-    setup_gui();
-
-    m_gui_container.find_selected(m_context.window);
 }
 
 bool KeyBindingState::handle_events(const sf::Event &event)
@@ -43,15 +40,11 @@ bool KeyBindingState::handle_events(const sf::Event &event)
         }
     }
 
-    m_gui_container.handle_event(event);
-
     return false;
 }
 
 bool KeyBindingState::update(double dt)
 {
-    m_gui_container.update(m_context.window);
-
     m_invalid_key_text.setFillColor(m_invalid_key_timer > 0? sf::Color::Red : sf::Color::Transparent);
 
     m_invalid_key_timer -= dt;
@@ -68,54 +61,7 @@ void KeyBindingState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    window.draw(m_gui_container);
     window.draw(m_invalid_key_text);
-}
-
-void KeyBindingState::setup_gui()
-{
-    static GUI_Builder gui_builder(m_context.texture_manager, m_context.font_manager);
-
-    sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
-
-    std::unique_ptr<SpriteElement> message_board = gui_builder.set_texture("message_board")
-            .set_position(window_size / 2.f)
-            .set_scale(4, 4)
-            .set_origin(Origin::CENTER)
-            .make_sprite_element();
-
-    std::unique_ptr<SpriteElement> message_board_paper = gui_builder.set_texture("message_paper")
-            .set_position(window_size / 2.f)
-            .set_scale(4, 4)
-            .set_origin(Origin::CENTER)
-            .make_sprite_element();
-
-    std::unique_ptr<TextElement> message_board_text = gui_builder.set_font("bulky_pixel")
-            .set_character_size(30)
-            .set_position(window_size / 2.f)
-            .set_origin(Origin::CENTER)
-            .set_text_color(Colors::brown)
-            .set_text_string("Press Any Key")
-            .make_text_element();
-
-    std::unique_ptr<TextButton> back_button = gui_builder.set_texture("large_button")
-            .set_font("bulky_pixel")
-            .set_position(window_size.x - 150, window_size.y - 100)
-            .set_origin(Origin::CENTER)
-            .set_scale(4, 4)
-            .set_scale_hover(4.2, 4.2)
-            .set_text_string("Back")
-            .set_character_size(30)
-            .set_character_size_hover(32)
-            .set_text_color(Colors::brown)
-            .set_text_offset(0, 0)
-            .set_callback([this] () { request_stack_pop(); })
-            .make_text_button();
-
-    m_gui_container.push_back(std::move(message_board));
-    m_gui_container.push_back(std::move(message_board_paper));
-    m_gui_container.push_back(std::move(message_board_text));
-    m_gui_container.push_back(std::move(back_button));
 }
 
 bool KeyBindingState::check_valid_key(sf::Keyboard::Key key)
@@ -138,4 +84,9 @@ bool KeyBindingState::check_valid_key(sf::Keyboard::Key key)
         return true;
 
     return false;
+}
+
+void KeyBindingState::back_callback()
+{
+    request_stack_pop();
 }

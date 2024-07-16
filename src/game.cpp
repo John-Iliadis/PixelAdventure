@@ -71,8 +71,8 @@ void Game::run()
 
         while (ellapsed >= time_per_frame)
         {
-            update(time_per_frame);
             ellapsed -= time_per_frame;
+            update(time_per_frame);
         }
 
         draw();

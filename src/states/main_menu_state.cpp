@@ -15,29 +15,27 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
 
     m_context.world_camera->set_center(m_context.world_camera->get_size() / 2.f);
 
-    setup_gui();
-
-    m_gui_container.find_selected(m_context.window);
     MusicPlayer::play("menu_music", true);
+
+    gui_sprite.set_texture(m_context.texture_manager->get("large_button"));
+    gui_sprite.move(20, 20);
+    gui_sprite.scale(4, 4);
 }
 
 void MainMenuState::on_exit()
 {
     State::on_exit();
 
-    m_gui_container.deselect_all();
 }
 
 void MainMenuState::on_return()
 {
     State::on_return();
 
-    m_gui_container.find_selected(m_context.window);
 }
 
 bool MainMenuState::handle_events(const sf::Event &event)
 {
-    m_gui_container.handle_event(event);
 
     return false;
 }
@@ -45,9 +43,6 @@ bool MainMenuState::handle_events(const sf::Event &event)
 bool MainMenuState::update(double dt)
 {
     m_scrolling_background.update(dt);
-
-    if (m_status == Status::CURRENT)
-        m_gui_container.update(m_context.window);
 
     return false;
 }
@@ -63,100 +58,22 @@ void MainMenuState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    if (m_status == Status::CURRENT)
-    {
-        window.draw(m_gui_container);
-    }
+    gui_sprite.draw(window);
 }
 
-void MainMenuState::setup_gui()
+void MainMenuState::play_callback()
 {
-    static GUI_Builder gui_builder(m_context.texture_manager, m_context.font_manager);
-
-    sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
-
-    std::unique_ptr<SpriteElement> title_board = gui_builder.set_texture("title_board")
-            .set_position(window_size.x / 2, 150)
-            .set_scale(4, 4)
-            .set_origin(Origin::CENTER)
-            .make_sprite_element();
-
-    std::unique_ptr<SpriteElement> title_board_paper = gui_builder.set_texture("paper_label")
-            .set_position(window_size.x / 2, 150)
-            .set_scale(4, 4)
-            .set_origin(Origin::CENTER)
-            .make_sprite_element();
-
-    std::unique_ptr<TextElement> title_board_text = gui_builder.set_font("bulky_pixel")
-            .set_character_size(30)
-            .set_position(window_size.x / 2, 150)
-            .set_origin(Origin::CENTER)
-            .set_text_color(Colors::brown)
-            .set_text_string("Main Menu")
-            .make_text_element();
-
-    std::unique_ptr<SpriteElement> menu_board = gui_builder.set_texture("menu_board")
-            .set_position(window_size.x / 2, window_size.y / 2 + 80)
-            .set_origin(Origin::CENTER)
-            .set_scale(4, 4)
-            .make_sprite_element();
-
-    sf::Rect<float> menu_board_bounds = menu_board->get_clickable_area();
-
-    std::unique_ptr<TextButton> play_button = gui_builder.set_texture("large_button")
-            .set_font("bulky_pixel")
-            .set_position(window_size.x / 2, menu_board_bounds.top + 125)
-            .set_origin(Origin::CENTER)
-            .set_scale(4, 4)
-            .set_scale_hover(4.2, 4.2)
-            .set_text_string("Play")
-            .set_character_size(30)
-            .set_character_size_hover(32)
-            .set_text_color(Colors::brown)
-            .set_text_offset(0, 0)
-            .set_callback([this] () {
-                MusicPlayer::stop();
-
-                request_stack_pop();
-                request_stack_push(StateID::LOADING_STATE, new LoadWorld(m_context, StateID::GAME));
-            }).make_text_button();
-
-    std::unique_ptr<TextButton> settings_button = gui_builder.set_texture("large_button")
-            .set_font("bulky_pixel")
-            .set_position(window_size.x / 2, menu_board_bounds.top + 255)
-            .set_origin(Origin::CENTER)
-            .set_scale(4, 4)
-            .set_scale_hover(4.2, 4.2)
-            .set_text_string("Settings")
-            .set_character_size(30)
-            .set_character_size_hover(32)
-            .set_text_color(Colors::brown)
-            .set_text_offset(0, 0)
-            .set_callback([this] () {
-                request_stack_push(StateID::SETTINGS);
-            }).make_text_button();
-
-    std::unique_ptr<TextButton> exit_button = gui_builder.set_texture("large_button")
-            .set_font("bulky_pixel")
-            .set_position(window_size.x / 2, menu_board_bounds.top + 385)
-            .set_origin(Origin::CENTER)
-            .set_scale(4, 4)
-            .set_scale_hover(4.2, 4.2)
-            .set_text_string("Exit")
-            .set_character_size(30)
-            .set_character_size_hover(32)
-            .set_text_color(Colors::brown)
-            .set_text_offset(0, 0)
-            .set_callback([this] () {
-                request_stack_pop();
-            }).make_text_button();
-
-    m_gui_container.push_back(std::move(title_board));
-    m_gui_container.push_back(std::move(title_board_paper));
-    m_gui_container.push_back(std::move(title_board_text));
-    m_gui_container.push_back(std::move(menu_board));
-    m_gui_container.push_back(std::move(play_button));
-    m_gui_container.push_back(std::move(settings_button));
-    m_gui_container.push_back(std::move(exit_button));
+    MusicPlayer::stop();
+    request_stack_pop();
+    request_stack_push(StateID::LOADING_STATE, new LoadWorld(m_context, StateID::GAME));
 }
 
+void MainMenuState::settings_callback()
+{
+    request_stack_push(StateID::SETTINGS);
+}
+
+void MainMenuState::exit_callback()
+{
+    request_stack_pop();
+}
