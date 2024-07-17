@@ -19,7 +19,7 @@ public:
     virtual void set_pos(float x, float y) = 0;
     virtual void set_scale(float scale) = 0;
     virtual void set_origin(float x, float y) = 0;
-    void set_parent(GUI_Element* parent);
+    virtual void set_parent(GUI_Element* parent);
 
     virtual void handle_event(const sf::Event& event) = 0;
     virtual void draw(sf::RenderWindow& window) = 0;
@@ -31,10 +31,10 @@ public:
 
     virtual void activate() = 0;
 
-    virtual sf::FloatRect local_bb() = 0;
-    virtual sf::FloatRect global_bb() = 0;
-    virtual sf::Transform transform() = 0;
-    sf::Transform global_transform();
+    virtual sf::FloatRect local_bb() const = 0;
+    virtual sf::FloatRect global_bb() const = 0;
+    virtual sf::Transform transform() const = 0;
+    sf::Transform global_transform() const;
 
 private:
     GUI_Element* m_parent;

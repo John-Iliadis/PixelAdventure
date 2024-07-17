@@ -2,20 +2,24 @@
 // Created by Gianni on 16/07/2024.
 //
 
-#ifndef PIXEL_ADVENTURE_GUI_SPRITE_HPP
-#define PIXEL_ADVENTURE_GUI_SPRITE_HPP
+#ifndef PIXEL_ADVENTURE_GUI_CONTAINER_HPP
+#define PIXEL_ADVENTURE_GUI_CONTAINER_HPP
 
-#include <cassert>
+#include <vector>
 #include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Vertex.hpp>
+#include "../world/cursor.hpp"
 #include "gui_element.hpp"
+#include "gui_sprite.hpp"
 
 
-class GUI_Sprite : public GUI_Element
+class GUI_Container : public GUI_Element
 {
 public:
-    GUI_Sprite();
-    GUI_Sprite(const sf::Texture& texture);
+    GUI_Container() = default;
+    GUI_Container(const sf::Texture& texture);
+    ~GUI_Container();
+
+    void pack(GUI_Element* gui_element);
 
     void set_texture(const sf::Texture& texture);
     void set_pos(float x, float y) override;
@@ -34,13 +38,9 @@ public:
     sf::Transform transform() const override;
 
 private:
-    void make_vertices();
-
-private:
-    sf::Vertex m_vertices[4];
-    sf::Transformable m_transform;
-    const sf::Texture* m_texture;
+    GUI_Sprite m_sprite;
+    std::vector<GUI_Element*> m_elements;
 };
 
 
-#endif //PIXEL_ADVENTURE_GUI_SPRITE_HPP
+#endif //PIXEL_ADVENTURE_GUI_CONTAINER_HPP

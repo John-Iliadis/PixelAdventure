@@ -9,11 +9,13 @@
 #include "../camera/camera.hpp"
 #include "../asset_managers/font_manager.hpp"
 #include "../asset_managers/texture_manager.hpp"
-#include "../gui/gui_sprite.hpp"
 #include "../structs/colors.hpp"
 #include "../world/parallel_task.hpp"
 #include "state.hpp"
 
+#include "../gui/gui_sprite.hpp"
+#include "../gui/gui_container.hpp"
+#include "../gui/gui_slider.hpp"
 
 class MainMenuState : public State
 {
@@ -35,7 +37,8 @@ private:
 
 private:
     ScrollingBackground m_scrolling_background;
-    GUI_Sprite gui_sprite;
+    GUI_Container m_container;
+    float val;
 };
 
 
