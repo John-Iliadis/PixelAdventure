@@ -18,8 +18,8 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
     MusicPlayer::play("menu_music", true);
 
     gui_sprite.set_texture(m_context.texture_manager->get("large_button"));
-    gui_sprite.move(20, 20);
-    gui_sprite.scale(4, 4);
+    gui_sprite.set_scale(4);
+//    gui_sprite.set_origin(gui_sprite.local_bb().width / 2.f, 0);
 }
 
 void MainMenuState::on_exit()

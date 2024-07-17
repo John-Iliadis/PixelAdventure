@@ -6,7 +6,8 @@
 
 
 GUI_Element::GUI_Element()
-    : m_selected()
+    : m_parent()
+    , m_selected()
 {
 }
 
@@ -23,4 +24,19 @@ void GUI_Element::deselect()
 bool GUI_Element::selected() const
 {
     return m_selected;
+}
+
+void GUI_Element::set_parent(GUI_Element *parent)
+{
+    m_parent = parent;
+}
+
+sf::Transform GUI_Element::global_transform()
+{
+    if (m_parent)
+    {
+        return m_parent->global_transform() * transform();
+    }
+
+    return transform();
 }

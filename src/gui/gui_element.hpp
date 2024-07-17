@@ -10,28 +10,34 @@
 #include <SFML/Graphics/Transformable.hpp>
 
 
-class GUI_Element : public sf::Transformable
+class GUI_Element
 {
 public:
     GUI_Element();
     virtual ~GUI_Element() = default;
 
-    virtual void select();
-    virtual void deselect();
-
-    bool selected() const;
+    virtual void set_pos(float x, float y) = 0;
+    virtual void set_scale(float scale) = 0;
+    virtual void set_origin(float x, float y) = 0;
+    void set_parent(GUI_Element* parent);
 
     virtual void handle_event(const sf::Event& event) = 0;
     virtual void draw(sf::RenderWindow& window) = 0;
 
+    virtual void select();
+    virtual void deselect();
+    bool selected() const;
     virtual bool selectable() = 0;
 
     virtual void activate() = 0;
 
-    virtual sf::FloatRect bounding_box() = 0;
-    virtual sf::Transform transform() = 0; // todo: delete
+    virtual sf::FloatRect local_bb() = 0;
+    virtual sf::FloatRect global_bb() = 0;
+    virtual sf::Transform transform() = 0;
+    sf::Transform global_transform();
 
 private:
+    GUI_Element* m_parent;
     bool m_selected;
 };
 

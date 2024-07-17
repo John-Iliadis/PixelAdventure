@@ -18,15 +18,19 @@ public:
     GUI_Sprite(const sf::Texture& texture);
 
     void set_texture(const sf::Texture& texture);
+    void set_pos(float x, float y) override;
+    void set_scale(float scale) override;
+    void set_origin(float x, float y) override;
 
     void handle_event(const sf::Event &event) override;
     void draw(sf::RenderWindow &window) override;
 
-    bool selectable() override;
-
     void activate() override;
 
-    sf::FloatRect bounding_box() override;
+    bool selectable() override;
+
+    sf::FloatRect local_bb() override;
+    sf::FloatRect global_bb() override;
     sf::Transform transform() override;
 
 private:
@@ -34,6 +38,7 @@ private:
 
 private:
     sf::Vertex m_vertices[4];
+    sf::Transformable m_transform;
     const sf::Texture* m_texture;
 };
 
