@@ -60,7 +60,7 @@ void GUI_Sprite::activate()
 {
 }
 
-sf::FloatRect GUI_Sprite::local_bb()
+sf::FloatRect GUI_Sprite::local_bb() const
 {
     return
     {
@@ -69,12 +69,12 @@ sf::FloatRect GUI_Sprite::local_bb()
     };
 }
 
-sf::FloatRect GUI_Sprite::global_bb()
+sf::FloatRect GUI_Sprite::global_bb() const
 {
     return global_transform().transformRect(local_bb());
 }
 
-sf::Transform GUI_Sprite::transform()
+sf::Transform GUI_Sprite::transform() const
 {
     return m_transform.getTransform();
 }

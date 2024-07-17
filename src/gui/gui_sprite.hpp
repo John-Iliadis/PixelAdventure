@@ -29,9 +29,9 @@ public:
 
     bool selectable() override;
 
-    sf::FloatRect local_bb() override;
-    sf::FloatRect global_bb() override;
-    sf::Transform transform() override;
+    sf::FloatRect local_bb() const override;
+    sf::FloatRect global_bb() const override;
+    sf::Transform transform() const override;
 
 private:
     void make_vertices();

@@ -31,7 +31,7 @@ void GUI_Element::set_parent(GUI_Element *parent)
     m_parent = parent;
 }
 
-sf::Transform GUI_Element::global_transform()
+sf::Transform GUI_Element::global_transform() const
 {
     if (m_parent)
     {

@@ -17,9 +17,28 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
 
     MusicPlayer::play("menu_music", true);
 
-    gui_sprite.set_texture(m_context.texture_manager->get("large_button"));
-    gui_sprite.set_scale(4);
+//    gui_sprite.set_texture(m_context.texture_manager->get("large_button"));
+//    gui_sprite.set_scale(4);
 //    gui_sprite.set_origin(gui_sprite.local_bb().width / 2.f, 0);
+
+    const auto& textures = *m_context.texture_manager;
+
+    m_container.set_texture(textures.get("menu_board"));
+    m_container.set_scale(4);
+    m_container.set_pos(400, 400);
+    sf::Vector2f container_size = {m_container.local_bb().width, m_container.local_bb().height};
+    m_container.set_origin(container_size.x / 2.f, container_size.y / 2.f);
+
+    val = 50.f;
+
+    GUI_Slider* slider = new GUI_Slider();
+    slider->set_textures(textures.get("slider"), textures.get("slider_pointer"));
+    slider->set_value(&val);
+    slider->set_pos(100, 100);
+
+//    slider->set_pos(1000, 200);
+
+    m_container.pack(slider);
 }
 
 void MainMenuState::on_exit()
@@ -36,7 +55,7 @@ void MainMenuState::on_return()
 
 bool MainMenuState::handle_events(const sf::Event &event)
 {
-
+    m_container.handle_event(event);
     return false;
 }
 
@@ -58,7 +77,7 @@ void MainMenuState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
-    gui_sprite.draw(window);
+    m_container.draw(window);
 }
 
 void MainMenuState::play_callback()
