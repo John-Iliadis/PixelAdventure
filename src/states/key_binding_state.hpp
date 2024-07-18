@@ -7,7 +7,6 @@
 
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../structs/colors.hpp"
 #include "../utilities/utils.hpp"
 #include "../structs/settings.hpp"
 #include "../audio/sound_player.hpp"

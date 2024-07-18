@@ -6,7 +6,6 @@
 #define PLATFORMER_GAME_OVER_STATE_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../structs/colors.hpp"
 #include "../camera/camera.hpp"
 #include "../world/parallel_task.hpp"
 #include "state.hpp"

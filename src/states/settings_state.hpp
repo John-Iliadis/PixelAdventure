@@ -7,7 +7,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "state.hpp"
-#include "../structs/colors.hpp"
 #include "../structs/settings.hpp"
 
 

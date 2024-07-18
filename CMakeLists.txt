@@ -114,7 +114,6 @@ add_executable(Pixel_Adventure
         src/states/game_over_state.hpp
         src/states/key_binding_state.cpp
         src/states/key_binding_state.hpp
-        src/structs/colors.hpp
         src/structs/settings.hpp
         src/states/loading_state.cpp
         src/states/loading_state.hpp

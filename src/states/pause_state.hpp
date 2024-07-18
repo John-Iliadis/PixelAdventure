@@ -8,7 +8,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "state.hpp"
-#include "../structs/colors.hpp"
 #include "../audio/sound_player.hpp"
 #include "../audio/music_player.hpp"
 #include "../world/parallel_task.hpp"
