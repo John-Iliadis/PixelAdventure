@@ -33,6 +33,9 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
     slider->set_pos(100, 100);
 
     m_container.pack(slider);
+
+    m_button = new GUI_Button(textures.get("large_button"), m_context.font_manager->get("bulky_pixel"), 30, "Menu");
+    m_button->set_pos(200, 200);
 }
 
 void MainMenuState::on_exit()
@@ -72,6 +75,7 @@ void MainMenuState::on_gui_draw()
     sf::RenderWindow& window = *m_context.window;
 
     m_container.draw(window);
+    m_button->draw(window);
 }
 
 void MainMenuState::play_callback()

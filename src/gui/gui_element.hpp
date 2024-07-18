@@ -16,9 +16,6 @@ public:
     GUI_Element();
     virtual ~GUI_Element() = default;
 
-    virtual void set_pos(float x, float y) = 0;
-    virtual void set_scale(float scale) = 0;
-    virtual void set_origin(float x, float y) = 0;
     virtual void set_parent(GUI_Element* parent);
 
     virtual void handle_event(const sf::Event& event) = 0;

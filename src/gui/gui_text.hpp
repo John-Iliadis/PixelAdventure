@@ -23,9 +23,9 @@ public:
     void set_string(const sf::String& string);
     void set_color(const sf::Color& color);
 
-    void set_pos(float x, float y) override;
-    void set_scale(float scale) override;
-    void set_origin(float x, float y) override;
+    void set_pos(float x, float y);
+    void set_scale(float scale);
+    void set_origin(float x, float y);
 
     void handle_event(const sf::Event &event) override;
     void draw(sf::RenderWindow &window) override;

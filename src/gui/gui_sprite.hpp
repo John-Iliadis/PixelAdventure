@@ -18,9 +18,9 @@ public:
     GUI_Sprite(const sf::Texture& texture);
 
     void set_texture(const sf::Texture& texture);
-    void set_pos(float x, float y) override;
-    void set_scale(float scale) override;
-    void set_origin(float x, float y) override;
+    void set_pos(float x, float y);
+    void set_scale(float scale);
+    void set_origin(float x, float y);
 
     void handle_event(const sf::Event &event) override;
     void draw(sf::RenderWindow &window) override;

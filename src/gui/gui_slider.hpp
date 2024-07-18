@@ -21,9 +21,9 @@ public:
 
     void set_textures(const sf::Texture& slider_tex, const sf::Texture& slider_ptr_tex);
     void set_value(float* value, float min = 0.f, float max = 100.f);
-    void set_pos(float x, float y) override;
-    void set_scale(float scale) override;
-    void set_origin(float x, float y) override;
+    void set_pos(float x, float y);
+    void set_scale(float scale);
+    void set_origin(float x, float y);
     void set_parent(GUI_Element *parent) override;
 
     void handle_event(const sf::Event &event) override;
