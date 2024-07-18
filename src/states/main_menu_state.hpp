@@ -16,6 +16,7 @@
 #include "../gui/gui_sprite.hpp"
 #include "../gui/gui_container.hpp"
 #include "../gui/gui_slider.hpp"
+#include "../gui/gui_text.hpp"
 
 class MainMenuState : public State
 {

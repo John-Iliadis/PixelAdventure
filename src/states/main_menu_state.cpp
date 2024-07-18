@@ -17,10 +17,6 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
 
     MusicPlayer::play("menu_music", true);
 
-//    gui_sprite.set_texture(m_context.texture_manager->get("large_button"));
-//    gui_sprite.set_scale(4);
-//    gui_sprite.set_origin(gui_sprite.local_bb().width / 2.f, 0);
-
     const auto& textures = *m_context.texture_manager;
 
     m_container.set_texture(textures.get("menu_board"));
@@ -35,8 +31,6 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
     slider->set_textures(textures.get("slider"), textures.get("slider_pointer"));
     slider->set_value(&val);
     slider->set_pos(100, 100);
-
-//    slider->set_pos(1000, 200);
 
     m_container.pack(slider);
 }
