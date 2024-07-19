@@ -7,9 +7,12 @@
 
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "../asset_managers/texture_manager.hpp"
+#include "../asset_managers/font_manager.hpp"
 #include "../utilities/utils.hpp"
 #include "../structs/settings.hpp"
 #include "../audio/sound_player.hpp"
+#include "../gui/includes.hpp"
 #include "state.hpp"
 
 
@@ -27,8 +30,10 @@ private:
     bool check_valid_key(sf::Keyboard::Key key);
 
     void back_callback();
+    void build_gui();
 
 private:
+    GUI_Container m_container;
     std::unique_ptr<std::string> m_action;
     sf::Text m_invalid_key_text;
     float m_invalid_key_timer;

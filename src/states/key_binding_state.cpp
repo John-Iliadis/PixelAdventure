@@ -11,12 +11,11 @@ KeyBindingState::KeyBindingState(StateStack &state_stack, GameContext &context, 
     , m_action(reinterpret_cast<std::string*>(user_ptr))
     , m_invalid_key_timer(-1)
 {
-    sf::Vector2f window_size = static_cast<sf::Vector2f>(m_context.window->getSize());
-
+    build_gui();
     m_invalid_key_text.setFont(m_context.font_manager->get("bulky_pixel"));
     m_invalid_key_text.setCharacterSize(32);
     m_invalid_key_text.setString("Invalid Key");
-    m_invalid_key_text.setPosition(window_size.x / 2, 700);
+    m_invalid_key_text.setPosition(m_context.window->getSize().x / 2, 700);
     m_invalid_key_text.setFillColor(sf::Color::Transparent);
     utils::set_origin(m_invalid_key_text, Origin::CENTER);
 }
@@ -61,6 +60,7 @@ void KeyBindingState::on_gui_draw()
 {
     sf::RenderWindow& window = *m_context.window;
 
+    m_container.draw(window);
     window.draw(m_invalid_key_text);
 }
 
@@ -89,4 +89,39 @@ bool KeyBindingState::check_valid_key(sf::Keyboard::Key key)
 void KeyBindingState::back_callback()
 {
     request_stack_pop();
+}
+
+void KeyBindingState::build_gui()
+{
+    const TextureManager& textures = *m_context.texture_manager;
+    const FontManager& fonts = *m_context.font_manager;
+
+    const auto [win_width, win_height] = sf::Vector2f(m_context.window->getSize());
+
+    m_container = GUI_Container(textures.get("message_board"));
+
+    GUI_Sprite* paper = new GUI_Sprite(textures.get("message_paper"));
+    GUI_Text* text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Press Any Key");
+    GUI_Button* back = new GUI_Button(textures.get("large_button"), fonts.get("bulky_pixel"), 30, "Back");
+
+    m_container.pack(paper);
+    m_container.pack(text);
+    m_container.pack(back);
+
+    m_container.set_origin(Origin::CENTER);
+    m_container.set_scale(4.f);
+    m_container.set_pos_glob(win_width / 2.f, win_height / 2.f);
+
+    const auto [width, height] = m_container.bounding_box().getSize();
+
+    paper->set_origin(Origin::CENTER);
+    paper->set_scale(4.f);
+    paper->set_pos_rel(width / 2.f, height / 2.f);
+
+    text->set_origin(Origin::CENTER);
+    text->set_pos_rel(width / 2.f, height / 2.f);
+
+    back->set_origin(Origin::CENTER);
+    back->set_scale(4.f);
+    back->set_pos_glob(win_width - 150.f, win_height - 100.f);
 }
