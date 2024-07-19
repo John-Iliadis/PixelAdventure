@@ -35,6 +35,7 @@ private:
 private:
     GUI_Container m_banner;
     GUI_Container m_left_panel;
+    GUI_Container m_right_panel;
 };
 
 

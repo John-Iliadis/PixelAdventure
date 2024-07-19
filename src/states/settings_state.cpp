@@ -36,6 +36,7 @@ void SettingsState::on_gui_draw()
 
     m_banner.draw(window);
     m_left_panel.draw(window);
+    m_right_panel.draw(window);
 }
 
 void SettingsState::left_binding_callback()
@@ -72,74 +73,170 @@ void SettingsState::back_callback()
 
 void SettingsState::build_gui()
 {
+    const TextureManager& textures = *m_context.texture_manager;
+    const FontManager& fonts = *m_context.font_manager;
 
+    const auto [win_width, win_height] = sf::Vector2f(m_context.window->getSize());
+
+    { // banner
+        m_banner = GUI_Container(textures.get("title_board"));
+
+        GUI_Sprite* banner_paper = new GUI_Sprite(textures.get("paper_label"));
+        GUI_Text* banner_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Settings");
+
+        m_banner.pack(banner_paper);
+        m_banner.pack(banner_text);
+
+        m_banner.set_origin(Origin::CENTER);
+        m_banner.set_scale(4.f);
+        m_banner.set_pos_glob(win_width / 2.f, 150.f);
+
+        sf::Vector2f banner_center
+        {
+            m_banner.bounding_box().left + m_banner.bounding_box().width / 2.f,
+            m_banner.bounding_box().top + m_banner.bounding_box().height / 2.f
+        };
+
+        banner_paper->set_origin(Origin::CENTER);
+        banner_paper->set_pos_glob(banner_center.x, banner_center.y);
+        banner_paper->set_scale(4.f);
+
+        banner_text->set_origin(Origin::CENTER);
+        banner_text->set_pos_glob(banner_center.x, banner_center.y);
+    }
+
+    { // left panel
+        m_left_panel = GUI_Container(textures.get("settings_board"));
+
+        GUI_Container* banner = new GUI_Container(textures.get("paper_label"));
+        GUI_Container* inner_panel = new GUI_Container(textures.get("settings_bg_paper"));
+        GUI_Text* banner_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Audio");
+        GUI_Text* music_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Music:");
+        GUI_Text* sound_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Sound:");
+        GUI_Slider* music_slider = new GUI_Slider(textures.get("slider"), textures.get("slider_pointer"));
+        GUI_Slider* sound_slider = new GUI_Slider(textures.get("slider"), textures.get("slider_pointer"));
+
+        m_left_panel.pack(banner);
+        m_left_panel.pack(inner_panel);
+        banner->pack(banner_text);
+        inner_panel->pack(music_text);
+        inner_panel->pack(sound_text);
+        inner_panel->pack(music_slider);
+        inner_panel->pack(sound_slider);
+
+        m_left_panel.set_origin(Origin::CENTER);
+        m_left_panel.set_scale(4.f);
+        m_left_panel.set_pos_glob(win_width * 0.3f, win_height / 2.f + 80.f);
+        sf::FloatRect panel_bb = m_left_panel.bounding_box();
+
+        { // banner
+            banner->set_origin(Origin::CENTER);
+            banner->set_scale(4.f);
+            banner->set_pos_rel(panel_bb.width * 0.5f, 100.f);
+
+            const auto [width, height] = banner->bounding_box().getSize();
+
+            banner_text->set_origin(Origin::CENTER);
+            banner_text->set_pos_rel(width / 2.f, height / 2.f);
+        }
+
+        { // inner panel
+            inner_panel->set_origin(Origin::CENTER);
+            inner_panel->set_scale(4.f);
+            inner_panel->set_pos_rel(panel_bb.width * 0.5f, 294.f);
+
+            const auto [width, height] = inner_panel->bounding_box().getSize();
+
+            music_text->set_origin(Origin::CENTER_LEFT);
+            music_text->set_pos_rel(100.f, height * 0.35);
+
+            sound_text->set_origin(Origin::CENTER_LEFT);
+            sound_text->set_pos_rel(100.f, height * 0.65f);
+
+            music_slider->set_value(&m_context.settings->music_volume, 0.f, 100.f);
+            music_slider->set_origin(Origin::CENTER);
+            music_slider->set_scale(4.f);
+            music_slider->set_pos_rel(400.f, height * 0.35f);
+
+            sound_slider->set_value(&m_context.settings->sound_volume, 0.f, 100.f);
+            sound_slider->set_origin(Origin::CENTER);
+            sound_slider->set_scale(4.f);
+            sound_slider->set_pos_rel(400.f, height * 0.65f);
+        }
+    }
+
+    { // right panel
+        m_right_panel = GUI_Container(textures.get("settings_board"));
+
+        GUI_Container* banner = new GUI_Container(textures.get("paper_label"));
+        GUI_Container* inner_panel = new GUI_Container(textures.get("settings_bg_paper"));
+        GUI_Text* banner_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Keys");
+        GUI_Text* left_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Left");
+        GUI_Text* right_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Right:");
+        GUI_Text* jump_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Jump:");
+        GUI_Button* left_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20, "Left");
+        GUI_Button* right_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20, "Right");
+        GUI_Button* jump_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20, "jump");
+        GUI_Button* back_button = new GUI_Button(textures.get("large_button"), fonts.get("bulky_pixel"), 30, "Back");
+
+        m_right_panel.pack(banner);
+        m_right_panel.pack(inner_panel);
+        banner->pack(banner_text);
+        inner_panel->pack(left_text);
+        inner_panel->pack(right_text);
+        inner_panel->pack(jump_text);
+        inner_panel->pack(left_button);
+        inner_panel->pack(right_button);
+        inner_panel->pack(jump_button);
+        inner_panel->pack(back_button);
+
+        m_right_panel.set_origin(Origin::CENTER);
+        m_right_panel.set_scale(4.f);
+        m_right_panel.set_pos_glob(win_width * 0.7f, win_height /2.f + 80.f);
+        sf::FloatRect panel_bb = m_right_panel.bounding_box();
+
+        { // banner
+            banner->set_origin(Origin::CENTER);
+            banner->set_scale(4.f);
+            banner->set_pos_rel(panel_bb.width * 0.5f, 100.f);
+
+            const auto [width, height] = banner->bounding_box().getSize();
+
+            banner_text->set_origin(Origin::CENTER);
+            banner_text->set_pos_rel(width / 2.f, height / 2.f);
+        }
+
+        { // inner panel
+            inner_panel->set_origin(Origin::CENTER);
+            inner_panel->set_scale(4.f);
+            inner_panel->set_pos_rel(panel_bb.width * 0.5f, 294.f);
+
+            const auto [width, height] = inner_panel->bounding_box().getSize();
+
+            left_text->set_origin(Origin::CENTER_LEFT);
+            left_text->set_pos_rel(100.f, height * 0.3f);
+
+            right_text->set_origin(Origin::CENTER_LEFT);
+            right_text->set_pos_rel(100.f, height * 0.5f);
+
+            jump_text->set_origin(Origin::CENTER_LEFT);
+            jump_text->set_pos_rel(100.f, height * 0.7f);
+
+            left_button->set_origin(Origin::CENTER);
+            left_button->set_scale(4.f);
+            left_button->set_pos_rel(420.f, height * 0.3f);
+
+            right_button->set_origin(Origin::CENTER);
+            right_button->set_scale(4.f);
+            right_button->set_pos_rel(420.f, height * 0.5f);
+
+            jump_button->set_origin(Origin::CENTER);
+            jump_button->set_scale(4.f);
+            jump_button->set_pos_rel(420.f, height * 0.7f);
+
+            back_button->set_origin(Origin::CENTER);
+            back_button->set_scale(4.f);
+            back_button->set_pos_glob(win_width - 150.f, win_height - 100.f);
+        }
+    }
 }
-//
-//void SettingsState::build_gui()
-//{
-//    const TextureManager& textures = *m_context.texture_manager;
-//    const FontManager& fonts = *m_context.font_manager;
-//
-//    const auto [window_width, window_height] = static_cast<sf::Vector2f>(m_context.window->getSize());
-//
-//    { // banner
-//        m_banner = GUI_Container(textures.get("title_board"));
-//
-//        GUI_Sprite* banner_paper = new GUI_Sprite(textures.get("paper_label"));
-//        GUI_Text* banner_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Settings");
-//
-//        const auto [banner_width, banner_height] = m_banner.local_bb().getSize();
-//        const auto [paper_width, paper_height] = banner_paper->local_bb().getSize();
-//        const auto [text_width, text_height] = banner_text->local_bb().getSize();
-//
-//        m_banner.set_origin(banner_width / 2.f, banner_height / 2.f);
-//        m_banner.set_scale(4.f);
-//        m_banner.set_pos(window_width / 2.f, 150);
-//
-//        banner_paper->set_origin(paper_width / 2.f, paper_height / 2.f);
-//        banner_paper->set_pos(banner_width / 2.f, banner_height / 2.f);
-//
-//        banner_text->set_origin(text_width / 2.f, text_height / 2.f);
-//        banner_text->set_pos(banner_width / 2.f, banner_height / 2.f);
-//        banner_text->set_scale(1.f / 4.f);
-//
-//        m_banner.pack(banner_paper);
-//        m_banner.pack(banner_text);
-//    }
-//
-//    { // left panel
-//        m_left_panel = GUI_Container(textures.get("settings_board"));
-//
-//        GUI_Container* banner = new GUI_Container(textures.get("paper_label"));
-//        GUI_Text* banner_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Audio");
-//
-////        GUI_Container* bg_paper = new GUI_Container(textures.get("settings_bg_paper"));
-////        GUI_Text* music_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Music");
-////        GUI_Text* sound_text = new GUI_Text(fonts.get("sound_text"), 30, "Sound");
-////        GUI_Slider* music_slider = new GUI_Slider(textures.get("slider"), textures.get("slider_pointer"));
-////        GUI_Slider* audi_slider = new GUI_Slider(textures.get("slider"), textures.get("slider_pointer"));
-//
-//        const auto [panel_width, panel_height] = m_left_panel.local_bb().getSize();
-//        const auto [banner_width, banner_height] = banner->local_bb().getSize();
-////        const auto [bg_paper_width, bg_paper_height] = bg_paper->local_bb().getSize();
-//        const auto [b_text_width, b_text_height] = banner_text->local_bb().getSize();
-////        const auto [m_text_width, m_text_height] = music_text->local_bb().getSize();
-////        const auto [s_text_width, s_text_height] = sound_text->local_bb().getSize();
-////        const auto [slider_width, slider_height] = music_slider->local_bb().getSize();
-//
-//        m_left_panel.set_origin(panel_width / 2.f, panel_height / 2.f);
-//        m_left_panel.set_scale(4.f);
-//        m_left_panel.set_pos(window_width / 3.5f, window_height / 2.f + 10.f);
-//
-//        banner->set_origin(banner_width / 2.f, banner_width / 2.f);
-//        banner->set_pos(panel_width / 2.f, 100 / 4.f);
-//        banner->pack(banner_text);
-//
-//        banner_text->set_origin(b_text_height / 2.f, b_text_height / 2.f);
-////        banner_text->set_pos(banner_width / 2.f, banner_height / 2.f);
-//        banner_text->set_scale(1.f / 4.f);
-//
-//        m_left_panel.pack(banner);
-//    }
-//
-//}
