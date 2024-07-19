@@ -7,10 +7,11 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "state.hpp"
 #include "../audio/sound_player.hpp"
 #include "../audio/music_player.hpp"
 #include "../world/parallel_task.hpp"
+#include "../gui/includes.hpp"
+#include "state.hpp"
 
 
 class PauseState : public State
@@ -32,9 +33,13 @@ private:
     void settings_callback();
     void menu_callback();
     void desktop_callback();
+    void build_gui();
 
 private:
     sf::RectangleShape m_dark_overlay;
+    GUI_Container m_banner;
+    GUI_Container m_top_panel;
+    GUI_Container m_bottom_panel;
 };
 
 
