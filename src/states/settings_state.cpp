@@ -14,10 +14,14 @@ SettingsState::SettingsState(StateStack &state_stack, GameContext &context, void
 void SettingsState::on_return()
 {
     State::on_return();
+    build_gui();
 }
 
 bool SettingsState::handle_events(const sf::Event &event)
 {
+    m_left_panel.handle_event(event);
+    m_right_panel.handle_event(event);
+
     return false;
 }
 
@@ -32,38 +36,35 @@ void SettingsState::on_world_draw()
 
 void SettingsState::on_gui_draw()
 {
-    sf::RenderWindow& window = *m_context.window;
+    if (m_status == Status::CURRENT)
+    {
+        sf::RenderWindow& window = *m_context.window;
 
-    m_banner.draw(window);
-    m_left_panel.draw(window);
-    m_right_panel.draw(window);
+        m_banner.draw(window);
+        m_left_panel.draw(window);
+        m_right_panel.draw(window);
+    }
 }
 
 void SettingsState::left_binding_callback()
 {
     std::string* action = new std::string("move_left_action");
 
-    auto action_ptr = reinterpret_cast<void*>(action);
-
-    request_stack_push(StateID::KEY_BINDING, action_ptr);
+    request_stack_push(StateID::KEY_BINDING, action);
 }
 
 void SettingsState::right_binding_callback()
 {
     std::string* action = new std::string("move_right_action");
 
-    auto action_ptr = reinterpret_cast<void*>(action);
-
-    request_stack_push(StateID::KEY_BINDING, action_ptr);
+    request_stack_push(StateID::KEY_BINDING, action);
 }
 
 void SettingsState::up_binding_callback()
 {
     std::string* action = new std::string("jump_action");
 
-    auto action_ptr = reinterpret_cast<void*>(action);
-
-    request_stack_push(StateID::KEY_BINDING, action_ptr);
+    request_stack_push(StateID::KEY_BINDING, action);
 }
 
 void SettingsState::back_callback()
@@ -174,9 +175,9 @@ void SettingsState::build_gui()
         GUI_Text* left_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Left");
         GUI_Text* right_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Right:");
         GUI_Text* jump_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Jump:");
-        GUI_Button* left_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20, "Left");
-        GUI_Button* right_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20, "Right");
-        GUI_Button* jump_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20, "jump");
+        GUI_Button* left_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20);
+        GUI_Button* right_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20);
+        GUI_Button* jump_button = new GUI_Button(textures.get("small_button"), fonts.get("bulky_pixel"), 20);
         GUI_Button* back_button = new GUI_Button(textures.get("large_button"), fonts.get("bulky_pixel"), 30, "Back");
 
         m_right_panel.pack(banner);
@@ -225,18 +226,28 @@ void SettingsState::build_gui()
             left_button->set_origin(Origin::CENTER);
             left_button->set_scale(4.f);
             left_button->set_pos_rel(420.f, height * 0.3f);
+            left_button->set_text_offset(0.f, -2.f);
+            left_button->set_string(m_context.settings->action_map["move_left_action"]);
+            left_button->set_callback([this](){left_binding_callback();});
 
             right_button->set_origin(Origin::CENTER);
             right_button->set_scale(4.f);
             right_button->set_pos_rel(420.f, height * 0.5f);
+            right_button->set_text_offset(0.f, -2.f);
+            right_button->set_string(m_context.settings->action_map["move_right_action"]);
+            right_button->set_callback([this](){right_binding_callback();});
 
             jump_button->set_origin(Origin::CENTER);
             jump_button->set_scale(4.f);
             jump_button->set_pos_rel(420.f, height * 0.7f);
+            jump_button->set_text_offset(0.f, -2.f);
+            jump_button->set_string(m_context.settings->action_map["jump_action"]);
+            jump_button->set_callback([this](){up_binding_callback();});
 
             back_button->set_origin(Origin::CENTER);
             back_button->set_scale(4.f);
             back_button->set_pos_glob(win_width - 150.f, win_height - 100.f);
+            back_button->set_callback([this](){back_callback();});
         }
     }
 }

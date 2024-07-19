@@ -6,8 +6,9 @@
 #define PLATFORMER_GAME_OVER_STATE_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../camera/camera.hpp"
 #include "../world/parallel_task.hpp"
+#include "../camera/camera.hpp"
+#include "../gui/includes.hpp"
 #include "state.hpp"
 
 
@@ -25,6 +26,11 @@ private:
     void restart_callback();
     void main_menu_callback();
     void exit_callback();
+    void build_gui();
+
+private:
+    GUI_Container m_banner;
+    GUI_Container m_panel;
 };
 
 

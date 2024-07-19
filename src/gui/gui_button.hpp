@@ -7,6 +7,7 @@
 
 #include <functional>
 #include <SFML/Graphics/Texture.hpp>
+#include "../audio/sound_player.hpp"
 #include "gui_element.hpp"
 #include "gui_sprite.hpp"
 #include "gui_text.hpp"
@@ -27,6 +28,7 @@ public:
     void set_pos_glob(float x, float y);
     void set_scale(float scale);
     void set_text_scale(float scale);
+    void set_text_offset(float x, float y);
     void set_origin(Origin origin);
     void set_callback(std::function<void()> callback);
     void set_parent(GUI_Element *parent) override;
@@ -49,6 +51,7 @@ private:
     GUI_Sprite m_sprite;
     GUI_Text m_text;
     std::function<void()> m_callback;
+    sf::Vector2f m_text_offset;
 };
 
 

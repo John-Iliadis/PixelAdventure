@@ -39,6 +39,8 @@ bool KeyBindingState::handle_events(const sf::Event &event)
         }
     }
 
+    m_container.handle_event(event);
+
     return false;
 }
 
@@ -124,4 +126,5 @@ void KeyBindingState::build_gui()
     back->set_origin(Origin::CENTER);
     back->set_scale(4.f);
     back->set_pos_glob(win_width - 150.f, win_height - 100.f);
+    back->set_callback([this](){back_callback();});
 }

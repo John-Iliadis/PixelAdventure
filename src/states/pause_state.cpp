@@ -36,13 +36,14 @@ bool PauseState::handle_events(const sf::Event &event)
         }
     }
 
+    m_top_panel.handle_event(event);
+    m_bottom_panel.handle_event(event);
+
     return false;
 }
 
 bool PauseState::update(double dt)
 {
-
-
     return false;
 }
 
@@ -55,9 +56,13 @@ void PauseState::on_gui_draw()
     sf::RenderWindow &window = *m_context.window;
 
     window.draw(m_dark_overlay);
-    m_banner.draw(window);
-    m_top_panel.draw(window);
-    m_bottom_panel.draw(window);
+
+    if (m_status == Status::CURRENT)
+    {
+        m_banner.draw(window);
+        m_top_panel.draw(window);
+        m_bottom_panel.draw(window);
+    }
 }
 
 void PauseState::play_callback()
@@ -67,7 +72,6 @@ void PauseState::play_callback()
 
 void PauseState::restart_callback()
 {
-//    m_gui_container.deselect_all();
     MusicPlayer::stop();
     request_stack_clear();
     request_stack_push(StateID::LOADING_STATE, new LoadWorld(m_context, StateID::GAME));
@@ -80,7 +84,6 @@ void PauseState::settings_callback()
 
 void PauseState::menu_callback()
 {
-//    m_gui_container.deselect_all();
     MusicPlayer::stop();
     request_stack_clear();
     request_stack_push(StateID::LOADING_STATE, new DoNothing(StateID::MAIN_MENU));
@@ -88,7 +91,7 @@ void PauseState::menu_callback()
 
 void PauseState::desktop_callback()
 {
-    request_stack_clear(); // todo: instead of window.close
+    request_stack_clear();
 }
 
 void PauseState::build_gui()
@@ -145,14 +148,17 @@ void PauseState::build_gui()
         play->set_origin(Origin::CENTER);
         play->set_scale(4.f);
         play->set_pos_rel(width / 2.f, height * 0.25f);
+        play->set_callback([this](){play_callback();});
 
         restart->set_origin(Origin::CENTER);
         restart->set_scale(4.f);
         restart->set_pos_rel(width / 2.f, height * 0.5f);
+        restart->set_callback([this](){restart_callback();});
 
         settings->set_origin(Origin::CENTER);
         settings->set_scale(4.f);
         settings->set_pos_rel(width / 2.f, height * 0.75f);
+        settings->set_callback([this](){settings_callback();});
     }
 
     { // bottom panel
@@ -173,9 +179,11 @@ void PauseState::build_gui()
         menu->set_origin(Origin::CENTER);
         menu->set_scale(4.f);
         menu->set_pos_rel(width * 0.3f, height * 0.5f);
+        menu->set_callback([this](){menu_callback();});
 
         desktop->set_origin(Origin::CENTER);
         desktop->set_scale(4.f);
         desktop->set_pos_rel(width * 0.7f, height * 0.5f);
+        desktop->set_callback([this](){desktop_callback();});
     }
 }

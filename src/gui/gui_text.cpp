@@ -7,7 +7,6 @@
 
 GUI_Text::GUI_Text()
     : m_font()
-    , m_color(51, 50, 61, 255) // brown default
     , m_char_size()
     , m_update()
 {
@@ -16,7 +15,7 @@ GUI_Text::GUI_Text()
 GUI_Text::GUI_Text(const sf::Font &font, uint32_t char_size, sf::String string)
     : m_font(&font)
     , m_string(string)
-    , m_color(51, 50, 61, 255)
+    , m_color(51, 50, 61, 255) // default brown
     , m_char_size(char_size)
     , m_update(true)
 {
@@ -66,6 +65,8 @@ void GUI_Text::set_scale(float scale)
 
 void GUI_Text::set_origin(Origin origin)
 {
+    make_vertices();
+
     const auto [width, height] = m_local_bb.getSize();
 
     switch (origin)

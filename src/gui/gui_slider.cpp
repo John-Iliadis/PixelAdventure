@@ -40,7 +40,8 @@ void GUI_Slider::set_textures(const sf::Texture &slider_tex, const sf::Texture &
 void GUI_Slider::set_value(float *value, float min, float max)
 {
     assert(value);
-    assert(*value > min && *value < max);
+    assert(max > min);
+    assert(*value >= min && *value <= max);
 
     m_value = value;
     m_min = min;
@@ -119,6 +120,7 @@ void GUI_Slider::set_pos_glob(float x, float y)
 void GUI_Slider::set_scale(float scale)
 {
     m_slider.set_scale(scale);
+    m_slider_ptr.set_scale(scale);
     set_slider_ptr();
 }
 

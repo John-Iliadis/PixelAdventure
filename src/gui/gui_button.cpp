@@ -47,6 +47,11 @@ void GUI_Button::set_text_color(const sf::Color &color)
     m_text.set_color(color);
 }
 
+void GUI_Button::set_text_offset(float x, float y)
+{
+    m_text_offset = {x, y};
+}
+
 void GUI_Button::set_pos_rel(float x, float y)
 {
     m_sprite.set_pos_rel(x, y);
@@ -103,6 +108,7 @@ bool GUI_Button::selectable()
 
 void GUI_Button::activate()
 {
+    SoundPlayer::play_sound("button_click");
     m_callback();
 }
 
@@ -110,6 +116,7 @@ void GUI_Button::select()
 {
     if (!selected())
     {
+        SoundPlayer::play_sound("prevnext");
         GUI_Element::select();
     }
 }
@@ -132,5 +139,5 @@ void GUI_Button::set_text_pos()
     const auto [width, height] = bounding_box().getSize();
 
     m_text.set_origin(Origin::CENTER);
-    m_text.set_pos_rel(width / 2.f, height / 2.f);
+    m_text.set_pos_rel(width / 2.f + m_text_offset.x, height / 2.f + m_text_offset.y);
 }

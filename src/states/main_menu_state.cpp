@@ -47,10 +47,13 @@ void MainMenuState::on_world_draw()
 
 void MainMenuState::on_gui_draw()
 {
-    sf::RenderWindow& window = *m_context.window;
+    if (m_status == Status::CURRENT)
+    {
+        sf::RenderWindow& window = *m_context.window;
 
-    m_banner.draw(window);
-    m_panel.draw(window);
+        m_banner.draw(window);
+        m_panel.draw(window);
+    }
 }
 
 void MainMenuState::play_callback()
@@ -67,7 +70,7 @@ void MainMenuState::settings_callback()
 
 void MainMenuState::exit_callback()
 {
-    request_stack_pop();
+    request_stack_clear();
 }
 
 void MainMenuState::build_gui()
@@ -83,12 +86,12 @@ void MainMenuState::build_gui()
         GUI_Sprite* banner_paper = new GUI_Sprite(textures.get("paper_label"));
         GUI_Text* banner_text = new GUI_Text(fonts.get("bulky_pixel"), 30, "Main Menu");
 
+        m_banner.pack(banner_paper);
+        m_banner.pack(banner_text);
+
         m_banner.set_origin(Origin::CENTER);
         m_banner.set_scale(4.f);
         m_banner.set_pos_glob(win_width / 2.f, 150.f);
-
-        m_banner.pack(banner_paper);
-        m_banner.pack(banner_text);
 
         sf::Vector2f banner_center
         {
@@ -124,13 +127,16 @@ void MainMenuState::build_gui()
         play->set_origin(Origin::CENTER);
         play->set_scale(4.f);
         play->set_pos_rel(width / 2.f, height * 0.25f);
+        play->set_callback([this](){play_callback();});
 
         settings->set_origin(Origin::CENTER);
         settings->set_scale(4.f);
         settings->set_pos_rel(width / 2.f, height / 2.f);
+        settings->set_callback([this](){settings_callback();});
 
         exit->set_origin(Origin::CENTER);
         exit->set_scale(4.f);
         exit->set_pos_rel(width / 2.f, height * 0.75f);
+        exit->set_callback([this](){exit_callback();});
     }
 }
