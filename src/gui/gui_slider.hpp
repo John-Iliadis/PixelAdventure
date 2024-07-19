@@ -15,15 +15,17 @@ class GUI_Slider : public GUI_Element
 {
 public:
     GUI_Slider();
+    GUI_Slider(const sf::Texture& slider_tex, const sf::Texture& slider_ptr_tex);
     GUI_Slider(const sf::Texture& slider_tex,
                const sf::Texture& slider_ptr_tex,
                float* value, float min = 0.f, float max = 100.f);
 
     void set_textures(const sf::Texture& slider_tex, const sf::Texture& slider_ptr_tex);
     void set_value(float* value, float min = 0.f, float max = 100.f);
-    void set_pos(float x, float y);
+    void set_pos_rel(float x, float y);
+    void set_pos_glob(float x, float y);
     void set_scale(float scale);
-    void set_origin(float x, float y);
+    void set_origin(Origin origin);
     void set_parent(GUI_Element *parent) override;
 
     void handle_event(const sf::Event &event) override;
@@ -32,9 +34,7 @@ public:
     void activate() override;
     bool selectable() override;
 
-    sf::FloatRect local_bb() const override;
-    sf::FloatRect global_bb() const override;
-    sf::Transform transform() const override;
+    sf::FloatRect bounding_box() const override;
 
 private:
     void set_slider_ptr();

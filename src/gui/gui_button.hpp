@@ -23,9 +23,13 @@ public:
     void set_char_size(uint32_t size);
     void set_string(const sf::String& string);
     void set_text_color(const sf::Color& color);
-    void set_pos(float x, float y);
+    void set_pos_rel(float x, float y);
+    void set_pos_glob(float x, float y);
     void set_scale(float scale);
-    void set_origin(float x, float y);
+    void set_text_scale(float scale);
+    void set_origin(Origin origin);
+    void set_callback(std::function<void()> callback);
+    void set_parent(GUI_Element *parent) override;
 
     void handle_event(const sf::Event &event) override;
     void draw(sf::RenderWindow &window) override;
@@ -36,9 +40,10 @@ public:
     bool selectable() override;
     void activate() override;
 
-    sf::FloatRect local_bb() const override;
-    sf::FloatRect global_bb() const override;
-    sf::Transform transform() const override;
+    sf::FloatRect bounding_box() const override;
+
+private:
+    void set_text_pos();
 
 private:
     GUI_Sprite m_sprite;

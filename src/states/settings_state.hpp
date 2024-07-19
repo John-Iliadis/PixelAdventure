@@ -7,7 +7,10 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "state.hpp"
+#include "../asset_managers/texture_manager.hpp"
+#include "../asset_managers/font_manager.hpp"
 #include "../structs/settings.hpp"
+#include "../gui/includes.hpp"
 
 
 class SettingsState : public State
@@ -27,6 +30,11 @@ private:
     void right_binding_callback();
     void up_binding_callback();
     void back_callback();
+    void build_gui();
+
+private:
+    GUI_Container m_banner;
+    GUI_Container m_left_panel;
 };
 
 

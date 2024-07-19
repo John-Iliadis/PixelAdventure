@@ -8,6 +8,7 @@
 #include <cassert>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Vertex.hpp>
+#include "../enums/origin.hpp"
 #include "gui_element.hpp"
 
 
@@ -18,9 +19,10 @@ public:
     GUI_Sprite(const sf::Texture& texture);
 
     void set_texture(const sf::Texture& texture);
-    void set_pos(float x, float y);
+    void set_pos_rel(float x, float y);
+    void set_pos_glob(float x, float y);
     void set_scale(float scale);
-    void set_origin(float x, float y);
+    void set_origin(Origin origin);
 
     void handle_event(const sf::Event &event) override;
     void draw(sf::RenderWindow &window) override;
@@ -28,10 +30,7 @@ public:
     void activate() override;
 
     bool selectable() override;
-
-    sf::FloatRect local_bb() const override;
-    sf::FloatRect global_bb() const override;
-    sf::Transform transform() const override;
+    sf::FloatRect bounding_box() const override;
 
 private:
     void make_vertices();

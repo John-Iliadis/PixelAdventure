@@ -139,7 +139,8 @@ add_executable(Pixel_Adventure
         src/gui/gui_slider.cpp
         src/gui/gui_slider.hpp
         src/gui/gui_container.cpp
-        src/gui/gui_container.hpp)
+        src/gui/gui_container.hpp
+        src/gui/includes.hpp)
 
 set(SFML_STATIC_LIBRARIES true)
 

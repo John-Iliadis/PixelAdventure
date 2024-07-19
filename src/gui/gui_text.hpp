@@ -9,6 +9,7 @@
 #include <SFML/System/String.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Vertex.hpp>
+#include "../enums/origin.hpp"
 #include "gui_element.hpp"
 
 
@@ -23,33 +24,32 @@ public:
     void set_string(const sf::String& string);
     void set_color(const sf::Color& color);
 
-    void set_pos(float x, float y);
+    void set_pos_rel(float x, float y);
+    void set_pos_glob(float x, float y);
     void set_scale(float scale);
-    void set_origin(float x, float y);
+    void set_origin(Origin origin);
 
     void handle_event(const sf::Event &event) override;
     void draw(sf::RenderWindow &window) override;
 
-    bool selectable() override;
     void activate() override;
 
-    sf::FloatRect local_bb() const override;
-    sf::FloatRect global_bb() const override;
-    sf::Transform transform() const override;
+    bool selectable() override;
+    sf::FloatRect bounding_box() const override;
 
 private:
-    void make_vertices();
-    void add_glyph_quad(const sf::Vector2f& pos, const sf::Glyph& glyph);
+    void make_vertices() const;
+    void add_glyph_quad(const sf::Vector2f& pos, const sf::Glyph& glyph) const;
 
 private:
-    std::vector<sf::Vertex> m_vertices;
+    mutable std::vector<sf::Vertex> m_vertices;
     const sf::Font* m_font;
     sf::Transformable m_transform;
     sf::String m_string;
     sf::Color m_color;
-    sf::FloatRect m_local_bb;
     uint32_t m_char_size;
-    bool m_update;
+    mutable sf::FloatRect m_local_bb;
+    mutable bool m_update;
 };
 
 

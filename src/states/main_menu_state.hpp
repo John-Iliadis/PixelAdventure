@@ -10,13 +10,8 @@
 #include "../asset_managers/font_manager.hpp"
 #include "../asset_managers/texture_manager.hpp"
 #include "../world/parallel_task.hpp"
+#include "../gui/includes.hpp"
 #include "state.hpp"
-
-#include "../gui/gui_sprite.hpp"
-#include "../gui/gui_container.hpp"
-#include "../gui/gui_slider.hpp"
-#include "../gui/gui_text.hpp"
-#include "../gui/gui_button.hpp"
 
 
 class MainMenuState : public State
@@ -36,11 +31,12 @@ private:
     void play_callback();
     void settings_callback();
     void exit_callback();
+    void build_gui();
 
 private:
     ScrollingBackground m_scrolling_background;
-    GUI_Container m_container;
-    GUI_Button* m_button;
+    GUI_Container m_banner;
+    GUI_Container m_panel;
     float val;
 };
 

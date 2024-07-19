@@ -18,22 +18,18 @@ public:
 
     virtual void set_parent(GUI_Element* parent);
 
-    virtual void handle_event(const sf::Event& event) = 0;
-    virtual void draw(sf::RenderWindow& window) = 0;
-
     virtual void select();
     virtual void deselect();
     bool selected() const;
-    virtual bool selectable() = 0;
+
+    virtual void handle_event(const sf::Event& event) = 0;
+    virtual void draw(sf::RenderWindow& window) = 0;
 
     virtual void activate() = 0;
+    virtual bool selectable() = 0;
+    virtual sf::FloatRect bounding_box() const = 0;
 
-    virtual sf::FloatRect local_bb() const = 0;
-    virtual sf::FloatRect global_bb() const = 0;
-    virtual sf::Transform transform() const = 0;
-    sf::Transform global_transform() const;
-
-private:
+protected:
     GUI_Element* m_parent;
     bool m_selected;
 };

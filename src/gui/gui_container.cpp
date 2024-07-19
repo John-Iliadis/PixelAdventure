@@ -12,12 +12,12 @@ GUI_Container::GUI_Container(const sf::Texture &texture)
 
 GUI_Container::~GUI_Container()
 {
-    std::for_each(m_elements.begin(), m_elements.end(), [] (auto p) { delete p; });
+    std::for_each(m_elements.begin(), m_elements.end(), [] (auto e) { delete e; });
 }
 
 void GUI_Container::pack(GUI_Element* gui_element)
 {
-    gui_element->set_parent(this);
+    gui_element->set_parent(&m_sprite);
     m_elements.push_back(gui_element);
 }
 
@@ -26,9 +26,14 @@ void GUI_Container::set_texture(const sf::Texture &texture)
     m_sprite.set_texture(texture);
 }
 
-void GUI_Container::set_pos(float x, float y)
+void GUI_Container::set_pos_rel(float x, float y)
 {
-    m_sprite.set_pos(x, y);
+    m_sprite.set_pos_rel(x, y);
+}
+
+void GUI_Container::set_pos_glob(float x, float y)
+{
+    m_sprite.set_pos_glob(x, y);
 }
 
 void GUI_Container::set_scale(float scale)
@@ -36,9 +41,14 @@ void GUI_Container::set_scale(float scale)
     m_sprite.set_scale(scale);
 }
 
-void GUI_Container::set_origin(float x, float y)
+void GUI_Container::set_origin(Origin origin)
 {
-    m_sprite.set_origin(x, y);
+    m_sprite.set_origin(origin);
+}
+
+void GUI_Container::set_parent(GUI_Element *parent)
+{
+    m_sprite.set_parent(parent);
 }
 
 void GUI_Container::handle_event(const sf::Event &event)
@@ -50,7 +60,7 @@ void GUI_Container::handle_event(const sf::Event &event)
             if (!element->selectable())
                 continue;
 
-            if (element->global_bb().contains(event.mouseMove.x, event.mouseMove.y))
+            if (element->bounding_box().contains(event.mouseMove.x, event.mouseMove.y))
             {
                 element->select();
             }
@@ -67,7 +77,7 @@ void GUI_Container::handle_event(const sf::Event &event)
             if (!element->selectable())
                 continue;
 
-            if (element->global_bb().contains(event.mouseButton.x, event.mouseButton.y))
+            if (element->bounding_box().contains(event.mouseButton.x, event.mouseButton.y))
             {
                 element->activate();
             }
@@ -95,17 +105,7 @@ void GUI_Container::activate()
 {
 }
 
-sf::Transform GUI_Container::transform() const
+sf::FloatRect GUI_Container::bounding_box() const
 {
-    return m_sprite.transform();
-}
-
-sf::FloatRect GUI_Container::local_bb() const
-{
-    return m_sprite.local_bb();
-}
-
-sf::FloatRect GUI_Container::global_bb() const
-{
-    return m_sprite.global_bb();
+    return m_sprite.bounding_box();
 }
