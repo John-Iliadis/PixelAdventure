@@ -121,8 +121,8 @@ add_executable(Pixel_Adventure
         src/audio/music_player.hpp
         src/audio/sound_player.cpp
         src/audio/sound_player.hpp
-        src/world/cursor.cpp
-        src/world/cursor.hpp
+        src/gui/cursor.cpp
+        src/gui/cursor.hpp
         src/world/finish_cup.cpp
         src/world/finish_cup.hpp
         src/utilities/easing_functions.cpp

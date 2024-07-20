@@ -10,5 +10,6 @@
 #include "gui_sprite.hpp"
 #include "gui_container.hpp"
 #include "gui_slider.hpp"
+#include "cursor.hpp"
 
 #endif //PIXEL_ADVENTURE_INCLUDES_HPP

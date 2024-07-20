@@ -20,7 +20,7 @@
 #include "structs/settings.hpp"
 #include "audio/sound_player.hpp"
 #include "audio/music_player.hpp"
-#include "world/cursor.hpp"
+#include "gui/cursor.hpp"
 #include "world/parallel_task.hpp"
 
 

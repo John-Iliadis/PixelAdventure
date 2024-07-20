@@ -7,8 +7,9 @@
 
 #include <vector>
 #include <SFML/Graphics/Texture.hpp>
-#include "../world/cursor.hpp"
+#include "cursor.hpp"
 #include "../enums/origin.hpp"
+#include "cursor.hpp"
 #include "gui_sprite.hpp"
 #include "gui_element.hpp"
 

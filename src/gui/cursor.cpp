@@ -13,7 +13,6 @@ void Cursor::init()
 {
     m_arrow.loadFromSystem(sf::Cursor::Arrow);
     m_hand.loadFromSystem(sf::Cursor::Hand);
-    m_window = nullptr;
 }
 
 void Cursor::select_window(sf::RenderWindow *window)
