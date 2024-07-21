@@ -1,6 +1,14 @@
 # Pixel Adventure Platformer
 
-A platformer game made with the pixel adventure assets from itch.io. Written in C++, using SFML as the graphics library.
+- A precision platformer game written in C++
+- SFML was used for graphics and audio
+- Tiled level editor was used for creating the world
+- nlohmann::json library was used for parsing world and configuration data
+
+The game was made with the pixel adventure assets from itch.io.
+
+The download can be found in the releases section. The executable is in the bin folder. Else, the project can be easily built in Clion with CMake (SFML dependency required).
+
 
 ## Gameplay
 
