@@ -10,7 +10,6 @@ MainMenuState::MainMenuState(StateStack &state_stack, GameContext& context, void
     , m_scrolling_background(m_context.texture_manager->get("blue"), static_cast<sf::Vector2i>(m_context.world_camera->get_size()))
 {
     build_gui();
-    m_context.world_camera->set_center(m_context.world_camera->get_size() / 2.f); // todo: delete this
     MusicPlayer::play("menu_music", true);
 }
 
