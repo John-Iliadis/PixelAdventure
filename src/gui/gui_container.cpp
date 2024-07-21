@@ -3,6 +3,7 @@
 //
 
 #include "gui_container.hpp"
+#include "../audio/sound_player.hpp"
 
 
 GUI_Container::GUI_Container(const sf::Texture &texture)
@@ -60,11 +61,15 @@ void GUI_Container::handle_event(const sf::Event &event)
             if (!element->selectable())
                 continue;
 
-            if (element->bounding_box().contains(event.mouseMove.x, event.mouseMove.y))
+            bool selected = element->selected();
+            bool inside = element->bounding_box().contains(event.mouseMove.x, event.mouseMove.y);
+
+            if (!selected && inside)
             {
+                SoundPlayer::play_sound("prevnext");
                 element->select();
             }
-            else
+            else if (selected && !inside)
             {
                 element->deselect();
             }
@@ -88,12 +93,48 @@ void GUI_Container::handle_event(const sf::Event &event)
         element->handle_event(event);
 }
 
+void GUI_Container::update()
+{
+    if (Cursor::item_selected())
+        return;
+
+    sf::Vector2f mouse_pos = Cursor::get_mouse_pos();
+
+    for (auto element : m_elements)
+    {
+        if (element->selectable() && element->bounding_box().contains(mouse_pos))
+        {
+            Cursor::set_item_selected(true);
+            break;
+        }
+
+        element->update();
+
+        if (Cursor::item_selected())
+            break;
+    }
+}
+
 void GUI_Container::draw(sf::RenderWindow &window)
 {
     m_sprite.draw(window);
 
     for (auto element : m_elements)
         element->draw(window);
+}
+
+void GUI_Container::on_return(const sf::Vector2f &mouse_pos)
+{
+    for (auto element : m_elements)
+    {
+        if (element->selectable() && element->bounding_box().contains(mouse_pos))
+            element->select();
+        else
+            element->deselect();
+
+        if (auto container = dynamic_cast<GUI_Container*>(element); container != nullptr)
+            container->on_return(mouse_pos);
+    }
 }
 
 bool GUI_Container::selectable()

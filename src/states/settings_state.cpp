@@ -15,6 +15,8 @@ void SettingsState::on_return()
 {
     State::on_return();
     build_gui();
+    m_right_panel.on_return(Cursor::get_mouse_pos());
+    m_left_panel.on_return(Cursor::get_mouse_pos());
 }
 
 bool SettingsState::handle_events(const sf::Event &event)
@@ -27,6 +29,12 @@ bool SettingsState::handle_events(const sf::Event &event)
 
 bool SettingsState::update(double dt)
 {
+    if (m_status == Status::CURRENT)
+    {
+        m_left_panel.update();
+        m_right_panel.update();
+    }
+
     return true;
 }
 

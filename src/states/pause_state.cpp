@@ -24,6 +24,8 @@ void PauseState::on_exit()
 void PauseState::on_return()
 {
     State::on_return();
+    m_top_panel.on_return(Cursor::get_mouse_pos());
+    m_bottom_panel.on_return(Cursor::get_mouse_pos());
 }
 
 bool PauseState::handle_events(const sf::Event &event)
@@ -44,6 +46,12 @@ bool PauseState::handle_events(const sf::Event &event)
 
 bool PauseState::update(double dt)
 {
+    if (m_status == Status::CURRENT)
+    {
+        m_top_panel.update();
+        m_bottom_panel.update();
+    }
+
     return false;
 }
 

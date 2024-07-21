@@ -29,6 +29,7 @@ public:
     void set_parent(GUI_Element *parent) override;
 
     void handle_event(const sf::Event &event) override;
+    void update() override;
     void draw(sf::RenderWindow &window) override;
 
     void activate() override;

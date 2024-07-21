@@ -7,7 +7,6 @@
 
 #include <vector>
 #include <SFML/Graphics/Texture.hpp>
-#include "cursor.hpp"
 #include "../enums/origin.hpp"
 #include "cursor.hpp"
 #include "gui_sprite.hpp"
@@ -31,7 +30,10 @@ public:
     void set_parent(GUI_Element *parent) override;
 
     void handle_event(const sf::Event &event) override;
+    void update() override;
     void draw(sf::RenderWindow &window) override;
+
+    void on_return(const sf::Vector2f& mouse_pos);
 
     void activate() override;
 

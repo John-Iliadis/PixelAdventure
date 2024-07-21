@@ -77,6 +77,10 @@ void GUI_Slider::handle_event(const sf::Event &event)
     }
 }
 
+void GUI_Slider::update()
+{
+}
+
 void GUI_Slider::draw(sf::RenderWindow &window)
 {
     m_slider.draw(window);

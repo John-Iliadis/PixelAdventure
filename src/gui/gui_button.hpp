@@ -7,7 +7,6 @@
 
 #include <functional>
 #include <SFML/Graphics/Texture.hpp>
-#include "../audio/sound_player.hpp"
 #include "gui_element.hpp"
 #include "gui_sprite.hpp"
 #include "gui_text.hpp"
@@ -34,10 +33,8 @@ public:
     void set_parent(GUI_Element *parent) override;
 
     void handle_event(const sf::Event &event) override;
+    void update() override;
     void draw(sf::RenderWindow &window) override;
-
-    void select() override;
-    void deselect() override;
 
     bool selectable() override;
     void activate() override;

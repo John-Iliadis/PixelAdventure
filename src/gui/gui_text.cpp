@@ -101,6 +101,10 @@ void GUI_Text::handle_event(const sf::Event &event)
 {
 }
 
+void GUI_Text::update()
+{
+}
+
 void GUI_Text::draw(sf::RenderWindow &window)
 {
     make_vertices();

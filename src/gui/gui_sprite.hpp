@@ -25,6 +25,7 @@ public:
     void set_origin(Origin origin);
 
     void handle_event(const sf::Event &event) override;
+    void update() override;
     void draw(sf::RenderWindow &window) override;
 
     void activate() override;

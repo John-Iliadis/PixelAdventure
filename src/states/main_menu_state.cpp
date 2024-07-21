@@ -22,6 +22,7 @@ void MainMenuState::on_exit()
 void MainMenuState::on_return()
 {
     State::on_return();
+    m_panel.on_return(Cursor::get_mouse_pos());
 }
 
 bool MainMenuState::handle_events(const sf::Event &event)
@@ -34,6 +35,9 @@ bool MainMenuState::handle_events(const sf::Event &event)
 bool MainMenuState::update(double dt)
 {
     m_scrolling_background.update(dt);
+
+    if (m_status == Status::CURRENT)
+        m_panel.update();
 
     return false;
 }

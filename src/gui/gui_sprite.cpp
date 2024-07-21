@@ -73,6 +73,11 @@ void GUI_Sprite::set_origin(Origin origin)
 
 void GUI_Sprite::handle_event(const sf::Event &event)
 {
+
+}
+
+void GUI_Sprite::update()
+{
 }
 
 void GUI_Sprite::draw(sf::RenderWindow &window)

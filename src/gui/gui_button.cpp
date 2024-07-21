@@ -3,6 +3,7 @@
 //
 
 #include "gui_button.hpp"
+#include "../audio/sound_player.hpp"
 
 
 GUI_Button::GUI_Button()
@@ -95,6 +96,10 @@ void GUI_Button::handle_event(const sf::Event &event)
 {
 }
 
+void GUI_Button::update()
+{
+}
+
 void GUI_Button::draw(sf::RenderWindow &window)
 {
     m_sprite.draw(window);
@@ -110,23 +115,6 @@ void GUI_Button::activate()
 {
     SoundPlayer::play_sound("button_click");
     m_callback();
-}
-
-void GUI_Button::select()
-{
-    if (!selected())
-    {
-        SoundPlayer::play_sound("prevnext");
-        GUI_Element::select();
-    }
-}
-
-void GUI_Button::deselect()
-{
-    if (selected())
-    {
-        GUI_Element::deselect();
-    }
 }
 
 sf::FloatRect GUI_Button::bounding_box() const

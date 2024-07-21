@@ -23,6 +23,7 @@ public:
     bool selected() const;
 
     virtual void handle_event(const sf::Event& event) = 0;
+    virtual void update() = 0;
     virtual void draw(sf::RenderWindow& window) = 0;
 
     virtual void activate() = 0;

@@ -26,6 +26,9 @@ bool GameOverState::handle_events(const sf::Event &event)
 
 bool GameOverState::update(double dt)
 {
+    if (m_context.gui_camera->target_reached())
+        m_panel.update();
+
     return true;
 }
 

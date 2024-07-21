@@ -8,6 +8,8 @@
 sf::Cursor Cursor::m_arrow;
 sf::Cursor Cursor::m_hand;
 sf::RenderWindow* Cursor::m_window = nullptr;
+bool Cursor::m_item_selected = false;
+
 
 void Cursor::init()
 {
@@ -20,21 +22,24 @@ void Cursor::select_window(sf::RenderWindow *window)
     m_window = window;
 }
 
-void Cursor::set_cursor(sf::Cursor::Type type)
+void Cursor::set_cursor()
 {
     assert(m_window);
 
-    switch (type)
-    {
-        case sf::Cursor::Arrow:
-            m_window->setMouseCursor(m_arrow);
-            break;
+    m_window->setMouseCursor(m_item_selected? m_hand : m_arrow);
+}
 
-        case sf::Cursor::Hand:
-            m_window->setMouseCursor(m_hand);
-            break;
+void Cursor::set_item_selected(bool selected)
+{
+    m_item_selected = selected;
+}
 
-        default:
-            assert(false);
-    }
+bool Cursor::item_selected()
+{
+    return m_item_selected;
+}
+
+sf::Vector2f Cursor::get_mouse_pos()
+{
+    return static_cast<sf::Vector2f>(sf::Mouse::getPosition(*m_window));
 }

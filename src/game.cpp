@@ -67,11 +67,10 @@ void Game::run()
         sf::Time elapsed_time = clock.restart();
         ellapsed += elapsed_time.asSeconds();
 
-        handle_events();
-
         while (ellapsed >= time_per_frame)
         {
             ellapsed -= time_per_frame;
+            handle_events();
             update(time_per_frame);
         }
 
@@ -102,7 +101,9 @@ void Game::handle_events()
 
 void Game::update(double dt)
 {
+    Cursor::set_item_selected(false);
     m_state_stack.update(dt);
+
     m_state_stack.empty()? m_window.close() : void();
     m_gui_camera.update(dt);
 
@@ -114,6 +115,7 @@ void Game::draw()
 {
     static const sf::Color clear_color(33, 31, 48, 255);
 
+    Cursor::set_cursor();
     m_window.clear(clear_color);
     m_state_stack.draw();
     m_window.display();

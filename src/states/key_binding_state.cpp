@@ -47,8 +47,9 @@ bool KeyBindingState::handle_events(const sf::Event &event)
 bool KeyBindingState::update(double dt)
 {
     m_invalid_key_text.setFillColor(m_invalid_key_timer > 0? sf::Color::Red : sf::Color::Transparent);
-
     m_invalid_key_timer -= dt;
+
+    m_container.update();
 
     return true;
 }
