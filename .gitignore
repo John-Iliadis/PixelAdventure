@@ -2,4 +2,5 @@ cmake-build-debug/
 cmake-build-release/
 .idea/
 notes.txt
-bin/Pixel_Adventure.exe
+bin/PixelAdventure.exe
+bin/PixelAdventure-d.exe
