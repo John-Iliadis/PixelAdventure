@@ -10,6 +10,13 @@ The game was made with the pixel adventure assets from itch.io.
 The download can be found in the releases section. The executable is in the bin folder. Else, the project can be easily built in Clion with CMake (SFML dependency required).
 
 
+## Player Actions
+
+- Use the arrow keys to run, jump, double jump, and wall slide.
+- Press escape to bring up the pause menu.
+- Can control audio and modify key bindings in the settings tab.
+
+
 ## Gameplay
 
 https://github.com/John-Iliadis/PixelAdventure/assets/124552848/7fea5dd1-6342-4a7a-bcb3-e99cc1cd14df
